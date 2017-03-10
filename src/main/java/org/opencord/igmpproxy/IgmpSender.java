@@ -177,12 +177,6 @@ public final class IgmpSender {
         if (!mastershipService.isLocalMaster(deviceId)) {
             return;
         }
-        /*
-        if (ethPkt.getEtherType() == Ethernet.TYPE_IPV4
-                && ((IPv4) ethPkt.getPayload()).getProtocol() == IPv4.PROTOCOL_IGMP) {
-            igmpManager.traceTxIgmpMsg(deviceId, (IGMP)ethPkt.getPayload().getPayload());
-        }
-*/
         PortNumber upLink = IgmpManager.getDeviceUplink(deviceId);
         TrafficTreatment treatment = DefaultTrafficTreatment.builder()
                 .setOutput(upLink).build();
@@ -197,12 +191,6 @@ public final class IgmpSender {
             return;
         }
 
-        /*
-        if (ethPkt.getEtherType() == Ethernet.TYPE_IPV4
-                && ((IPv4) ethPkt.getPayload()).getProtocol() == IPv4.PROTOCOL_IGMP) {
-            igmpManager.traceTxIgmpMsg(deviceId, (IGMP)ethPkt.getPayload().getPayload());
-        }
-*/
         TrafficTreatment treatment = DefaultTrafficTreatment.builder()
                 .setOutput(portNumber).build();
         OutboundPacket packet = new DefaultOutboundPacket(deviceId,
