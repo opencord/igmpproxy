@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba092121_9fbc746e",
+        "filename": "src/main/java/org/opencord/igmpproxy/GroupMember.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-04-01T01:37:25Z",
+      "side": 1,
+      "message": "This class should be immuteable.",
+      "range": {
+        "startLine": 14,
+        "startChar": 13,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "c60ce7ccf87a1f927a521ebf50b686c5b52b4fd5",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba092121_bf8f38cc",
+        "filename": "src/main/java/org/opencord/igmpproxy/GroupMember.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-04-01T01:37:25Z",
+      "side": 1,
+      "message": "should be VlanId",
+      "range": {
+        "startLine": 16,
+        "startChar": 12,
+        "endLine": 16,
+        "endChar": 17
+      },
+      "revId": "c60ce7ccf87a1f927a521ebf50b686c5b52b4fd5",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba092121_7fc1a0e3",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2017-04-01T01:37:25Z",
+      "side": 1,
+      "message": "what is this timer for? And if it is actually used please replace it with a ScheduledExecutor",
+      "range": {
+        "startLine": 145,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 38
+      },
+      "revId": "c60ce7ccf87a1f927a521ebf50b686c5b52b4fd5",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
