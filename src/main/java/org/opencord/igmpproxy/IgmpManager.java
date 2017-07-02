@@ -556,9 +556,15 @@ public class IgmpManager {
     }
 
     private boolean isConnectPoint(DeviceId device, PortNumber port) {
-        return (connectPointMode && connectPoint.deviceId().equals(device)
-                && connectPoint.port().equals(port));
+        if (connectPoint != null) {
+            return (connectPointMode && connectPoint.deviceId().equals(device)
+                    && connectPoint.port().equals(port));
+        } else {
+            log.info("connectPoint not configured for device {}", device);
+            return false;
+        }
     }
+
     private boolean isUplink(DeviceId device, PortNumber port) {
         return ((!connectPointMode) && oltData.containsKey(device)
                 && oltData.get(device).uplink().equals(port));
