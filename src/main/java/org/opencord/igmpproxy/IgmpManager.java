@@ -191,6 +191,7 @@ public class IgmpManager {
         McastConfig config = networkConfig.getConfig(coreAppId, MCAST_CONFIG_CLASS);
         if (config != null) {
             mvlan = config.egressVlan().toShort();
+            IgmpSender.getInstance().setMvlan(mvlan);
         }
         deviceService.addListener(deviceListener);
         scheduledExecutorService.scheduleAtFixedRate(new IgmpProxyTimerTask(), 0, 1000, TimeUnit.MILLISECONDS);
@@ -718,6 +719,7 @@ public class IgmpManager {
                         McastConfig config = networkConfig.getConfig(coreAppId, MCAST_CONFIG_CLASS);
                         if (config != null && mvlan != config.egressVlan().toShort()) {
                             mvlan = config.egressVlan().toShort();
+                            IgmpSender.getInstance().setMvlan(mvlan);
                             groupMemberMap.values().forEach(m -> leaveAction(m));
                         }
                     }
