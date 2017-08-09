@@ -18,5 +18,5 @@
         featuresRepo="mvn:org.opencord/onos-app-igmpproxy/1.2-SNAPSHOT/xml/features"
         features="onos-app-igmpproxy" apps="org.opencord.mcast">
     <description>IGMP PROXY APP</description>
-    <artifact>mvn:org.opencord/onos-app-igmpproxy/1.2-SNAPSHOT</artifact>
+    <artifact>mvn:org.opencord/onos-app-igmpproxy/1.0.0-SNAPSHOT</artifact>
 </app>
