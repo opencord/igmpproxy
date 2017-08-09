@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a437d4f_f2a28699",
+        "filename": "app.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2017-08-09T18:55:11Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 17,
+        "startChar": 59,
+        "endLine": 17,
+        "endChar": 71
+      },
+      "revId": "43fcc786b44553d4f64d8cbbbc9edf2125f66d68",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a437d4f_d29f824f",
+        "filename": "app.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2017-08-09T18:55:11Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 18,
+        "startChar": 58,
+        "endLine": 18,
+        "endChar": 70
+      },
+      "revId": "43fcc786b44553d4f64d8cbbbc9edf2125f66d68",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
