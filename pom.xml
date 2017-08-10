@@ -42,7 +42,7 @@
         <onos.app.readme>IGMP implementation.</onos.app.readme>
         <onos.app.requires>org.opencord.config</onos.app.requires>
 	<onos.app.requires>org.opencord.mcast</onos.app.requires>
-	<cord.config.version>1.2-SNAPSHOT</cord.config.version>
+	<cord.config.version>1.2.0-SNAPSHOT</cord.config.version>
     </properties>
 
 
