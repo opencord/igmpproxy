@@ -22,27 +22,27 @@
     <parent>
         <groupId>org.onosproject</groupId>
         <artifactId>onos-dependencies</artifactId>
-        <version>1.8.0</version>
+        <version>1.8.9</version>
         <relativePath></relativePath>
     </parent>
 
     <groupId>org.opencord</groupId>
     <artifactId>onos-app-igmpproxy</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>bundle</packaging>
 
     <description>IGMP PROXY APP</description>
 
     <properties>
         <onos.app.name>org.opencord.igmpproxy</onos.app.name>
-        <onos.version>1.8.0</onos.version>
+        <onos.version>1.8.9</onos.version>
         <onos.app.category>Traffic Steering</onos.app.category>
         <onos.app.title>IGMP proxy App</onos.app.title>
         <onos.app.url>http://opencord.org</onos.app.url>
         <onos.app.readme>IGMP implementation.</onos.app.readme>
         <onos.app.requires>org.opencord.config</onos.app.requires>
 	<onos.app.requires>org.opencord.mcast</onos.app.requires>
-	<cord.config.version>1.2.0-SNAPSHOT</cord.config.version>
+	<cord.config.version>1.2.0</cord.config.version>
     </properties>
 
 
