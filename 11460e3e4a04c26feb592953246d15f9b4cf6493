@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a2585a7_13e2b403",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000097
+      },
+      "writtenOn": "2017-08-16T04:23:05Z",
+      "side": 1,
+      "message": "For this change, we would have to release cord config app also with version 1.2.0. Are you taking care of that as well?",
+      "revId": "11460e3e4a04c26feb592953246d15f9b4cf6493",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
