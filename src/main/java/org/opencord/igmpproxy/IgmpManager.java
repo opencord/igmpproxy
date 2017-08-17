@@ -196,7 +196,7 @@ public class IgmpManager {
                 }
         );
 
-        oltData.keySet().forEach(d->provisionDefaultFlows(d));
+        oltData.keySet().forEach(d -> provisionDefaultFlows(d));
         if (connectPointMode) {
             provisionConnectPointFlows();
         } else {
@@ -781,7 +781,7 @@ public class IgmpManager {
             return;
         }
 
-        oltData.keySet().forEach(deviceId ->provisionUplinkFlows(deviceId));
+        oltData.keySet().forEach(deviceId -> provisionUplinkFlows(deviceId));
     }
     private void unprovisionUplinkFlows() {
         oltData.keySet().forEach(deviceId ->
