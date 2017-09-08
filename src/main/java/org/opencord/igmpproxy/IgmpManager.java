@@ -111,6 +111,8 @@ public class IgmpManager {
     public static boolean connectPointMode = true;
     public static ConnectPoint connectPoint = null;
 
+    private static boolean pimSSmInterworking = false;
+    private static final String DEFAULT_PIMSSM_HOST = "127.0.0.1";
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(1);
     @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY)
@@ -296,10 +298,15 @@ public class IgmpManager {
                 join = true;
             }
         } else {
-            IpAddress src = ssmTranslateRoute(groupIp);
-            if (src == null) {
-                log.info("no ssm translate for group " + groupIp.toString());
-                return;
+            IpAddress src = null;
+            if (pimSSmInterworking) {
+                src = ssmTranslateRoute(groupIp);
+                if (src == null) {
+                    log.info("no ssm translate for group " + groupIp.toString());
+                    return;
+                }
+            } else {
+                src = IpAddress.valueOf(DEFAULT_PIMSSM_HOST);
             }
             sourceList.add(src.getIp4Address());
             if (recordType == IGMPMembership.CHANGE_TO_EXCLUDE_MODE ||
@@ -672,7 +679,7 @@ public class IgmpManager {
             igmpCos = newCfg.igmpCos();
             periodicQuery = newCfg.periodicQuery();
             fastLeave = newCfg.fastLeave();
-
+            pimSSmInterworking = newCfg.pimSsmInterworking();
             connectPoint = newCfg.connectPoint();
             if (connectPointMode != newCfg.connectPointMode()) {
                 connectPointMode = newCfg.connectPointMode();
