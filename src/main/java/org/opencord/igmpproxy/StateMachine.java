@@ -93,6 +93,13 @@ public final class StateMachine {
         }
     }
 
+    static void generalQuery(int maxResp) {
+        for (Map.Entry<String, SingleStateMachine> entry : map.entrySet()) {
+            SingleStateMachine machine = entry.getValue();
+            machine.query(maxResp);
+        }
+    }
+
     public static Set<Map.Entry<String, SingleStateMachine>> entrySet() {
         return map.entrySet();
     }
