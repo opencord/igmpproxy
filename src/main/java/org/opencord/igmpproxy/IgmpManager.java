@@ -249,21 +249,41 @@ public class IgmpManager {
 
         DeviceId deviceId = cp.deviceId();
         Ip4Address gAddr = igmpQuery.getGaddr().getIp4Address();
+        maxResp = calculateMaxResp(maxResp);
+        if (gAddr != null && !gAddr.isZero()) {
+            StateMachine.specialQuery(deviceId, gAddr, maxResp);
+        } else {
+            StateMachine.generalQuery(deviceId, maxResp);
+        }
+    }
 
+    private void processIgmpConnectPointQuery(IGMPQuery igmpQuery, ConnectPoint cp, int maxResp) {
+
+        DeviceId deviceId = cp.deviceId();
+        Ip4Address gAddr = igmpQuery.getGaddr().getIp4Address();
+        maxResp = calculateMaxResp(maxResp);
+        //The query is received on the ConnectPoint
+        // send query accordingly to the registered OLT devices.
+        if (gAddr != null && !gAddr.isZero()) {
+            for (DeviceId devId : oltData.keySet()) {
+                StateMachine.specialQuery(devId, gAddr, maxResp);
+            }
+        } else {
+            //Don't know which group is targeted by the query
+            //So query all the members(in all the OLTs) and proxy their reports
+            StateMachine.generalQuery(maxResp);
+        }
+    }
+
+
+    private int calculateMaxResp(int maxResp) {
         if (maxResp >= 128) {
             int mant = maxResp & 0xf;
             int exp = (maxResp >> 4) & 0x7;
             maxResp = (mant | 0x10) << (exp + 3);
         }
 
-        maxResp = (maxResp + 5) / 10;
-
-        if (gAddr != null && !gAddr.isZero()) {
-            StateMachine.specialQuery(deviceId, gAddr, maxResp);
-        } else {
-            StateMachine.generalQuery(deviceId, maxResp);
-        }
-
+        return (maxResp + 5) / 10;
     }
 
     private Ip4Address ssmTranslateRoute(IpAddress group) {
@@ -432,7 +452,8 @@ public class IgmpManager {
                 short vlan = ethPkt.getVlanID();
                 DeviceId deviceId = pkt.receivedFrom().deviceId();
 
-                if (oltData.get(deviceId) == null) {
+                if (oltData.get(deviceId) == null &&
+                        !(connectPointMode && deviceId.equals(connectPoint.deviceId()))) {
                     log.error("Device not registered in netcfg :" + deviceId.toString());
                     return;
                 }
@@ -442,8 +463,17 @@ public class IgmpManager {
                     case IGMP.TYPE_IGMPV3_MEMBERSHIP_QUERY:
                         //Discard Query from OLT’s non-uplink port’s
                         if (!pkt.receivedFrom().port().equals(getDeviceUplink(deviceId))) {
-                            log.info("IGMP Picked up query from non-uplink port");
-                            return;
+                            if (isConnectPoint(deviceId, pkt.receivedFrom().port())) {
+                                log.info("IGMP Picked up query from connectPoint");
+                                //OK to process packet
+                                processIgmpConnectPointQuery((IGMPQuery) igmp.getGroups().get(0), pkt.receivedFrom(),
+                                        0xff & igmp.getMaxRespField());
+                                break;
+                            } else {
+                                //Not OK to process packet
+                                log.warn("IGMP Picked up query from non-uplink port");
+                                return;
+                            }
                         }
 
                         processIgmpQuery((IGMPQuery) igmp.getGroups().get(0), pkt.receivedFrom(),
@@ -484,7 +514,7 @@ public class IgmpManager {
                 }
 
             } catch (Exception ex) {
-                log.error("igmp process error : " + ex.toString());
+                log.error("igmp process error : {} ", ex);
                 ex.printStackTrace();
             }
         }
@@ -545,7 +575,11 @@ public class IgmpManager {
     }
 
     public static PortNumber getDeviceUplink(DeviceId devId) {
-        return oltData.get(devId).uplink();
+        if (oltData.get(devId) != null) {
+            return oltData.get(devId).uplink();
+        } else {
+            return null;
+        }
     }
 
     private void processFilterObjective(DeviceId devId, PortNumber port, boolean remove) {
