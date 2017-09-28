@@ -631,10 +631,13 @@ public class IgmpManager {
         @Override
         public void event(DeviceEvent event) {
             DeviceId devId = event.subject().id();
-            PortNumber port;
-            if (oltData.get(devId) == null) {
+            Port p = event.port();
+            if (oltData.get(devId) == null &&
+                    !(p != null && isConnectPoint(devId, p.number()))) {
                 return;
             }
+            PortNumber port;
+
             switch (event.type()) {
 
                 case DEVICE_ADDED:
@@ -645,7 +648,7 @@ public class IgmpManager {
                 case PORT_STATS_UPDATED:
                     break;
                 case PORT_ADDED:
-                    port = event.port().number();
+                    port = p.number();
                     if (oltData.containsKey(devId) && !isUplink(devId, port) && !isConnectPoint(devId, port)) {
                         processFilterObjective(devId, port, false);
                     } else if (isUplink(devId, port)) {
@@ -655,7 +658,7 @@ public class IgmpManager {
                     }
                     break;
                 case PORT_UPDATED:
-                    port = event.port().number();
+                    port = p.number();
                     if (oltData.containsKey(devId) && !isUplink(devId, port) && !isConnectPoint(devId, port)) {
                         if (event.port().isEnabled()) {
                             processFilterObjective(devId, port, false);
@@ -677,7 +680,7 @@ public class IgmpManager {
                     }
                     break;
                 case PORT_REMOVED:
-                    port = event.port().number();
+                    port = p.number();
                     processFilterObjective(devId, port, true);
                     break;
                 default:
@@ -714,9 +717,11 @@ public class IgmpManager {
             periodicQuery = newCfg.periodicQuery();
             fastLeave = newCfg.fastLeave();
             pimSSmInterworking = newCfg.pimSsmInterworking();
-            connectPoint = newCfg.connectPoint();
-            if (connectPointMode != newCfg.connectPointMode()) {
+
+            if (connectPointMode != newCfg.connectPointMode() ||
+                    connectPoint != newCfg.connectPoint()) {
                 connectPointMode = newCfg.connectPointMode();
+                connectPoint = newCfg.connectPoint();
                 if (connectPointMode) {
                     unprovisionUplinkFlows();
                     provisionConnectPointFlows();
