@@ -453,7 +453,7 @@ public class IgmpManager {
                 DeviceId deviceId = pkt.receivedFrom().deviceId();
 
                 if (oltData.get(deviceId) == null &&
-                        !(connectPointMode && deviceId.equals(connectPoint.deviceId()))) {
+                        !isConnectPoint(deviceId, pkt.receivedFrom().port())) {
                     log.error("Device not registered in netcfg :" + deviceId.toString());
                     return;
                 }
@@ -486,8 +486,9 @@ public class IgmpManager {
                     case IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT:
                     case IGMP.TYPE_IGMPV2_LEAVE_GROUP:
                         //Discard join/leave from OLT’s uplink port’s
-                        if (pkt.receivedFrom().port().equals(getDeviceUplink(deviceId))) {
-                            log.info("IGMP Picked up join/leave from the olt uplink port");
+                        if (pkt.receivedFrom().port().equals(getDeviceUplink(deviceId)) ||
+                                isConnectPoint(deviceId, pkt.receivedFrom().port())) {
+                            log.info("IGMP Picked up join/leave from uplink/connectPoint port");
                             return;
                         }
 
@@ -631,10 +632,13 @@ public class IgmpManager {
         @Override
         public void event(DeviceEvent event) {
             DeviceId devId = event.subject().id();
-            PortNumber port;
-            if (oltData.get(devId) == null) {
+            Port p = event.port();
+            if (oltData.get(devId) == null &&
+                    !(p != null && isConnectPoint(devId, p.number()))) {
                 return;
             }
+            PortNumber port;
+
             switch (event.type()) {
 
                 case DEVICE_ADDED:
@@ -645,7 +649,7 @@ public class IgmpManager {
                 case PORT_STATS_UPDATED:
                     break;
                 case PORT_ADDED:
-                    port = event.port().number();
+                    port = p.number();
                     if (oltData.containsKey(devId) && !isUplink(devId, port) && !isConnectPoint(devId, port)) {
                         processFilterObjective(devId, port, false);
                     } else if (isUplink(devId, port)) {
@@ -655,7 +659,7 @@ public class IgmpManager {
                     }
                     break;
                 case PORT_UPDATED:
-                    port = event.port().number();
+                    port = p.number();
                     if (oltData.containsKey(devId) && !isUplink(devId, port) && !isConnectPoint(devId, port)) {
                         if (event.port().isEnabled()) {
                             processFilterObjective(devId, port, false);
@@ -677,7 +681,7 @@ public class IgmpManager {
                     }
                     break;
                 case PORT_REMOVED:
-                    port = event.port().number();
+                    port = p.number();
                     processFilterObjective(devId, port, true);
                     break;
                 default:
@@ -714,9 +718,11 @@ public class IgmpManager {
             periodicQuery = newCfg.periodicQuery();
             fastLeave = newCfg.fastLeave();
             pimSSmInterworking = newCfg.pimSsmInterworking();
-            connectPoint = newCfg.connectPoint();
-            if (connectPointMode != newCfg.connectPointMode()) {
+
+            if (connectPointMode != newCfg.connectPointMode() ||
+                    connectPoint != newCfg.connectPoint()) {
                 connectPointMode = newCfg.connectPointMode();
+                connectPoint = newCfg.connectPoint();
                 if (connectPointMode) {
                     unprovisionUplinkFlows();
                     provisionConnectPointFlows();

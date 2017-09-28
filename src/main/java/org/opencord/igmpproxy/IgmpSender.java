@@ -30,6 +30,8 @@ import org.onosproject.net.flow.TrafficTreatment;
 import org.onosproject.net.packet.DefaultOutboundPacket;
 import org.onosproject.net.packet.OutboundPacket;
 import org.onosproject.net.packet.PacketService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.ByteBuffer;
 
@@ -52,6 +54,7 @@ public final class IgmpSender {
     private short mvlan = DEFAULT_MVLAN;
     private byte igmpCos = DEFAULT_COS;
     private int maxResp = DEFAULT_MEX_RESP;
+    private Logger log = LoggerFactory.getLogger(getClass());
 
     private IgmpSender(PacketService packetService, MastershipService mastershipService) {
         this.packetService = packetService;
@@ -199,6 +202,10 @@ public final class IgmpSender {
 
 
         if (IgmpManager.connectPointMode) {
+            if (IgmpManager.connectPoint == null) {
+                log.warn("cannot find a connectPoint to send the packet uplink");
+                return;
+            }
             sendIgmpPacket(ethPkt, IgmpManager.connectPoint.deviceId(), IgmpManager.connectPoint.port());
         } else {
             PortNumber upLink = IgmpManager.getDeviceUplink(deviceId);
