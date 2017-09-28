@@ -15,7 +15,6 @@
  */
 package org.opencord.igmpproxy;
 
-import com.google.common.collect.Maps;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
@@ -31,6 +30,7 @@ import org.onlab.packet.IPv4;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.IpAddress;
 import org.onlab.packet.VlanId;
+import org.onlab.util.KryoNamespace;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.core.CoreService;
 import org.onosproject.incubator.net.config.basics.McastConfig;
@@ -63,6 +63,12 @@ import org.onosproject.net.packet.InboundPacket;
 import org.onosproject.net.packet.PacketContext;
 import org.onosproject.net.packet.PacketProcessor;
 import org.onosproject.net.packet.PacketService;
+import org.onosproject.store.serializers.KryoNamespaces;
+import org.onosproject.store.service.EventuallyConsistentMap;
+import org.onosproject.store.service.EventuallyConsistentMapEvent;
+import org.onosproject.store.service.EventuallyConsistentMapListener;
+import org.onosproject.store.service.StorageService;
+import org.onosproject.store.service.WallClockTimestamp;
 import org.opencord.cordconfig.access.AccessDeviceConfig;
 import org.opencord.cordconfig.access.AccessDeviceData;
 import org.slf4j.Logger;
@@ -80,6 +86,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static org.onosproject.store.service.EventuallyConsistentMapEvent.Type.PUT;
+
 /**
  * Igmp process application, use proxy mode, support first join/ last leave , fast leave
  * period query and keep alive, packet out igmp message to uplink port features.
@@ -95,7 +103,7 @@ public class IgmpManager {
             IgmpproxySsmTranslateConfig.class;
     private static final Class<McastConfig> MCAST_CONFIG_CLASS =
             McastConfig.class;
-    public static Map<String, GroupMember> groupMemberMap = Maps.newConcurrentMap();
+
     private static ApplicationId appId;
     private static Map<DeviceId, AccessDeviceData> oltData = new ConcurrentHashMap<>();
     private static int unSolicitedTimeout = 3; // unit is 1 sec
@@ -131,6 +139,12 @@ public class IgmpManager {
     protected NetworkConfigRegistry networkConfig;
     @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY)
     protected MulticastRouteService multicastService;
+    @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY)
+    protected StorageService storageService;
+
+    private EventuallyConsistentMap<String, GroupMember> groupMemberMap;
+    private EventuallyConsistentMapListener<String, GroupMember> groupMemberMapTracker = new GroupMemberTracker();
+
     private IgmpPacketProcessor processor = new IgmpPacketProcessor();
     private Logger log = LoggerFactory.getLogger(getClass());
     private ApplicationId coreAppId;
@@ -166,6 +180,17 @@ public class IgmpManager {
     protected void activate() {
         appId = coreService.registerApplication("org.opencord.igmpproxy");
         coreAppId = coreService.registerApplication(CoreService.CORE_APP_NAME);
+        KryoNamespace.Builder groupMemberSerializer = KryoNamespace.newBuilder()
+                .register(KryoNamespaces.API)
+                .register(GroupMember.class);
+
+        groupMemberMap =  storageService.<String, GroupMember>eventuallyConsistentMapBuilder()
+                .withName("groupMember")
+                .withSerializer(groupMemberSerializer)
+                .withTimestampProvider((k, v) -> new WallClockTimestamp())
+                .build();
+
+
         packetService.addProcessor(processor, PacketProcessor.director(4));
         IgmpSender.init(packetService, mastershipService);
 
@@ -183,6 +208,7 @@ public class IgmpManager {
         networkConfig.registerConfigFactory(igmpproxySsmConfigFactory);
         networkConfig.registerConfigFactory(igmpproxyConfigFactory);
         networkConfig.addListener(configListener);
+        groupMemberMap.addListener(groupMemberMapTracker);
 
         configListener.reconfigureNetwork(networkConfig.getConfig(appId, IGMPPROXY_CONFIG_CLASS));
         configListener.reconfigureSsmTable(networkConfig.getConfig(appId, IGMPPROXY_SSM_CONFIG_CLASS));
@@ -230,6 +256,7 @@ public class IgmpManager {
         deviceService.removeListener(deviceListener);
         packetService.removeProcessor(processor);
         flowRuleService.removeFlowRulesById(appId);
+        groupMemberMap.removeListener(groupMemberMapTracker);
 
         log.info("Stopped");
     }
@@ -350,8 +377,8 @@ public class IgmpManager {
                     groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, false);
                 }
                 StateMachine.join(deviceId, groupIp, srcIp);
-                groupMemberMap.put(groupMemberKey, groupMember);
                 groupMember.updateList(recordType, sourceList);
+                groupMemberMap.put(groupMemberKey, groupMember);
                 groupMember.getSourceList().forEach(source -> multicastService.addSink(
                         new McastRoute(source, groupIp, McastRoute.Type.IGMP), cp));
             }
@@ -841,5 +868,41 @@ public class IgmpManager {
             return;
         }
         processFilterObjective(connectPoint.deviceId(), connectPoint.port(), true);
+    }
+
+    private class GroupMemberTracker implements EventuallyConsistentMapListener<String, GroupMember> {
+        @Override
+        public void event(EventuallyConsistentMapEvent<String, GroupMember> event) {
+            switch (event.type()) {
+                case PUT:
+                    log.info("INSERT event received for groupMemberMap");
+                    join(event);
+                    break;
+                case REMOVE:
+                    log.info("REMOVE event received for groupMemberMap");
+                    leave(event);
+                    break;
+                default:
+                    log.warn("unknown operation : {}");
+            }
+        }
+
+        private void join(EventuallyConsistentMapEvent<String, GroupMember> event) {
+            GroupMember groupMember = event.value();
+            DeviceId devId = groupMember.getDeviceId();
+            if (!mastershipService.isLocalMaster(devId)) {
+                StateMachine.join(devId, groupMember.getGroupIp(), getDeviceIp(devId));
+                log.info("Replicating and Joining");
+            }
+        }
+
+        private void leave(EventuallyConsistentMapEvent<String, GroupMember> event) {
+            GroupMember groupMember = event.value();
+            DeviceId devId = groupMember.getDeviceId();
+            if (!mastershipService.isLocalMaster(devId)) {
+                StateMachine.leave(devId, groupMember.getGroupIp());
+                log.info("Replicating and Leaving");
+            }
+        }
     }
 }
