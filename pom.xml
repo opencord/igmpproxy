@@ -44,7 +44,7 @@
             org.opencord.config,
             org.opencord.mcast
         </onos.app.requires>
-        <cord.config.version>1.4.0-SNAPSHOT</cord.config.version>
+        <cord.config.version>1.4.0</cord.config.version>
     </properties>
 
 
