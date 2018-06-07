@@ -14,9 +14,9 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<app name="org.opencord.igmpproxy" origin="Nokia" version="1.2.0-SNAPSHOT"
-        featuresRepo="mvn:org.opencord/onos-app-igmpproxy/1.2.0-SNAPSHOT/xml/features"
-        features="onos-app-igmpproxy" apps="org.opencord.mcast">
+<app name="org.opencord.igmpproxy" origin="Nokia" version="${project.version}"
+        featuresRepo="mvn:${project.groupId}/${project.artifactId}/${project.version}/xml/features"
+        features="${project.artifactId}" apps="org.opencord.mcast">
     <description>IGMP PROXY APP</description>
-    <artifact>mvn:org.opencord/onos-app-igmpproxy/1.2.0-SNAPSHOT</artifact>
+    <artifact>mvn:${project.groupId}/${project.artifactId}/${project.version}</artifact>
 </app>
