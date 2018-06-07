@@ -28,7 +28,7 @@
 
     <groupId>org.opencord</groupId>
     <artifactId>onos-app-igmpproxy</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.0</version>
     <packaging>bundle</packaging>
 
     <description>IGMP proxy app</description>
