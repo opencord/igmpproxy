@@ -37,6 +37,7 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     protected static final String DEFAULT_WITH_RA_DOWNLINK = "true";
     private static final Boolean DEFAULT_CONNECT_POINT_MODE = true;
     private static final Boolean DEFAULT_PIMSSM_INTERWORKING = false;
+    protected static final Boolean DEFAULT_LLDP_PROVISIONING = false;
 
     protected static final String CONNECT_POINT_MODE = "globalConnectPointMode";
     protected static final String CONNECT_POINT = "globalConnectPoint";
@@ -52,6 +53,8 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     private static final String WITH_RA_UPLINK = "withRAUpLink";
     private static final String WITH_RA_DOWN_LINK = "withRADownLink";
     private static final String PIMSSM_INTERWORKING = "pimSSmInterworking";
+    private static final String ENABLE_LLDP_PROVISIONING = "enableLldpProvisioning";
+
 
     /**
      * Gets the value of a string property, protecting for an empty
@@ -180,5 +183,12 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
             return DEFAULT_PIMSSM_INTERWORKING;
         }
         return Boolean.parseBoolean(getStringProperty(PIMSSM_INTERWORKING, DEFAULT_PIMSSM_INTERWORKING.toString()));
+    }
+
+    public boolean enableLldpProvisioning() {
+        if (object == null || object.path(ENABLE_LLDP_PROVISIONING) == null) {
+            return DEFAULT_LLDP_PROVISIONING;
+        }
+        return Boolean.parseBoolean(getStringProperty(ENABLE_LLDP_PROVISIONING, DEFAULT_LLDP_PROVISIONING.toString()));
     }
 }

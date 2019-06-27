@@ -16,6 +16,7 @@
 package org.opencord.igmpproxy;
 
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
@@ -57,22 +58,26 @@ import org.onosproject.net.flowobjective.FlowObjectiveService;
 import org.onosproject.net.flowobjective.Objective;
 import org.onosproject.net.flowobjective.ObjectiveContext;
 import org.onosproject.net.flowobjective.ObjectiveError;
-import org.onosproject.net.mcast.McastRoute;
-import org.onosproject.net.mcast.MulticastRouteService;
+import org.onosproject.mcast.api.McastRoute;
+import org.onosproject.mcast.api.MulticastRouteService;
 import org.onosproject.net.packet.InboundPacket;
 import org.onosproject.net.packet.PacketContext;
 import org.onosproject.net.packet.PacketProcessor;
 import org.onosproject.net.packet.PacketService;
 import org.opencord.cordconfig.access.AccessDeviceConfig;
 import org.opencord.cordconfig.access.AccessDeviceData;
+import org.opencord.igmpproxy.config.AggregatorDeviceConfig;
+import org.opencord.igmpproxy.config.AggregatorDeviceData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
@@ -95,6 +100,8 @@ public class IgmpManager {
             IgmpproxySsmTranslateConfig.class;
     private static final Class<McastConfig> MCAST_CONFIG_CLASS =
             McastConfig.class;
+    private static final Class<AggregatorDeviceConfig> AGG_DEVICE_CONFIG_CLASS =
+            AggregatorDeviceConfig.class;
     public static Map<String, GroupMember> groupMemberMap = Maps.newConcurrentMap();
     private static ApplicationId appId;
     private static Map<DeviceId, AccessDeviceData> oltData = new ConcurrentHashMap<>();
@@ -110,8 +117,16 @@ public class IgmpManager {
     private static byte igmpCos = 7;
     public static boolean connectPointMode = true;
     public static ConnectPoint connectPoint = null;
+    public static boolean enableLldpProvisioning = false;
+
+    private static final Integer MAX_PRIORITY = 10000;
+    private static final String INSTALLED = "installed";
+    private static final String REMOVED = "removed";
+    private static final String INSTALLATION = "installation";
+    private static final String REMOVAL = "removal";
 
     private static boolean pimSSmInterworking = false;
+    public static final String AGG_DEVICE_CONFIG_KEY = "aggregatorDevice";
     private static final String DEFAULT_PIMSSM_HOST = "127.0.0.1";
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(1);
@@ -135,6 +150,7 @@ public class IgmpManager {
     private Logger log = LoggerFactory.getLogger(getClass());
     private ApplicationId coreAppId;
     private Map<Ip4Address, Ip4Address> ssmTranslateTable = new ConcurrentHashMap<>();
+    private static Map<String, AggregatorDeviceData> aggregatorDeviceDataCache = Maps.newConcurrentMap();
     private InternalNetworkConfigListener configListener =
             new InternalNetworkConfigListener();
     private DeviceListener deviceListener = new InternalDeviceListener();
@@ -153,6 +169,15 @@ public class IgmpManager {
                 @Override
                 public IgmpproxySsmTranslateConfig createConfig() {
                     return new IgmpproxySsmTranslateConfig();
+                }
+            };
+    private ConfigFactory<DeviceId, AggregatorDeviceConfig> aggDeviceConfigFactory =
+            new ConfigFactory<DeviceId, AggregatorDeviceConfig>(
+                    SubjectFactories.DEVICE_SUBJECT_FACTORY,
+                    AGG_DEVICE_CONFIG_CLASS, AGG_DEVICE_CONFIG_KEY) {
+                @Override
+                public AggregatorDeviceConfig createConfig() {
+                    return new AggregatorDeviceConfig();
                 }
             };
     private int maxResp = 10; //unit is 1 sec
@@ -182,6 +207,7 @@ public class IgmpManager {
         }
         networkConfig.registerConfigFactory(igmpproxySsmConfigFactory);
         networkConfig.registerConfigFactory(igmpproxyConfigFactory);
+        networkConfig.registerConfigFactory(aggDeviceConfigFactory);
         networkConfig.addListener(configListener);
 
         configListener.reconfigureNetwork(networkConfig.getConfig(appId, IGMPPROXY_CONFIG_CLASS));
@@ -227,6 +253,7 @@ public class IgmpManager {
         }
         networkConfig.unregisterConfigFactory(igmpproxyConfigFactory);
         networkConfig.unregisterConfigFactory(igmpproxySsmConfigFactory);
+        networkConfig.unregisterConfigFactory(aggDeviceConfigFactory);
         deviceService.removeListener(deviceListener);
         packetService.removeProcessor(processor);
         flowRuleService.removeFlowRulesById(appId);
@@ -349,11 +376,28 @@ public class IgmpManager {
                 } else {
                     groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, false);
                 }
+
+                Optional<ConnectPoint> upLinkOfAggDevice = getUplinkOfAggDevice();
+                if (!upLinkOfAggDevice.isPresent()) {
+                    log.warn("Unable to process IGMP Join from {} since no aggregator " +
+                                     "device configuration is found.", deviceId);
+                    return;
+                }
+                HashSet<ConnectPoint> aggDevConnectPoints = Sets.newHashSet(upLinkOfAggDevice.get());
+
                 StateMachine.join(deviceId, groupIp, srcIp);
                 groupMemberMap.put(groupMemberKey, groupMember);
                 groupMember.updateList(recordType, sourceList);
-                groupMember.getSourceList().forEach(source -> multicastService.addSink(
-                        new McastRoute(source, groupIp, McastRoute.Type.IGMP), cp));
+                groupMember.getSourceList().forEach(source -> {
+                    McastRoute route = new McastRoute(source, groupIp, McastRoute.Type.IGMP);
+                    //add route
+                    multicastService.add(route);
+                    //add source to the route
+                    multicastService.addSources(route, Sets.newHashSet(aggDevConnectPoints));
+                    //add sink to the route
+                    multicastService.addSinks(route, Sets.newHashSet(cp));
+                });
+
             }
             groupMember.resetAllTimers();
             groupMember.updateList(recordType, sourceList);
@@ -377,9 +421,9 @@ public class IgmpManager {
     private void leaveAction(GroupMember groupMember) {
         ConnectPoint cp = new ConnectPoint(groupMember.getDeviceId(), groupMember.getPortNumber());
         StateMachine.leave(groupMember.getDeviceId(), groupMember.getGroupIp());
-        groupMember.getSourceList().forEach(source -> multicastService.removeSink(
+        groupMember.getSourceList().forEach(source -> multicastService.removeSinks(
                 new McastRoute(source, groupMember.getGroupIp(),
-                        McastRoute.Type.IGMP), cp));
+                               McastRoute.Type.IGMP), Sets.newHashSet(cp)));
         groupMemberMap.remove(groupMember.getId());
     }
 
@@ -394,35 +438,17 @@ public class IgmpManager {
         IgmpSender.getInstance().sendIgmpPacket(ethpkt, groupMember.getDeviceId(), groupMember.getPortNumber());
     }
 
-    private void processFilterObjective(DeviceId devId, Port port, boolean remove) {
-
-        //TODO migrate to packet requests when packet service uses filtering objectives
-        DefaultFilteringObjective.Builder builder = DefaultFilteringObjective.builder();
-
-        builder = remove ? builder.deny() : builder.permit();
-
-        FilteringObjective igmp = builder
-                .withKey(Criteria.matchInPort(port.number()))
-                .addCondition(Criteria.matchEthType(EthType.EtherType.IPV4.ethType()))
-                .addCondition(Criteria.matchIPProtocol(IPv4.PROTOCOL_IGMP))
-                .withMeta(DefaultTrafficTreatment.builder().setOutput(PortNumber.CONTROLLER).build())
-                .fromApp(appId)
-                .withPriority(10000)
-                .add(new ObjectiveContext() {
-                    @Override
-                    public void onSuccess(Objective objective) {
-                        log.info("IgmpProxy filter for {} on {} installed.",
-                                devId, port);
-                    }
-
-                    @Override
-                    public void onError(Objective objective, ObjectiveError error) {
-                        log.info("IgmpProxy filter for {} on {} failed because {}.",
-                                devId, port, error);
-                    }
-                });
-
-        flowObjectiveService.filter(devId, igmp);
+    /**
+     * @return connect point of the uplink of the agg. switch if configured; empty Optional otherwise.
+     */
+    public static Optional<ConnectPoint> getUplinkOfAggDevice() {
+        AggregatorDeviceData aggregatorDeviceData = aggregatorDeviceDataCache.get(AGG_DEVICE_CONFIG_KEY);
+        if (aggregatorDeviceData == null) {
+            return Optional.empty();
+        } else {
+            return Optional.of(new ConnectPoint(aggregatorDeviceData.deviceId(),
+                                                aggregatorDeviceData.uplink()));
+        }
     }
 
     /**
@@ -595,22 +621,59 @@ public class IgmpManager {
                 .addCondition(Criteria.matchIPProtocol(IPv4.PROTOCOL_IGMP))
                 .withMeta(DefaultTrafficTreatment.builder().setOutput(PortNumber.CONTROLLER).build())
                 .fromApp(appId)
-                .withPriority(10000)
+                .withPriority(MAX_PRIORITY)
                 .add(new ObjectiveContext() {
                     @Override
                     public void onSuccess(Objective objective) {
-                        log.info("IgmpProxy filter for {} on {} installed.",
-                                devId, port);
+                        log.info("Igmp filter for {} on {} {}.",
+                                 devId, port, (remove) ? REMOVED : INSTALLED);
                     }
 
                     @Override
                     public void onError(Objective objective, ObjectiveError error) {
-                        log.info("IgmpProxy filter for {} on {} failed because {}.",
-                                devId, port, error);
+                        log.info("Igmp filter {} for device {} on port {} failed because of {}",
+                                 (remove) ? INSTALLATION : REMOVAL, devId, port,
+                                 error);
                     }
                 });
 
         flowObjectiveService.filter(devId, igmp);
+
+        if (enableLldpProvisioning) {
+            processLldpFilteringObjective(devId, port, remove);
+        }
+    }
+
+    private void processLldpFilteringObjective(DeviceId devId, PortNumber port, boolean remove) {
+        if (!mastershipService.isLocalMaster(devId)) {
+            return;
+        }
+        DefaultFilteringObjective.Builder builder = DefaultFilteringObjective.builder();
+
+        FilteringObjective lldp = (remove ? builder.deny() : builder.permit())
+                .withKey(Criteria.matchInPort(port))
+                .addCondition(Criteria.matchEthType(EthType.EtherType.LLDP.ethType()))
+                .withMeta(DefaultTrafficTreatment.builder()
+                                  .setOutput(PortNumber.CONTROLLER).build())
+                .fromApp(appId)
+                .withPriority(MAX_PRIORITY)
+                .add(new ObjectiveContext() {
+                    @Override
+                    public void onSuccess(Objective objective) {
+                        log.info("LLDP filter for device {} on port {} {}.",
+                                 devId, port, (remove) ? REMOVED : INSTALLED);
+                    }
+
+                    @Override
+                    public void onError(Objective objective, ObjectiveError error) {
+                        log.info("LLDP filter {} for device {} on port {} failed because of {}",
+                                 (remove) ? INSTALLATION : REMOVAL, devId, port,
+                                 error);
+                    }
+                });
+
+        flowObjectiveService.filter(devId, lldp);
+
     }
 
     private boolean isConnectPoint(DeviceId device, PortNumber port) {
@@ -718,6 +781,7 @@ public class IgmpManager {
             periodicQuery = newCfg.periodicQuery();
             fastLeave = newCfg.fastLeave();
             pimSSmInterworking = newCfg.pimSsmInterworking();
+            enableLldpProvisioning = newCfg.enableLldpProvisioning();
 
             if (connectPointMode != newCfg.connectPointMode() ||
                     connectPoint != newCfg.connectPoint()) {
@@ -741,7 +805,6 @@ public class IgmpManager {
             IgmpSender.getInstance().setMvlan(mvlan);
             IgmpSender.getInstance().setWithRADownlink(withRADownlink);
             IgmpSender.getInstance().setWithRAUplink(withRAUplink);
-
         }
 
         public void reconfigureSsmTable(IgmpproxySsmTranslateConfig cfg) {
@@ -750,7 +813,7 @@ public class IgmpManager {
             }
             Collection<McastRoute> translations = cfg.getSsmTranslations();
             for (McastRoute route : translations) {
-                ssmTranslateTable.put(route.group().getIp4Address(), route.source().getIp4Address());
+                ssmTranslateTable.put(route.group().getIp4Address(), route.source().get().getIp4Address());
             }
         }
 
@@ -789,6 +852,24 @@ public class IgmpManager {
                             mvlan = config.egressVlan().toShort();
                             IgmpSender.getInstance().setMvlan(mvlan);
                             groupMemberMap.values().forEach(m -> leaveAction(m));
+                        }
+                    }
+
+                    //config for the aggregator device added
+                    if (event.configClass().equals(AGG_DEVICE_CONFIG_CLASS)) {
+                        //do whatever you need for the aggregator switch
+                        Set<DeviceId> subjects = networkConfig.getSubjects(DeviceId.class, AGG_DEVICE_CONFIG_CLASS);
+                        if (!subjects.isEmpty()) {
+                            //assumed that there is only one aggregator switch
+                            DeviceId d = subjects.iterator().next();
+                            AggregatorDeviceConfig config = networkConfig.getConfig(d, AGG_DEVICE_CONFIG_CLASS);
+
+                            if (aggregatorDeviceDataCache.containsValue(config.getAggregatorDevice())) {
+                                aggregatorDeviceDataCache.replace(AGG_DEVICE_CONFIG_KEY, config.getAggregatorDevice());
+                            } else {
+                                aggregatorDeviceDataCache.put(AGG_DEVICE_CONFIG_KEY, config.getAggregatorDevice());
+                            }
+                            log.info("Aggregator device config received. {}", config.getAggregatorDevice());
                         }
                     }
 
