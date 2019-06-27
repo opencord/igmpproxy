@@ -37,6 +37,7 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     protected static final String DEFAULT_WITH_RA_DOWNLINK = "true";
     private static final Boolean DEFAULT_CONNECT_POINT_MODE = true;
     private static final Boolean DEFAULT_PIMSSM_INTERWORKING = false;
+    private static final Boolean DEFAULT_IGMP_PROVISIONING_SUPPORT = Boolean.FALSE;
 
     protected static final String CONNECT_POINT_MODE = "globalConnectPointMode";
     protected static final String CONNECT_POINT = "globalConnectPoint";
@@ -52,6 +53,9 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     private static final String WITH_RA_UPLINK = "withRAUpLink";
     private static final String WITH_RA_DOWN_LINK = "withRADownLink";
     private static final String PIMSSM_INTERWORKING = "pimSSmInterworking";
+    private static final String SOURCE_DEV_PORT = "sourceDeviceAndPort";
+    private static final String ENABLE_IGMP_PROVISIONING = "enableIgmpProvisioning";
+
 
     /**
      * Gets the value of a string property, protecting for an empty
@@ -180,5 +184,25 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
             return DEFAULT_PIMSSM_INTERWORKING;
         }
         return Boolean.parseBoolean(getStringProperty(PIMSSM_INTERWORKING, DEFAULT_PIMSSM_INTERWORKING.toString()));
+    }
+
+    public ConnectPoint getSourceDeviceAndPort() {
+        if (object == null || object.path(SOURCE_DEV_PORT) == null) {
+            return null;
+        }
+
+        try {
+            return ConnectPoint.deviceConnectPoint(getStringProperty(SOURCE_DEV_PORT, ""));
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    public boolean enableIgmpProvisioning() {
+        if (object == null || object.path(ENABLE_IGMP_PROVISIONING) == null) {
+            return DEFAULT_IGMP_PROVISIONING_SUPPORT;
+        }
+        return Boolean.parseBoolean(getStringProperty(ENABLE_IGMP_PROVISIONING,
+                                                      DEFAULT_IGMP_PROVISIONING_SUPPORT.toString()));
     }
 }
