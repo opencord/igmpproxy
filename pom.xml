@@ -42,7 +42,7 @@
         <onos.app.readme>IGMP implementation.</onos.app.readme>
         <onos.app.requires>
             org.opencord.config,
-            org.opencord.mcast
+            org.onosproject.mcast
         </onos.app.requires>
         <cord.config.version>1.4.0</cord.config.version>
     </properties>
@@ -95,7 +95,13 @@
         <dependency>
             <groupId>org.opencord</groupId>
             <artifactId>cord-config</artifactId>
-	    <version>${cord.config.version}</version>
+            <version>${cord.config.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.onosproject</groupId>
+            <artifactId>onos-apps-mcast-api</artifactId>
+            <version>${onos.version}</version>
         </dependency>
     </dependencies>
 
