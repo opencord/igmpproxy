@@ -19,8 +19,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.onlab.packet.IpAddress;
 import org.onosproject.core.ApplicationId;
+import org.onosproject.mcast.api.McastRoute;
 import org.onosproject.net.config.Config;
-import org.onosproject.net.mcast.McastRoute;
 
 import java.util.ArrayList;
 import java.util.List;
