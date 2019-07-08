@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "0e15fa9f_05c6acac",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-07-08T21:15:58Z",
+      "side": 1,
+      "message": "why do you need this ?",
+      "range": {
+        "startLine": 153,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 105
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f23bdf33_7af5017f",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-07-08T21:15:58Z",
+      "side": 1,
+      "message": "Maybe under IgmpProxyConfig",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 84
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6427f3e_304fafb8",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 4
@@ -87,6 +133,29 @@
         "startChar": 13,
         "endLine": 23,
         "endChar": 35
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "48aac51e_7bf81ea1",
+        "filename": "src/main/java/org/opencord/igmpproxy/config/AggregatorDeviceConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-07-08T21:15:58Z",
+      "side": 1,
+      "message": "I would use connect point directly and put under ApplicationId and not under DeviceId",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 1
       },
       "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
