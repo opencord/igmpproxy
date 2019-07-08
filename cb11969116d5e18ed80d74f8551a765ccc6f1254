@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f21077a2_b79d3ddd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2019-07-08T21:09:54Z",
+      "side": 1,
+      "message": "This is not part of SEBA-642 originally. I would suggest clarify this here or in the jira story.",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 72
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6427f3e_304fafb8",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2019-07-08T21:09:54Z",
+      "side": 1,
+      "message": "Should be OK but would be nice to have someone more familiar with overall solution to confirm this won\u0027t conflict with other flows",
+      "range": {
+        "startLine": 624,
+        "startChar": 30,
+        "endLine": 624,
+        "endChar": 42
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b9f5923_47d04f4d",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2019-07-08T21:09:54Z",
+      "side": 1,
+      "message": "Maybe useful to print a message in else {}",
+      "range": {
+        "startLine": 873,
+        "startChar": 24,
+        "endLine": 873,
+        "endChar": 25
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "381eb8d8_9c23d206",
+        "filename": "src/main/java/org/opencord/igmpproxy/config/AggregatorDeviceConfig.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2019-07-08T21:09:54Z",
+      "side": 1,
+      "message": "It is encouraged to implement the isValid() method for netcfg classes.",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
