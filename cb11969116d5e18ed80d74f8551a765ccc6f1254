@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "e1fa86d4_00bcdc04",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2019-07-09T00:55:00Z",
+      "side": 1,
+      "message": "I am OK with Pier\u0027s suggestion",
+      "parentUuid": "f23bdf33_7af5017f",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 84
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6427f3e_304fafb8",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 4
