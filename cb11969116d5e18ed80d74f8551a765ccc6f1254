@@ -95,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "3748f437_e9cfdf3e",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2019-07-22T12:15:29Z",
+      "side": 1,
+      "message": "I put it into the IgmpProxyConfig",
+      "parentUuid": "e1fa86d4_00bcdc04",
+      "range": {
+        "startLine": 174,
+        "startChar": 4,
+        "endLine": 174,
+        "endChar": 84
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6427f3e_304fafb8",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 4
@@ -129,6 +153,30 @@
       "writtenOn": "2019-07-08T21:09:54Z",
       "side": 1,
       "message": "Maybe useful to print a message in else {}",
+      "range": {
+        "startLine": 873,
+        "startChar": 24,
+        "endLine": 873,
+        "endChar": 25
+      },
+      "revId": "cb11969116d5e18ed80d74f8551a765ccc6f1254",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae49c079_4fc07028",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2019-07-22T12:15:29Z",
+      "side": 1,
+      "message": "I completely removed AggDeviceConfig class; source configuration will be made through IgmpProxyConfig instead.",
+      "parentUuid": "1b9f5923_47d04f4d",
       "range": {
         "startLine": 873,
         "startChar": 24,
