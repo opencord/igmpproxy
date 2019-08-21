@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d157047_a07eb2eb",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-08-21T02:21:04Z",
+      "side": 1,
+      "message": "false ?",
+      "range": {
+        "startLine": 118,
+        "startChar": 52,
+        "endLine": 118,
+        "endChar": 56
+      },
+      "revId": "52d87490bfa9d34808de3109ebbd98e66d848317",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf109b71_04bcbe53",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-08-21T02:21:04Z",
+      "side": 1,
+      "message": "debug",
+      "range": {
+        "startLine": 597,
+        "startChar": 16,
+        "endLine": 597,
+        "endChar": 20
+      },
+      "revId": "52d87490bfa9d34808de3109ebbd98e66d848317",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fce7996a_8f19ccec",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-08-21T02:21:04Z",
+      "side": 1,
+      "message": "fix the space",
+      "range": {
+        "startLine": 597,
+        "startChar": 0,
+        "endLine": 597,
+        "endChar": 12
+      },
+      "revId": "52d87490bfa9d34808de3109ebbd98e66d848317",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c08cd368_093fa68b",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-08-21T02:21:04Z",
+      "side": 1,
+      "message": "debug",
+      "range": {
+        "startLine": 762,
+        "startChar": 20,
+        "endLine": 762,
+        "endChar": 24
+      },
+      "revId": "52d87490bfa9d34808de3109ebbd98e66d848317",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ba9bc46_526b3472",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpproxyConfig.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-08-21T02:21:04Z",
+      "side": 1,
+      "message": "Do we want to make the default False ?",
+      "range": {
+        "startLine": 40,
+        "startChar": 77,
+        "endLine": 40,
+        "endChar": 81
+      },
+      "revId": "52d87490bfa9d34808de3109ebbd98e66d848317",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
