@@ -20,6 +20,7 @@ import org.onlab.packet.Ip4Address;
 import org.onosproject.net.DeviceId;
 
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * State machine for single IGMP group member. The state machine is implemented on
@@ -38,8 +39,10 @@ public class SingleStateMachine {
     private DeviceId devId;
     private Ip4Address groupIp;
     private Ip4Address srcIp;
+    private boolean firstJoinAcrossDomain = true;
+    private boolean lastLeaveAcrossDomain = true;
 
-    private int count = DEFAULT_COUNT;
+    private AtomicInteger count = new AtomicInteger(DEFAULT_COUNT);
     private int timerId = IgmpTimer.INVALID_TIMER_ID;
     private int timeOut = DEFAULT_MAX_RESP;
     private State[] states =
@@ -63,18 +66,29 @@ public class SingleStateMachine {
         this.srcIp = src;
     }
 
+    public Ip4Address getGroupIp() {
+        return groupIp;
+    }
+
+    public void setFirstJoinAcrossDomain(boolean firstJoinAcrossDomain) {
+        this.firstJoinAcrossDomain = firstJoinAcrossDomain;
+    }
+
+    public void setLastLeaveAcrossDomain(boolean lastLeaveAcrossDomain) {
+        this.lastLeaveAcrossDomain = lastLeaveAcrossDomain;
+    }
 
     public DeviceId getDeviceId() {
         return devId;
     }
     public boolean increaseCounter() {
-        count++;
+        count.incrementAndGet();
         return true;
     }
 
     public boolean decreaseCounter() {
-        if (count > 0) {
-            count--;
+        if (count.get() > 0) {
+            count.decrementAndGet();
             return true;
         } else {
             return false;
@@ -82,7 +96,7 @@ public class SingleStateMachine {
     }
 
     public int getCounter() {
-        return count;
+        return count.get();
     }
     public int currentState() {
         return currentState;
@@ -128,8 +142,10 @@ public class SingleStateMachine {
         }
 
         public void leave() {
-            Ethernet eth = IgmpSender.getInstance().buildIgmpV3Leave(groupIp, srcIp);
-            IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId);
+            if (lastLeaveAcrossDomain) {
+                Ethernet eth = IgmpSender.getInstance().buildIgmpV3Leave(groupIp, srcIp);
+                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId);
+            }
         }
 
         public void query(int maxResp) {
@@ -142,10 +158,12 @@ public class SingleStateMachine {
 
     class NonMember extends State {
         public void join() {
-            Ethernet eth = IgmpSender.getInstance().buildIgmpV3Join(groupIp, srcIp);
-            IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId);
-            timeOut = getTimeOut(IgmpManager.getUnsolicitedTimeout());
-            timerId = IgmpTimer.start(SingleStateMachine.this, timeOut);
+            if (firstJoinAcrossDomain) {
+                Ethernet eth = IgmpSender.getInstance().buildIgmpV3Join(groupIp, srcIp);
+                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId);
+                timeOut = getTimeOut(IgmpManager.getUnsolicitedTimeout());
+                timerId = IgmpTimer.start(SingleStateMachine.this, timeOut);
+            }
         }
     }
 
