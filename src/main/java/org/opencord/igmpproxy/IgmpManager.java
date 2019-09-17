@@ -79,9 +79,13 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.TimerTask;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
+import static org.onlab.util.Tools.groupedThreads;
 
 /**
  * Igmp process application, use proxy mode, support first join/ last leave , fast leave
@@ -116,6 +120,7 @@ public class IgmpManager {
     public static ConnectPoint connectPoint = null;
     private static ConnectPoint sourceDeviceAndPort = null;
     private static boolean enableIgmpProvisioning = false;
+    private static boolean igmpOnPodBasis = false;
 
     private static final Integer MAX_PRIORITY = 10000;
     private static final String INSTALLED = "installed";
@@ -172,6 +177,8 @@ public class IgmpManager {
     private int maxResp = 10; //unit is 1 sec
     private int keepAliveInterval = 120; //unit is 1 sec
 
+    private ExecutorService eventExecutor;
+
     public static int getUnsolicitedTimeout() {
         return unSolicitedTimeout;
     }
@@ -226,6 +233,8 @@ public class IgmpManager {
         }
         deviceService.addListener(deviceListener);
         scheduledExecutorService.scheduleAtFixedRate(new IgmpProxyTimerTask(), 0, 1000, TimeUnit.MILLISECONDS);
+        eventExecutor = newSingleThreadScheduledExecutor(groupedThreads("cord/igmpproxy",
+                                                                        "events-igmp-%d", log));
 
         log.info("Started");
     }
@@ -233,6 +242,7 @@ public class IgmpManager {
     @Deactivate
     protected void deactivate() {
         scheduledExecutorService.shutdown();
+        eventExecutor.shutdown();
 
         // de-register and null our handler
         networkConfig.removeListener(configListener);
@@ -439,8 +449,7 @@ public class IgmpManager {
     private class IgmpPacketProcessor implements PacketProcessor {
         @Override
         public void process(PacketContext context) {
-
-            try {
+            eventExecutor.execute(() -> {
                 InboundPacket pkt = context.inPacket();
                 Ethernet ethPkt = pkt.parsed();
                 if (ethPkt == null) {
@@ -474,8 +483,9 @@ public class IgmpManager {
                             if (isConnectPoint(deviceId, pkt.receivedFrom().port())) {
                                 log.info("IGMP Picked up query from connectPoint");
                                 //OK to process packet
-                                processIgmpConnectPointQuery((IGMPQuery) igmp.getGroups().get(0), pkt.receivedFrom(),
-                                        0xff & igmp.getMaxRespField());
+                                processIgmpConnectPointQuery((IGMPQuery) igmp.getGroups().get(0),
+                                                             pkt.receivedFrom(),
+                                                             0xff & igmp.getMaxRespField());
                                 break;
                             } else {
                                 //Not OK to process packet
@@ -485,7 +495,7 @@ public class IgmpManager {
                         }
 
                         processIgmpQuery((IGMPQuery) igmp.getGroups().get(0), pkt.receivedFrom(),
-                                0xff & igmp.getMaxRespField());
+                                         0xff & igmp.getMaxRespField());
                         break;
                     case IGMP.TYPE_IGMPV1_MEMBERSHIP_REPORT:
                         log.debug("IGMP version 1  message types are not currently supported.");
@@ -505,14 +515,15 @@ public class IgmpManager {
                             IGMPGroup group = itr.next();
                             if (group instanceof IGMPMembership) {
                                 processIgmpReport((IGMPMembership) group, VlanId.vlanId(vlan),
-                                        pkt.receivedFrom(), igmp.getIgmpType());
+                                                  pkt.receivedFrom(), igmp.getIgmpType());
                             } else if (group instanceof IGMPQuery) {
                                 IGMPMembership mgroup;
                                 mgroup = new IGMPMembership(group.getGaddr().getIp4Address());
                                 mgroup.setRecordType(igmp.getIgmpType() == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT ?
-                                        IGMPMembership.MODE_IS_EXCLUDE : IGMPMembership.MODE_IS_INCLUDE);
+                                                             IGMPMembership.MODE_IS_EXCLUDE :
+                                                             IGMPMembership.MODE_IS_INCLUDE);
                                 processIgmpReport(mgroup, VlanId.vlanId(vlan),
-                                        pkt.receivedFrom(), igmp.getIgmpType());
+                                                  pkt.receivedFrom(), igmp.getIgmpType());
                             }
                         }
                         break;
@@ -521,11 +532,7 @@ public class IgmpManager {
                         log.info("wrong IGMP v3 type:" + igmp.getIgmpType());
                         break;
                 }
-
-            } catch (Exception ex) {
-                log.error("igmp process error : {} ", ex);
-                ex.printStackTrace();
-            }
+            });
         }
     }
 
@@ -589,6 +596,10 @@ public class IgmpManager {
         } else {
             return null;
         }
+    }
+
+    public static boolean isIgmpOnPodBasis() {
+        return igmpOnPodBasis;
     }
 
     private void processFilterObjective(DeviceId devId, PortNumber port, boolean remove) {
@@ -728,6 +739,7 @@ public class IgmpManager {
             fastLeave = newCfg.fastLeave();
             pimSSmInterworking = newCfg.pimSsmInterworking();
             enableIgmpProvisioning = newCfg.enableIgmpProvisioning();
+            igmpOnPodBasis = newCfg.igmpOnPodBasis();
 
             if (connectPointMode != newCfg.connectPointMode() ||
                     connectPoint != newCfg.connectPoint()) {

@@ -38,6 +38,7 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     private static final Boolean DEFAULT_CONNECT_POINT_MODE = true;
     private static final Boolean DEFAULT_PIMSSM_INTERWORKING = false;
     private static final Boolean DEFAULT_IGMP_PROVISIONING_SUPPORT = Boolean.FALSE;
+    private static final Boolean DEFAULT_IGMP_ON_POD_BASIS = Boolean.FALSE;
 
     protected static final String CONNECT_POINT_MODE = "globalConnectPointMode";
     protected static final String CONNECT_POINT = "globalConnectPoint";
@@ -55,7 +56,7 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     private static final String PIMSSM_INTERWORKING = "pimSSmInterworking";
     private static final String SOURCE_DEV_PORT = "sourceDeviceAndPort";
     private static final String ENABLE_IGMP_PROVISIONING = "enableIgmpProvisioning";
-
+    private static final String IGMP_ON_POD_BASIS = "igmpOnPodBasis";
 
     /**
      * Gets the value of a string property, protecting for an empty
@@ -204,5 +205,13 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
         }
         return Boolean.parseBoolean(getStringProperty(ENABLE_IGMP_PROVISIONING,
                                                       DEFAULT_IGMP_PROVISIONING_SUPPORT.toString()));
+    }
+
+    public boolean igmpOnPodBasis() {
+        if (object == null || object.path(IGMP_ON_POD_BASIS) == null) {
+            return DEFAULT_IGMP_ON_POD_BASIS;
+        }
+        return Boolean.parseBoolean(getStringProperty(IGMP_ON_POD_BASIS,
+                                                      DEFAULT_IGMP_ON_POD_BASIS.toString()));
     }
 }
