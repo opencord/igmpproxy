@@ -20,19 +20,27 @@ import org.onlab.packet.Ip4Address;
 import org.onosproject.net.DeviceId;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * State machine for whole IGMP process. The state machine is implemented on
  * RFC 2236 "6. Host State Diagram".
  */
 public final class StateMachine {
+
+    private static final String GROUP = "Group";
+    // locks to synchronize concurrent join and leave operations
+    private static final Lock JOIN_LOCK = new ReentrantLock();
+    private static final Lock LEAVE_LOCK = new ReentrantLock();
+
     private StateMachine() {
 
     }
     private static Map<String, SingleStateMachine> map = Maps.newConcurrentMap();
 
     private static String getId(DeviceId devId, Ip4Address groupIp) {
-        return devId.toString() + "Group" + groupIp.toString();
+        return devId.toString() + GROUP + groupIp.toString();
     }
 
     private static SingleStateMachine get(DeviceId devId, Ip4Address groupIp) {
@@ -40,7 +48,7 @@ public final class StateMachine {
         return map.get(id);
     }
 
-    public static void destorySingle(DeviceId devId, Ip4Address groupIp) {
+    public static void destroySingle(DeviceId devId, Ip4Address groupIp) {
         SingleStateMachine machine = get(devId, groupIp);
         if (null == machine) {
             return;
@@ -51,11 +59,36 @@ public final class StateMachine {
 
     public static boolean join(DeviceId devId, Ip4Address groupIp, Ip4Address srcIP) {
         SingleStateMachine machine = get(devId, groupIp);
-        if (null == machine) {
-            machine = new SingleStateMachine(devId, groupIp, srcIP);
-            map.put(getId(devId, groupIp), machine);
-            machine.join();
-            return true;
+
+        if (machine == null) {
+            // use lock to synchronize consecutive threads
+            // to make sure that the machine instance is created only once
+            JOIN_LOCK.lock();
+            try {
+                machine = get(devId, groupIp);
+                // check if a machine instance has not been created yet by the preceding thread.
+                // if so, increase the counter and return.
+                if (machine != null) {
+                    machine.increaseCounter();
+                    return false;
+                }
+
+                machine = new SingleStateMachine(devId, groupIp, srcIP);
+                map.put(getId(devId, groupIp), machine);
+
+                if (IgmpManager.isIgmpOnPodBasis() &&
+                        groupListenedByOtherDevices(devId, groupIp)) {
+                    // unset this flag if igmp messages are evaluated on POD basis
+                    // and there are already active members of this group
+                    // across the entire POD
+                    machine.setFirstJoinAcrossDomain(false);
+                }
+                machine.join();
+                return true;
+
+            } finally {
+                JOIN_LOCK.unlock();
+            }
         }
         machine.increaseCounter();
         return false;
@@ -63,15 +96,32 @@ public final class StateMachine {
 
     public static boolean leave(DeviceId devId, Ip4Address groupIp) {
         SingleStateMachine machine = get(devId, groupIp);
-        if (null == machine) {
-            return false;
-        }
-        machine.decreaseCounter();
 
-        if (machine.getCounter() == 0) {
-            machine.leave();
-            destorySingle(devId, groupIp);
-            return true;
+        if (machine != null) {
+            LEAVE_LOCK.lock();
+            try {
+                machine.decreaseCounter();
+                // make sure machine instance still exists.
+                // it may be removed by the preceding thread
+                if (get(devId, groupIp) != null) {
+                    if (machine.getCounter() == 0) {
+                        if (IgmpManager.isIgmpOnPodBasis() &&
+                                groupListenedByOtherDevices(devId, groupIp)) {
+                            // unset this flag if igmp messages are evaluated on POD basis
+                            // and there are still active members of this group
+                            // across the entire POD
+                            machine.setLastLeaveAcrossDomain(false);
+                        } else {
+                            machine.setLastLeaveAcrossDomain(true);
+                        }
+                        machine.leave();
+                        destroySingle(devId, groupIp);
+                        return true;
+                    }
+                }
+            } finally {
+                LEAVE_LOCK.unlock();
+            }
         }
         return false;
     }
@@ -114,6 +164,25 @@ public final class StateMachine {
 
     public static void clearMap() {
         map.clear();
+    }
+
+    /**
+     * @param devId   id of the device being excluded
+     * @param groupIp group IP address
+     * @return true if this group has at least one listener connected to
+     * any device in the map except for the device specified; false otherwise.
+     */
+    private static boolean groupListenedByOtherDevices(DeviceId devId, Ip4Address groupIp) {
+        for (SingleStateMachine machine : map.values()) {
+            if (machine.getDeviceId().equals(devId)) {
+                continue;
+            }
+            if (machine.getGroupIp().equals(groupIp)) {
+                //means group is being listened by other peers in the domain
+                return true;
+            }
+        }
+        return false;
     }
 
 }

@@ -116,6 +116,7 @@ public class IgmpManager {
     public static ConnectPoint connectPoint = null;
     private static ConnectPoint sourceDeviceAndPort = null;
     private static boolean enableIgmpProvisioning = false;
+    private static boolean igmpOnPodBasis = false;
 
     private static final Integer MAX_PRIORITY = 10000;
     private static final String INSTALLED = "installed";
@@ -591,6 +592,10 @@ public class IgmpManager {
         }
     }
 
+    public static boolean isIgmpOnPodBasis() {
+        return igmpOnPodBasis;
+    }
+
     private void processFilterObjective(DeviceId devId, PortNumber port, boolean remove) {
         if (!enableIgmpProvisioning) {
             log.debug("IGMP trap rules won't be installed since enableIgmpProvisioning flag is not set");
@@ -728,6 +733,7 @@ public class IgmpManager {
             fastLeave = newCfg.fastLeave();
             pimSSmInterworking = newCfg.pimSsmInterworking();
             enableIgmpProvisioning = newCfg.enableIgmpProvisioning();
+            igmpOnPodBasis = newCfg.igmpOnPodBasis();
 
             if (connectPointMode != newCfg.connectPointMode() ||
                     connectPoint != newCfg.connectPoint()) {
