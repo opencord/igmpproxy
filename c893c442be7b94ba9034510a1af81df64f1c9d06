@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f91ddd9_2d8822a7",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-30T09:04:00Z",
+      "side": 1,
+      "message": "see my comment on StateMachine. We should probably verify if there was a change or not",
+      "range": {
+        "startLine": 736,
+        "startChar": 12,
+        "endLine": 736,
+        "endChar": 26
+      },
+      "revId": "c893c442be7b94ba9034510a1af81df64f1c9d06",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e59c6713_e7dac26a",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-30T09:04:00Z",
+      "side": 1,
+      "message": "We need a method to reset the state machines when we change the new cfg option. What do you think ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "c893c442be7b94ba9034510a1af81df64f1c9d06",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca2d20ee_ea5ced4b",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-30T09:04:00Z",
+      "side": 1,
+      "message": "Why do you need these locks for join and leave ? Is this to be sure that just one packet will be sent ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 63
+      },
+      "revId": "c893c442be7b94ba9034510a1af81df64f1c9d06",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c43387b_ebf841c9",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-30T09:04:00Z",
+      "side": 1,
+      "message": "why do you need to perform it multiple times ? Is this a leftover ?",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 9
+      },
+      "revId": "c893c442be7b94ba9034510a1af81df64f1c9d06",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c055be3_e7c00484",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-09-30T09:04:00Z",
+      "side": 1,
+      "message": "destroy ?",
+      "range": {
+        "startLine": 112,
+        "startChar": 16,
+        "endLine": 112,
+        "endChar": 29
+      },
+      "revId": "c893c442be7b94ba9034510a1af81df64f1c9d06",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
