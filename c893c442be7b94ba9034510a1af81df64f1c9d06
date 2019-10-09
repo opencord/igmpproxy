@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "97bdd001_62f1addd",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-10-09T20:59:35Z",
+      "side": 1,
+      "message": "Maybe we will not change the config very often but imagine this case. IgmpOnPodBasis is true, you will receive the first join and you forward - ok. You receive the second join and you don\u0027t forward and set to false firstJoinAcrossDomain. Now I change the config to set IgmpOnPodBasis on false.\n\nI do believe that you need a way to reset the internal variables firstJoin and lastLeave otherwise you will not forward the packets accordingly.",
+      "parentUuid": "deba7eaf_9ad74b3c",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "c893c442be7b94ba9034510a1af81df64f1c9d06",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2d20ee_ea5ced4b",
         "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
         "patchSetId": 3
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "To resolve concurrency issues that may occur when consecutive IGMP join/leave requests are received.",
       "parentUuid": "ca2d20ee_ea5ced4b",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 63
+      },
+      "revId": "c893c442be7b94ba9034510a1af81df64f1c9d06",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "42c104a7_939c5f1c",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-10-09T20:59:35Z",
+      "side": 1,
+      "message": "I guess you can have this problem if you receive packets related to the same group from different devices, right ?\n\nPerhaps if you implement the suggestion I made in the IGMPManager you will not need anymore these locks. Right ?",
+      "parentUuid": "8a790ae2_9cd2e590",
       "range": {
         "startLine": 34,
         "startChar": 0,
