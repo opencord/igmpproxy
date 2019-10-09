@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21e25c49_10a10e6d",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-10-09T20:59:35Z",
+      "side": 1,
+      "message": "I would offload this part to an external executor. Right now is processed by the OF dispatcher which is not a good idea.",
+      "range": {
+        "startLine": 442,
+        "startChar": 20,
+        "endLine": 442,
+        "endChar": 27
+      },
+      "revId": "402b66059823313ec360dec688561810ddcda177",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28ca8e43_548e5316",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-10-09T20:59:35Z",
+      "side": 1,
+      "message": "There is something mysterious in this code that I still don\u0027t understand. To me this code can be simplified and there are operation performed multiple times.",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "402b66059823313ec360dec688561810ddcda177",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a1e60d45_6dd205ac",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-10-09T20:59:35Z",
+      "side": 1,
+      "message": "Also here, why don\u0027t you take the lock at the beginning ?",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "402b66059823313ec360dec688561810ddcda177",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
