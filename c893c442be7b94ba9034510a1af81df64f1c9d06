@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0b8fc584_29126b3f",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2019-10-19T12:39:25Z",
+      "side": 1,
+      "message": "In case you change the config to set igmpOnPodBasis to false, we still do not need to reset these variables since we don\u0027t use this flag any more since once a user has received a Join, the state of the machine evolves to Leave state. We do not expect a join in this state so do not need the value of this variable anymore. \n\nWell at the beginning I thought of these variables for temporary usage; I mean just to use before sending join\nand leave messages. I will change the methodology so that we won\u0027t have to need any internal variables any more. It seems more straightforward ve simple.",
+      "parentUuid": "97bdd001_62f1addd",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 31
+      },
+      "revId": "c893c442be7b94ba9034510a1af81df64f1c9d06",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2d20ee_ea5ced4b",
         "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
         "patchSetId": 3
