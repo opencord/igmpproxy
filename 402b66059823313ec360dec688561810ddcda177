@@ -68,6 +68,30 @@
       "revId": "402b66059823313ec360dec688561810ddcda177",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8ee7f39e_5fc5f75f",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2019-10-19T12:39:25Z",
+      "side": 1,
+      "message": "I thought it is not necessary to acquire the lock for a leave message that has not any machine instance.",
+      "parentUuid": "a1e60d45_6dd205ac",
+      "range": {
+        "startLine": 101,
+        "startChar": 12,
+        "endLine": 101,
+        "endChar": 22
+      },
+      "revId": "402b66059823313ec360dec688561810ddcda177",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
