@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "4bd52af6_cabdfd82",
+        "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2019-10-19T13:25:25Z",
+      "side": 1,
+      "message": "I checked the existence of the machine instance twice; before and after the lock acquisition. I needed these redundancy checks to handle the case where two threads attempt to acquire the lock at the same time. In this case, the first one which acquires the lock creates the machine instance; In the meanwhile, the other thread is waiting for the lock to be released. When the second thread acquires the lock, it will create a new machine instance if I do not check the existence of the machine again. So the join counter will be reset to 1 also. \n\nI think I should remove these concurrency improvements from the patch since it is not in the scope of the task. We can think of these issues in the scope of another task.",
+      "parentUuid": "28ca8e43_548e5316",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 5
+      },
+      "revId": "402b66059823313ec360dec688561810ddcda177",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1e60d45_6dd205ac",
         "filename": "src/main/java/org/opencord/igmpproxy/StateMachine.java",
         "patchSetId": 4
