@@ -53,6 +53,8 @@
             <groupId>org.onosproject</groupId>
             <artifactId>onos-api</artifactId>
             <version>${onos.version}</version>
+            <scope>test</scope>
+            <classifier>tests</classifier>
         </dependency>
 
         <dependency>
@@ -103,6 +105,7 @@
             <artifactId>onos-apps-mcast-api</artifactId>
             <version>${onos.version}</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -199,3 +202,4 @@
         </repository>
     </repositories>
 </project>
+
