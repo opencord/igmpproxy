@@ -52,6 +52,7 @@
             <artifactId>onos-api</artifactId>
             <version>${onos.version}</version>
             <scope>provided</scope>
+            <classifier>tests</classifier>
         </dependency>
 
         <dependency>

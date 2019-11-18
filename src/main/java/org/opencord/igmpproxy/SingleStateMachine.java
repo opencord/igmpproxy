@@ -27,6 +27,9 @@ import java.util.concurrent.atomic.AtomicInteger;
  * RFC 2236 "6. Host State Diagram".
  */
 public class SingleStateMachine {
+    // Only for tests purposes
+    static boolean sendQuery = true;
+
     static final int STATE_NON = 0;
     static final int STATE_DELAY = 1;
     static final int STATE_IDLE = 2;
@@ -166,9 +169,11 @@ public class SingleStateMachine {
         }
 
         public void timeOut() {
-            Ethernet eth = IgmpSender.getInstance().buildIgmpV3ResponseQuery(groupIp, srcIp);
-            IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId);
-            timeOut = DEFAULT_MAX_RESP;
+            if (sendQuery) {
+                Ethernet eth = IgmpSender.getInstance().buildIgmpV3ResponseQuery(groupIp, srcIp);
+                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId);
+                timeOut = DEFAULT_MAX_RESP;
+            }
         }
 
     }
