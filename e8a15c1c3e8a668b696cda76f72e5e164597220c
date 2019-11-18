@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ded43ab_68ea5a58",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "Let\u0027s create a IgmpManagerBase class where we move all the declarations of the mocks and other things. Keep here just the tests",
+      "range": {
+        "startLine": 51,
+        "startChar": 13,
+        "endLine": 51,
+        "endChar": 28
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33ba4903_f8559fe9",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "this should be removed - we should have references inside the MockPacketService not here. Also - do you plan to emulate the receiving of a packet ?",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "358a5b35_d02305e5",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "why do you need this ? I believe you can remove it",
+      "range": {
+        "startLine": 55,
+        "startChar": 8,
+        "endLine": 74,
+        "endChar": 10
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d06f049f_42f9af1a",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "At the moment you are not providing any implementation - I guess you can remove it and uses just the adapter",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 9
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd2a4d55_b0a44b18",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "not clear this logic - I would have a list of packet processors inside the mock. I believe there are a lot of example in the onos code base",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 17
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50c434f5_74367aff",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "Are you using it ?",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 9
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33a6e4e7_f15f44f5",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "This does not provide any implementation you can remove it",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 101,
+        "endChar": 9
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "671e7927_1e10b362",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "where are you using it ?",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 17
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd8ebd08_33fd2f6b",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "please move inside the new base class",
+      "range": {
+        "startLine": 113,
+        "startChar": 20,
+        "endLine": 113,
+        "endChar": 45
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f79db88a_b1d8cf65",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "can you remove these ?",
+      "range": {
+        "startLine": 234,
+        "startChar": 0,
+        "endLine": 277,
+        "endChar": 9
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5eacdc53_653b9e8b",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "please use //",
+      "range": {
+        "startLine": 313,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 11
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a40fbb80_ca327918",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "ok but we need to test also changing its value",
+      "range": {
+        "startLine": 316,
+        "startChar": 0,
+        "endLine": 320,
+        "endChar": 9
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00991ef9_c1fe0999",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "The message is not very clear and please use // - we don\u0027t need javadoc",
+      "range": {
+        "startLine": 322,
+        "startChar": 0,
+        "endLine": 326,
+        "endChar": 11
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36c8298a_6310ff62",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-11-18T15:22:07Z",
+      "side": 1,
+      "message": "not clear what you are testing here - it seems to me you are just verifying what the StateMachine is returning. We need tests that verify the behaviors when IgmpOnPodBasis is true and false.",
+      "range": {
+        "startLine": 328,
+        "startChar": 0,
+        "endLine": 346,
+        "endChar": 9
+      },
+      "revId": "e8a15c1c3e8a668b696cda76f72e5e164597220c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
