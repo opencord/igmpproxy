@@ -232,7 +232,7 @@ public class IgmpManager {
             IgmpSender.getInstance().setMvlan(mvlan);
         }
         deviceService.addListener(deviceListener);
-        scheduledExecutorService.scheduleAtFixedRate(new IgmpProxyTimerTask(), 0, 1000, TimeUnit.MILLISECONDS);
+        scheduledExecutorService.scheduleAtFixedRate(new IgmpProxyTimerTask(), 1000, 1000, TimeUnit.MILLISECONDS);
         eventExecutor = newSingleThreadScheduledExecutor(groupedThreads("cord/igmpproxy",
                                                                         "events-igmp-%d", log));
 
@@ -474,7 +474,6 @@ public class IgmpManager {
                     log.error("Device not registered in netcfg :" + deviceId.toString());
                     return;
                 }
-
                 IGMP igmp = (IGMP) ipv4Pkt.getPayload();
                 switch (igmp.getIgmpType()) {
                     case IGMP.TYPE_IGMPV3_MEMBERSHIP_QUERY:
