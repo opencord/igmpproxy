@@ -45,6 +45,7 @@
             org.onosproject.mcast
         </onos.app.requires>
         <cord.config.version>1.4.0</cord.config.version>
+        <powermock.version>2.0.2</powermock.version>
     </properties>
 
 
@@ -53,6 +54,8 @@
             <groupId>org.onosproject</groupId>
             <artifactId>onos-api</artifactId>
             <version>${onos.version}</version>
+            <scope>test</scope>
+            <classifier>tests</classifier>
         </dependency>
 
         <dependency>
@@ -102,6 +105,27 @@
             <groupId>org.onosproject</groupId>
             <artifactId>onos-apps-mcast-api</artifactId>
             <version>${onos.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.easymock</groupId>
+            <artifactId>easymock</artifactId>
+            <version>3.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-module-junit4</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.powermock</groupId>
+            <artifactId>powermock-api-easymock</artifactId>
+            <version>${powermock.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -199,3 +223,4 @@
         </repository>
     </repositories>
 </project>
+
