@@ -93,7 +93,6 @@ import static org.onlab.util.Tools.groupedThreads;
  */
 @Component(immediate = true)
 public class IgmpManager {
-
     private static final Class<AccessDeviceConfig> CONFIG_CLASS =
             AccessDeviceConfig.class;
     private static final Class<IgmpproxyConfig> IGMPPROXY_CONFIG_CLASS =
@@ -474,7 +473,6 @@ public class IgmpManager {
                     log.error("Device not registered in netcfg :" + deviceId.toString());
                     return;
                 }
-
                 IGMP igmp = (IGMP) ipv4Pkt.getPayload();
                 switch (igmp.getIgmpType()) {
                     case IGMP.TYPE_IGMPV3_MEMBERSHIP_QUERY:
@@ -543,6 +541,7 @@ public class IgmpManager {
                 queryMembers();
             } catch (Exception ex) {
                 log.warn("Igmp timer task error : {}", ex.getMessage());
+                ex.printStackTrace();
             }
         }
 
