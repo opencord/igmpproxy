@@ -1,0 +1,464 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9636c7c7_ae5821ae",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "Did we cut a new version ? I guess there is a bug in the verify job - we have to check with Zack",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 31,
+        "endChar": 27
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9a5dca4b_3e67af99",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "please remove",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 3
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c9db405a_83057d99",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "what is the role of these flags ? Please add some comments to help reviewers understand your code",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e82b71b_fbeed46f",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "these are constants",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 24
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "58adb90b_a33bd87c",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "You can move inside the MockPacketService - the code will be better organized",
+      "range": {
+        "startLine": 86,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 59
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b315dc6a_7e7d39c9",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "You don\u0027t need this - just do it inside emit. Also do not mix java docs and comments",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 5
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d43816a7_0bf7ed6b",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "for the purpose of the test I believe you need just to add to the list and that\u0027s it - savePacket code",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 31
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0356c544_407a1558",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "Can we move this init at the beginning ? I believe most of the objects are constants",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 31
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec330b50_3d0da93c",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "please move these near the factory",
+      "range": {
+        "startLine": 297,
+        "startChar": 0,
+        "endLine": 309,
+        "endChar": 5
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a3b2622_2ca0d2e4",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 311,
+        "startChar": 17,
+        "endLine": 311,
+        "endChar": 39
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dc3705e6_deaf70e4",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "java doc or comments - no half way",
+      "range": {
+        "startLine": 375,
+        "startChar": 0,
+        "endLine": 377,
+        "endChar": 35
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c90ed4ec_0c26f5ed",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "Are these necessary here ? I believe this can be initialized as constant",
+      "range": {
+        "startLine": 58,
+        "startChar": 0,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89e36475_d289fbdc",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "I believe in ICMPHandlerTest you can find an easier way to get this. I believe that you don\u0027t need to resort to easy mock to achieve this",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 44
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0511cc4_de697d2b",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "here you are mocking the return value. I believe that here you can just do this for the purpose of the test:\n\n        assertEquals(IgmpManager.isIgmpOnPodBasis(), false);",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 60
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "930255e0_a224dbfb",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "same here. Since you have realized the mock of the netcfg registry. You should apply the config and then do assertEquals. See ICMPHandlerTest.java in SegmentRouting application",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 59
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec3b02ac_43e56626",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "We should test also when the isIgmpOnPodBasis is false",
+      "range": {
+        "startLine": 114,
+        "startChar": 16,
+        "endLine": 114,
+        "endChar": 40
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b64aa02_a6e5525f",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "I was thinking that it can be just a reference and not a list",
+      "range": {
+        "startLine": 139,
+        "startChar": 22,
+        "endLine": 139,
+        "endChar": 34
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8b02ffc4_08c43f9c",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "this check is very brittle - you can get the device from the outbound packet and the port from the traffic treatment",
+      "range": {
+        "startLine": 148,
+        "startChar": 8,
+        "endLine": 148,
+        "endChar": 98
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed65a8ac_4c234c8c",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "probably here you can simplify a bit if you remove the list - since no changes are expected if the configuration isIgmpOnPodBasis is true",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 157,
+        "endChar": 70
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b2e0797_895981d2",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-05T22:43:16Z",
+      "side": 1,
+      "message": "I would improve this check",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 50
+      },
+      "revId": "f4edd468742334773926fa007a70ce08cb9183f9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
