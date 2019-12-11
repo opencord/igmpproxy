@@ -1,0 +1,14 @@
+{
+  "org.opencord.igmpproxy": {
+    "igmpproxy": {
+      "FastLeave": "true",
+      "LastQueryInterval": 1,
+      "MaxResp": 1,
+      "globalConnectPointMode": "true",
+      "globalConnectPoint": "of:00000a0a0a0a0a00/1048576",
+      "enableIgmpProvisioning": "true",
+      "sourceDeviceAndPort": "of:00000a0a0a0a0a00/1048576",
+      "igmpOnPodBasis": "false"
+    }
+  }
+}

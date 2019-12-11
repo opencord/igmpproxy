@@ -1,0 +1,13 @@
+{
+  "devices": {
+    "of:00000a0a0a0a0a00": {
+      "basic": {
+        "driver": "voltha"
+      },
+      "accessDevice": {
+        "uplink": 1048576,
+        "vlan": 0
+      }
+    }
+  }
+}
