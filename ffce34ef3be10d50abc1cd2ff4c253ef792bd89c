@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e608a56a_ba6e1d99",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000554
+      },
+      "writtenOn": "2019-12-12T10:54:41Z",
+      "side": 1,
+      "message": "1. Added the 2 tests, facing some issue because of that.\n2. Have removed easy mock from setup and have overridden the methods in Mock Class.",
+      "parentUuid": "c1248d42_1a5b6277",
+      "range": {
+        "startLine": 49,
+        "startChar": 13,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "ffce34ef3be10d50abc1cd2ff4c253ef792bd89c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82822f8a_aeb34ed0",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-11T11:51:10Z",
       "side": 1,
       "message": "why do you need this ?",
+      "range": {
+        "startLine": 171,
+        "startChar": 0,
+        "endLine": 171,
+        "endChar": 51
+      },
+      "revId": "ffce34ef3be10d50abc1cd2ff4c253ef792bd89c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "00e32b4b_bc3c4db1",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000554
+      },
+      "writtenOn": "2019-12-12T10:54:41Z",
+      "side": 1,
+      "message": "This is to differentiate between the two outbound packets and to assert the packet based on connect point.",
+      "parentUuid": "82822f8a_aeb34ed0",
       "range": {
         "startLine": 171,
         "startChar": 0,
