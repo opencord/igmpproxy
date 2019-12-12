@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a32dcba_64f83881",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "Add the constructor - and pass a boolean value through which you can influence the return for igmpproxyconfig",
+      "range": {
+        "startLine": 203,
+        "startChar": 11,
+        "endLine": 203,
+        "endChar": 75
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a6145e2_171dfa74",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "You can remove this",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 92
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ee318115_bcf185a0",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "You can move this inside the tests and pass the boolean to TestNetworkConfigRegistry",
+      "range": {
+        "startLine": 65,
+        "startChar": 8,
+        "endLine": 67,
+        "endChar": 31
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08dc309b_f859d7a6",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "I do believe you don\u0027t need anymore these expect",
+      "range": {
+        "startLine": 89,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 20
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac17ea12_aa91fb80",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "I believe this is needed for the connectPointMode which is the uplink of the ASG. \n\nInstead according to the test you wrote, this connect point is the uplink of the OLT 1. You are making confusion. \n\nSince you have provided the oltData this info is not needed",
+      "range": {
+        "startLine": 97,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 51
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fd0e2180_fb0aca99",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "wait with a timeout",
+      "range": {
+        "startLine": 119,
+        "startChar": 25,
+        "endLine": 119,
+        "endChar": 29
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f52cec1d_61ca593c",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "I guess you can check \u003d\u003d 2 ?",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 44
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "912b4e36_78aad99a",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "better to test this at the beginning",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 60
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b0b39f4_ea728ab4",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "Same comment above",
+      "range": {
+        "startLine": 139,
+        "startChar": 8,
+        "endLine": 153,
+        "endChar": 20
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "185da267_42b1144a",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "same comments above",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "990f6692_556c1d12",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "wait with timeout",
+      "range": {
+        "startLine": 161,
+        "startChar": 25,
+        "endLine": 161,
+        "endChar": 29
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "908807a7_b3b088af",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2019-12-12T12:33:55Z",
+      "side": 1,
+      "message": "add after a wait with timeout",
+      "range": {
+        "startLine": 165,
+        "startChar": 8,
+        "endLine": 165,
+        "endChar": 18
+      },
+      "revId": "7842d25ca2f44baf1278f33978d2760a2cbf23a4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
