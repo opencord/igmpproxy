@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f67f406_fed2d398",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24b67519_87a801d1",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 90
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1790b87_52d9f182",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2019-12-17T08:28:47Z",
       "side": 1,
       "message": "I believe there is a confusion here - I will follow up by email",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 9
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03445683_f78e05e7",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1790b87_52d9f182",
       "range": {
         "startLine": 159,
         "startChar": 0,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "c636faa1_2a21baff",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb247c77_d20e1c64",
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ec2c1e8_8623dd61",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
         "patchSetId": 7
@@ -76,6 +142,30 @@
       "writtenOn": "2019-12-17T08:28:47Z",
       "side": 1,
       "message": "why 2 configs are needed ? In theory you don\u0027t need two configs",
+      "range": {
+        "startLine": 168,
+        "startChar": 10,
+        "endLine": 168,
+        "endChar": 44
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "99dcb33e_fdded9e2",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Removed the config, there is only one config file",
+      "parentUuid": "3ec2c1e8_8623dd61",
       "range": {
         "startLine": 168,
         "startChar": 10,
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "ae7ea398_5ab55adb",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca371c10_57e61d4b",
+      "range": {
+        "startLine": 181,
+        "startChar": 14,
+        "endLine": 181,
+        "endChar": 72
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06bdebbd_aace0b6a",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
         "patchSetId": 7
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "ed6fcd56_f09e5ee9",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06bdebbd_aace0b6a",
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb31526b_2ae0ecb5",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
         "patchSetId": 7
@@ -139,6 +271,30 @@
       "writtenOn": "2019-12-17T08:28:47Z",
       "side": 1,
       "message": "if a boolean is too limited - you can use an integer",
+      "range": {
+        "startLine": 232,
+        "startChar": 43,
+        "endLine": 232,
+        "endChar": 51
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2d7ab473_0dff2879",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Used boolean value only, as we are just using it for igmpOnPodBasisFlag value",
+      "parentUuid": "cb31526b_2ae0ecb5",
       "range": {
         "startLine": 232,
         "startChar": 43,
@@ -174,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "5abcf8ad_b5e16b8a",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "We are passing the same boolean flag used in TestNetworkConfigRegistry to set the value of igmpOnPodBasis in MockIgmpProxyConfig",
+      "parentUuid": "011693fb_1f5affbb",
+      "range": {
+        "startLine": 240,
+        "startChar": 74,
+        "endLine": 240,
+        "endChar": 80
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fa27b90_57a1b2d5",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
         "patchSetId": 7
@@ -185,6 +365,30 @@
       "writtenOn": "2019-12-17T08:28:47Z",
       "side": 1,
       "message": "Also this thing is very weird - you are mixing connect point mode with olt uplink mode. From the configuration, it seems you have two olts but the connect point mode is meant to send packet out on the ASG uplink",
+      "range": {
+        "startLine": 274,
+        "startChar": 4,
+        "endLine": 288,
+        "endChar": 5
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df2f26e3_eee24f9e",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "1fa27b90_57a1b2d5",
       "range": {
         "startLine": 274,
         "startChar": 4,
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "8343e6c7_89c7a8d8",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "We are sending packets from two different sources with same group ip address that\u0027s why we are using two different connect point",
+      "parentUuid": "548f6fa1_86cb4bbc",
+      "range": {
+        "startLine": 454,
+        "startChar": 75,
+        "endLine": 454,
+        "endChar": 78
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9b89170_a0aea016",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
         "patchSetId": 7
@@ -231,6 +459,30 @@
       "writtenOn": "2019-12-17T08:28:47Z",
       "side": 1,
       "message": "why you need this long wait ? in theory you should wait at most 3s. For the purpose of the test - we can change the timeout value (you have to make package private the constants and then you can set them from the tests)",
+      "range": {
+        "startLine": 86,
+        "startChar": 30,
+        "endLine": 86,
+        "endChar": 35
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6fb48498_ebe89c76",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Removed and used only wait() and notify() for synchronization.",
+      "parentUuid": "c9b89170_a0aea016",
       "range": {
         "startLine": 86,
         "startChar": 30,
@@ -266,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "e18eb3e0_92070916",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e15e2901_d5378bfb",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 72
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98856980_1ea5491d",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
         "patchSetId": 7
@@ -277,6 +553,30 @@
       "writtenOn": "2019-12-17T08:28:47Z",
       "side": 1,
       "message": "why this ? This does not make sense",
+      "range": {
+        "startLine": 115,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 64
+      },
+      "revId": "856866b76677c7b4baa49a8edf4ad7938c99a491",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a600ef4_c0903a4b",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000649
+      },
+      "writtenOn": "2019-12-19T12:23:46Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "98856980_1ea5491d",
       "range": {
         "startLine": 115,
         "startChar": 8,
