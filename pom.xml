@@ -22,7 +22,7 @@
     <parent>
         <groupId>org.onosproject</groupId>
         <artifactId>onos-dependencies</artifactId>
-        <version>1.13.9-rc4</version>
+        <version>1.13.10-rc2</version>
         <relativePath></relativePath>
     </parent>
 
@@ -35,7 +35,7 @@
 
     <properties>
         <onos.app.name>org.opencord.igmpproxy</onos.app.name>
-        <onos.version>1.13.9-rc4</onos.version>
+        <onos.version>1.13.10-rc2</onos.version>
         <onos.app.category>Traffic Steering</onos.app.category>
         <onos.app.title>IGMP proxy app</onos.app.title>
         <onos.app.url>http://opencord.org</onos.app.url>
@@ -44,7 +44,7 @@
             org.opencord.config,
             org.onosproject.mcast
         </onos.app.requires>
-        <cord.config.version>1.4.0</cord.config.version>
+        <cord.config.version>1.5.0-SNAPSHOT</cord.config.version>
     </properties>
 
 
@@ -146,7 +146,6 @@
             <plugin>
                 <groupId>org.onosproject</groupId>
                 <artifactId>onos-maven-plugin</artifactId>
-                <version>1.11</version>
                 <executions>
                     <execution>
                         <id>cfg</id>
@@ -178,7 +177,7 @@
         <repository>
             <id>central</id>
             <name>Central Repository</name>
-            <url>http://repo.maven.apache.org/maven2</url>
+            <url>https://repo.maven.apache.org/maven2</url>
             <layout>default</layout>
             <snapshots>
                 <enabled>false</enabled>
