@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "e3d2fa09_b6f3b937",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000381
+      },
+      "writtenOn": "2020-02-12T22:58:43Z",
+      "side": 1,
+      "message": "oltData.containsKey(device) is implicit in the implementation of getDeviceUplink() so it can be removed",
+      "range": {
+        "startLine": 649,
+        "startChar": 39,
+        "endLine": 649,
+        "endChar": 66
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "690a1a86_002a9d21",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1000381
+      },
+      "writtenOn": "2020-02-12T22:58:43Z",
+      "side": 1,
+      "message": "I think you should check that getDeviceUplink(device) returns a port that is equal  to the  given one (method parameter)",
+      "range": {
+        "startLine": 648,
+        "startChar": 0,
+        "endLine": 651,
+        "endChar": 5
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50232991_e6d06737",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
@@ -41,6 +87,29 @@
         "startChar": 23,
         "endLine": 789,
         "endChar": 74
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7ba2589_72d59e8d",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000381
+      },
+      "writtenOn": "2020-02-12T22:58:43Z",
+      "side": 1,
+      "message": "p.element().id() should return a DeviceId, so there should be no need of converting to string and parsing the result into a new device ID object. You might need to cast p.element() into a Device first.",
+      "range": {
+        "startLine": 832,
+        "startChar": 65,
+        "endLine": 832,
+        "endChar": 81
       },
       "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
