@@ -17,6 +17,10 @@ package org.opencord.igmpproxy;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import org.onosproject.net.Device;
+import org.opencord.sadis.BaseInformationService;
+import org.opencord.sadis.SadisService;
+import org.opencord.sadis.SubscriberAndDeviceInformation;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -64,8 +68,6 @@ import org.onosproject.net.packet.InboundPacket;
 import org.onosproject.net.packet.PacketContext;
 import org.onosproject.net.packet.PacketProcessor;
 import org.onosproject.net.packet.PacketService;
-import org.opencord.cordconfig.access.AccessDeviceConfig;
-import org.opencord.cordconfig.access.AccessDeviceData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,8 +96,8 @@ import static org.onlab.util.Tools.groupedThreads;
 @Component(immediate = true)
 public class IgmpManager {
 
-    private static final Class<AccessDeviceConfig> CONFIG_CLASS =
-            AccessDeviceConfig.class;
+    private static final String APP_NAME = "org.opencord.igmpproxy";
+
     private static final Class<IgmpproxyConfig> IGMPPROXY_CONFIG_CLASS =
             IgmpproxyConfig.class;
     private static final Class<IgmpproxySsmTranslateConfig> IGMPPROXY_SSM_CONFIG_CLASS =
@@ -105,7 +107,7 @@ public class IgmpManager {
 
     public static Map<String, GroupMember> groupMemberMap = Maps.newConcurrentMap();
     private static ApplicationId appId;
-    private static Map<DeviceId, AccessDeviceData> oltData = new ConcurrentHashMap<>();
+
     private static int unSolicitedTimeout = 3; // unit is 1 sec
     private static int keepAliveCount = 3;
     private static int lastQueryInterval = 2;  //unit is 1 sec
@@ -132,22 +134,34 @@ public class IgmpManager {
     private static final String DEFAULT_PIMSSM_HOST = "127.0.0.1";
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(1);
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected CoreService coreService;
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected PacketService packetService;
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected MastershipService mastershipService;
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected FlowRuleService flowRuleService;
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected DeviceService deviceService;
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected FlowObjectiveService flowObjectiveService;
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected NetworkConfigRegistry networkConfig;
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected MulticastRouteService multicastService;
+
+    @Reference(cardinality = ReferenceCardinality.MANDATORY)
+    protected SadisService sadisService;
+
     private IgmpPacketProcessor processor = new IgmpPacketProcessor();
     private Logger log = LoggerFactory.getLogger(getClass());
     private ApplicationId coreAppId;
@@ -156,7 +170,7 @@ public class IgmpManager {
     private InternalNetworkConfigListener configListener =
             new InternalNetworkConfigListener();
     private DeviceListener deviceListener = new InternalDeviceListener();
-    private ConfigFactory<DeviceId, AccessDeviceConfig> configFactory = null;
+
     private ConfigFactory<ApplicationId, IgmpproxyConfig> igmpproxyConfigFactory =
             new ConfigFactory<ApplicationId, IgmpproxyConfig>(
                     SubjectFactories.APP_SUBJECT_FACTORY, IGMPPROXY_CONFIG_CLASS, "igmpproxy") {
@@ -183,24 +197,17 @@ public class IgmpManager {
         return unSolicitedTimeout;
     }
 
+    protected BaseInformationService<SubscriberAndDeviceInformation> subsService;
+    private static Map<DeviceId, SubscriberAndDeviceInformation> oltData = new ConcurrentHashMap<>();
+
+
     @Activate
     protected void activate() {
-        appId = coreService.registerApplication("org.opencord.igmpproxy");
+        appId = coreService.registerApplication(APP_NAME);
         coreAppId = coreService.registerApplication(CoreService.CORE_APP_NAME);
         packetService.addProcessor(processor, PacketProcessor.director(4));
         IgmpSender.init(packetService, mastershipService);
 
-        if (networkConfig.getConfigFactory(CONFIG_CLASS) == null) {
-            configFactory =
-                    new ConfigFactory<DeviceId, AccessDeviceConfig>(
-                            SubjectFactories.DEVICE_SUBJECT_FACTORY, CONFIG_CLASS, "accessDevice") {
-                        @Override
-                        public AccessDeviceConfig createConfig() {
-                            return new AccessDeviceConfig();
-                        }
-                    };
-            networkConfig.registerConfigFactory(configFactory);
-        }
         networkConfig.registerConfigFactory(igmpproxySsmConfigFactory);
         networkConfig.registerConfigFactory(igmpproxyConfigFactory);
         networkConfig.addListener(configListener);
@@ -208,18 +215,15 @@ public class IgmpManager {
         configListener.reconfigureNetwork(networkConfig.getConfig(appId, IGMPPROXY_CONFIG_CLASS));
         configListener.reconfigureSsmTable(networkConfig.getConfig(appId, IGMPPROXY_SSM_CONFIG_CLASS));
 
-        networkConfig.getSubjects(DeviceId.class, AccessDeviceConfig.class).forEach(
-                subject -> {
-                    AccessDeviceConfig config = networkConfig.getConfig(subject,
-                            AccessDeviceConfig.class);
-                    if (config != null) {
-                        AccessDeviceData data = config.getAccessDevice();
-                        oltData.put(data.deviceId(), data);
-                    }
-                }
-        );
+        subsService = sadisService.getSubscriberInfoService();
 
-        oltData.keySet().forEach(d -> provisionDefaultFlows(d));
+        networkConfig.getSubjects(DeviceId.class).forEach(subject -> {
+            SubscriberAndDeviceInformation olt = subsService.get(subject.toString());
+            if (olt != null) {
+                oltData.put(subject, olt);
+            }
+        });
+
         if (connectPointMode) {
             provisionConnectPointFlows();
         } else {
@@ -246,9 +250,6 @@ public class IgmpManager {
 
         // de-register and null our handler
         networkConfig.removeListener(configListener);
-        if (configFactory != null) {
-            networkConfig.unregisterConfigFactory(configFactory);
-        }
         networkConfig.unregisterConfigFactory(igmpproxyConfigFactory);
         networkConfig.unregisterConfigFactory(igmpproxySsmConfigFactory);
         deviceService.removeListener(deviceListener);
@@ -598,7 +599,7 @@ public class IgmpManager {
 
     public static PortNumber getDeviceUplink(DeviceId devId) {
         if (oltData.get(devId) != null) {
-            return oltData.get(devId).uplink();
+            return PortNumber.portNumber(oltData.get(devId).uplinkPort());
         } else {
             return null;
         }
@@ -655,8 +656,7 @@ public class IgmpManager {
     }
 
     private boolean isUplink(DeviceId device, PortNumber port) {
-        return ((!connectPointMode) && oltData.containsKey(device)
-                && oltData.get(device).uplink().equals(port));
+        return ((!connectPointMode) && getDeviceUplink(device).equals(port));
     }
 
     private class InternalDeviceListener implements DeviceListener {
@@ -795,15 +795,7 @@ public class IgmpManager {
             switch (event.type()) {
                 case CONFIG_ADDED:
                 case CONFIG_UPDATED:
-                    if (event.configClass().equals(CONFIG_CLASS)) {
-                        AccessDeviceConfig config =
-                                networkConfig.getConfig((DeviceId) event.subject(), CONFIG_CLASS);
-                        if (config != null) {
-                            oltData.put(config.getAccessDevice().deviceId(), config.getAccessDevice());
-                            provisionDefaultFlows((DeviceId) event.subject());
-                            provisionUplinkFlows((DeviceId) event.subject());
-                        }
-                    }
+                    // NOTE how to know if something has changed in sadis?
 
                     if (event.configClass().equals(IGMPPROXY_CONFIG_CLASS)) {
                         IgmpproxyConfig config = networkConfig.getConfig(appId, IGMPPROXY_CONFIG_CLASS);
@@ -835,10 +827,7 @@ public class IgmpManager {
                 case CONFIG_UNREGISTERED:
                     break;
                 case CONFIG_REMOVED:
-                    if (event.configClass().equals(CONFIG_CLASS)) {
-                        oltData.remove(event.subject());
-                    }
-
+                    // NOTE how to know if something has changed in sadis?
                 default:
                     break;
             }
@@ -847,8 +836,9 @@ public class IgmpManager {
 
     private void provisionDefaultFlows(DeviceId deviceId) {
         List<Port> ports = deviceService.getPorts(deviceId);
+
         ports.stream()
-                .filter(p -> (!oltData.get(p.element().id()).uplink().equals(p.number()) && p.isEnabled()))
+                .filter(p -> (!getDeviceUplink(((Device) p.element()).id()).equals(p.number()) && p.isEnabled()))
                 .forEach(p -> processFilterObjective((DeviceId) p.element().id(), p.number(), false));
     }
 
@@ -857,7 +847,7 @@ public class IgmpManager {
             return;
         }
 
-        processFilterObjective(deviceId, oltData.get(deviceId).uplink(), false);
+        processFilterObjective(deviceId, getDeviceUplink(deviceId), false);
     }
 
     private void provisionUplinkFlows() {
@@ -869,7 +859,7 @@ public class IgmpManager {
     }
     private void unprovisionUplinkFlows() {
         oltData.keySet().forEach(deviceId ->
-                processFilterObjective(deviceId, oltData.get(deviceId).uplink(), true));
+                processFilterObjective(deviceId, getDeviceUplink(deviceId), true));
     }
 
     private void provisionConnectPointFlows() {
