@@ -15,20 +15,18 @@
  */
 package org.opencord.igmpproxy;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
+import com.google.common.collect.ImmutableSet;
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.IpAddress;
-import org.onlab.packet.VlanId;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.mastership.MastershipServiceAdapter;
 import org.onosproject.mcast.api.McastListener;
@@ -59,13 +57,8 @@ import org.onosproject.net.packet.OutboundPacket;
 import org.onosproject.net.packet.PacketContext;
 import org.onosproject.net.packet.PacketProcessor;
 import org.onosproject.net.packet.PacketServiceAdapter;
-import org.opencord.cordconfig.access.AccessDeviceConfig;
-import org.opencord.cordconfig.access.AccessDeviceData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class IgmpManagerBase {
 
@@ -130,7 +123,6 @@ public class IgmpManagerBase {
         }
     }
 
-    static final Class<AccessDeviceConfig> CONFIG_CLASS = AccessDeviceConfig.class;
     static final Class<IgmpproxyConfig> IGMPPROXY_CONFIG_CLASS = IgmpproxyConfig.class;
     static final Class<IgmpproxySsmTranslateConfig> IGMPPROXY_SSM_CONFIG_CLASS = IgmpproxySsmTranslateConfig.class;
     static final Class<McastConfig> MCAST_CONFIG_CLASS = McastConfig.class;
@@ -177,48 +169,6 @@ public class IgmpManagerBase {
     }
 
 
-    static class MockAccessDeviceConfig extends AccessDeviceConfig {
-
-        public MockAccessDeviceConfig() {
-            super();
-        }
-
-        public MockAccessDeviceConfig(DeviceId id) {
-            super();
-            subject = id;
-        }
-
-        @Override
-        public AccessDeviceData getAccessDevice() {
-            PortNumber uplink = PortNumber.portNumber(3);
-            VlanId vlan = VlanId.vlanId((short) 0);
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode defaultVlanNode = null;
-            try {
-                  defaultVlanNode = (JsonNode) mapper.readTree("{\"driver\":\"pmc-olt\" , \"type \" : \"OLT\"}");
-            } catch (IOException e) {
-                  e.printStackTrace();
-            }
-
-            Optional<VlanId> defaultVlan;
-            if (defaultVlanNode.isMissingNode()) {
-                defaultVlan = Optional.empty();
-            } else {
-                defaultVlan = Optional.of(VlanId.vlanId(defaultVlanNode.shortValue()));
-            }
-            return new AccessDeviceData(subject, uplink, vlan, defaultVlan);
-        }
-    }
-
-    ConfigFactory<DeviceId, AccessDeviceConfig> cf =
-            new ConfigFactory<DeviceId, AccessDeviceConfig>(
-               SubjectFactories.DEVICE_SUBJECT_FACTORY, CONFIG_CLASS, "accessDevice") {
-        @Override
-        public AccessDeviceConfig createConfig() {
-            return new MockAccessDeviceConfig();
-        }
-     };
-
      class TestNetworkConfigRegistry extends NetworkConfigRegistryAdapter {
          Boolean igmpOnPodFlag = false;
          TestNetworkConfigRegistry(Boolean igmpFlag) {
@@ -226,36 +176,25 @@ public class IgmpManagerBase {
          }
         @SuppressWarnings("unchecked")
         @Override
-        public <S, C extends Config<S>> C getConfig(S subject, Class<C> configClass) {
-            if (configClass.getName().equalsIgnoreCase("org.opencord.igmpproxy.IgmpproxyConfig")) {
-                IgmpproxyConfig igmpproxyConfig = new MockIgmpProxyConfig(igmpOnPodFlag);
-                return (C) igmpproxyConfig;
-            } else if (configClass.getName().equalsIgnoreCase("org.opencord.cordconfig.access.AccessDeviceConfig")) {
-
-                if (subject.toString().equals(DEVICE_ID_OF_A.toString())) {
-                    AccessDeviceConfig accessDeviceConfig = new MockAccessDeviceConfig(DEVICE_ID_OF_A);
-                return (C) accessDeviceConfig;
-                } else {
-                    AccessDeviceConfig accessDeviceConfig = new MockAccessDeviceConfig(DEVICE_ID_OF_B);
-                    return (C) accessDeviceConfig;
-                }
-            } else {
-                super.getConfig(subject, configClass);
+        public <S> Set<S> getSubjects(Class<S> subjectClass) {
+            if (subjectClass.getName().equalsIgnoreCase("org.onosproject.net.DeviceId")) {
+                return (Set<S>) ImmutableSet.of(DEVICE_ID_OF_A, DEVICE_ID_OF_B);
             }
+            log.info("subject class", subjectClass);
             return null;
        }
 
-        @SuppressWarnings("unchecked")
-        @Override
-        public <S, C extends Config<S>> ConfigFactory<S, C> getConfigFactory(Class<C> configClass) {
-            return (ConfigFactory<S, C>) cf;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public <S, C extends Config<S>> Set<S> getSubjects(Class<S> subjectClass, Class<C> configClass) {
-            return (Set<S>) setOfDevices;
-        }
+         @SuppressWarnings("unchecked")
+         @Override
+         public <S, C extends Config<S>> C getConfig(S subject, Class<C> configClass) {
+             if (configClass.getName().equalsIgnoreCase("org.opencord.igmpproxy.IgmpproxyConfig")) {
+                 IgmpproxyConfig igmpproxyConfig = new MockIgmpProxyConfig(igmpOnPodFlag);
+                 return (C) igmpproxyConfig;
+             } else {
+                 super.getConfig(subject, configClass);
+             }
+             return null;
+         }
     }
 
 
