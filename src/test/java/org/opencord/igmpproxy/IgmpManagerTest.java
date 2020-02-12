@@ -19,15 +19,24 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.onlab.packet.Ethernet;
+import org.onlab.packet.Ip4Address;
+import org.onlab.packet.MacAddress;
 import org.onosproject.core.CoreServiceAdapter;
 import org.onosproject.net.flow.FlowRuleServiceAdapter;
 import org.onosproject.net.flowobjective.FlowObjectiveServiceAdapter;
+import org.opencord.sadis.BandwidthProfileInformation;
+import org.opencord.sadis.BaseInformationService;
+import org.opencord.sadis.SadisService;
+import org.opencord.sadis.SubscriberAndDeviceInformation;
 
 import static org.junit.Assert.*;
 
 public class IgmpManagerTest extends IgmpManagerBase {
 
     private static final int WAIT_TIMEOUT = 1000;
+    protected static final String CLIENT_NAS_PORT_ID = "PON 1/1";
+    protected static final String CLIENT_CIRCUIT_ID = "CIR-PON 1/1";
+    protected String dsBpId = "HSIA-DS";
 
     private IgmpManager igmpManager;
 
@@ -42,6 +51,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
         igmpManager.packetService = new MockPacketService();
         igmpManager.flowRuleService = new FlowRuleServiceAdapter();
         igmpManager.multicastService = new TestMulticastRouteService();
+        igmpManager.sadisService = new MockSadisService();
         // By default - we send query messages
         SingleStateMachine.sendQuery = true;
     }
@@ -127,5 +137,85 @@ public class IgmpManagerTest extends IgmpManagerBase {
         }
         assertEquals(1, savedPackets.size());
     }
+    protected class MockSadisService implements SadisService {
 
+        @Override
+        public BaseInformationService<SubscriberAndDeviceInformation> getSubscriberInfoService() {
+            return new MockSubService();
+        }
+
+        @Override
+        public BaseInformationService<BandwidthProfileInformation> getBandwidthProfileService() {
+            return new MockBpService();
+        }
+    }
+
+    private class MockBpService implements BaseInformationService<BandwidthProfileInformation> {
+
+        @Override
+        public void invalidateAll() {
+
+        }
+
+        @Override
+        public void invalidateId(String id) {
+
+        }
+
+        @Override
+        public BandwidthProfileInformation get(String id) {
+            if (id.equals(dsBpId)) {
+                BandwidthProfileInformation bpInfo = new BandwidthProfileInformation();
+                bpInfo.setAssuredInformationRate(0);
+                bpInfo.setCommittedInformationRate(10000);
+                bpInfo.setCommittedBurstSize(1000L);
+                bpInfo.setExceededBurstSize(2000L);
+                bpInfo.setExceededInformationRate(20000);
+                return bpInfo;
+            }
+            return null;
+        }
+
+        @Override
+        public BandwidthProfileInformation getfromCache(String id) {
+            return null;
+        }
+    }
+
+    private class MockSubService implements BaseInformationService<SubscriberAndDeviceInformation> {
+        MockSubscriberAndDeviceInformation sub =
+                new MockSubscriberAndDeviceInformation(CLIENT_NAS_PORT_ID,
+                                                       CLIENT_NAS_PORT_ID, CLIENT_CIRCUIT_ID, null, null);
+
+        @Override
+        public SubscriberAndDeviceInformation get(String id) {
+            return sub;
+        }
+
+        @Override
+        public void invalidateAll() {
+        }
+
+        @Override
+        public void invalidateId(String id) {
+        }
+
+        @Override
+        public SubscriberAndDeviceInformation getfromCache(String id) {
+            return null;
+        }
+    }
+
+    private class MockSubscriberAndDeviceInformation extends SubscriberAndDeviceInformation {
+
+        MockSubscriberAndDeviceInformation(String id, String nasPortId,
+                                           String circuitId, MacAddress hardId,
+                                           Ip4Address ipAddress) {
+            this.setHardwareIdentifier(hardId);
+            this.setId(id);
+            this.setIPAddress(ipAddress);
+            this.setNasPortId(nasPortId);
+            this.setCircuitId(circuitId);
+        }
+    }
 }
