@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6d58dafb_9b101cdb",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2020-02-12T23:10:48Z",
+      "side": 1,
+      "message": "I agree that getting rid of this Map would be the best choice, with this patch I was just trying to get what we had to work with the other apps. This entire app will most likely need a refactor.",
+      "parentUuid": "71bffe3f_6c09b40f",
+      "range": {
+        "startLine": 191,
+        "startChar": 65,
+        "endLine": 191,
+        "endChar": 72
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d2fa09_b6f3b937",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-12T22:58:43Z",
       "side": 1,
       "message": "oltData.containsKey(device) is implicit in the implementation of getDeviceUplink() so it can be removed",
+      "range": {
+        "startLine": 649,
+        "startChar": 39,
+        "endLine": 649,
+        "endChar": 66
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db2b2986_7b28c03d",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 649,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2020-02-12T23:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3d2fa09_b6f3b937",
       "range": {
         "startLine": 649,
         "startChar": 39,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "562a55cf_f7264206",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 651,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2020-02-12T23:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "690a1a86_002a9d21",
+      "range": {
+        "startLine": 648,
+        "startChar": 0,
+        "endLine": 651,
+        "endChar": 5
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50232991_e6d06737",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "2388bdcd_d7f8fcd2",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2020-02-12T23:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50232991_e6d06737",
+      "range": {
+        "startLine": 789,
+        "startChar": 23,
+        "endLine": 789,
+        "endChar": 74
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7ba2589_72d59e8d",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2020-02-12T22:58:43Z",
       "side": 1,
       "message": "p.element().id() should return a DeviceId, so there should be no need of converting to string and parsing the result into a new device ID object. You might need to cast p.element() into a Device first.",
+      "range": {
+        "startLine": 832,
+        "startChar": 65,
+        "endLine": 832,
+        "endChar": 81
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1133a497_78a29a34",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 832,
+      "author": {
+        "id": 1000007
+      },
+      "writtenOn": "2020-02-12T23:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7ba2589_72d59e8d",
       "range": {
         "startLine": 832,
         "startChar": 65,
