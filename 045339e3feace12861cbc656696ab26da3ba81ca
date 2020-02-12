@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71bffe3f_6c09b40f",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2020-02-12T22:51:46Z",
+      "side": 1,
+      "message": "I think we should get rid of the oltData map completely. This info is already being cached within the sadis app, so doesn\u0027t make sense to have another cache here. How much work would it be to just use the sadis API to fetch the olt info instead of getting it from this map?",
+      "range": {
+        "startLine": 191,
+        "startChar": 65,
+        "endLine": 191,
+        "endChar": 72
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50232991_e6d06737",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2020-02-12T22:51:46Z",
+      "side": 1,
+      "message": "Yeah this is a problem in the OLT app as well, if the config is added after the app starts then we don\u0027t/can\u0027t know about it. We can punt on that problem for now I guess because the OLT app doesn\u0027t solve it either.",
+      "range": {
+        "startLine": 789,
+        "startChar": 23,
+        "endLine": 789,
+        "endChar": 74
+      },
+      "revId": "045339e3feace12861cbc656696ab26da3ba81ca",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
