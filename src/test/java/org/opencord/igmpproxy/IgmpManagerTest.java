@@ -42,6 +42,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
         igmpManager.packetService = new MockPacketService();
         igmpManager.flowRuleService = new FlowRuleServiceAdapter();
         igmpManager.multicastService = new TestMulticastRouteService();
+        igmpManager.sadisService = new MockSadisService();
         // By default - we send query messages
         SingleStateMachine.sendQuery = true;
     }
@@ -127,5 +128,4 @@ public class IgmpManagerTest extends IgmpManagerBase {
         }
         assertEquals(1, savedPackets.size());
     }
-
 }

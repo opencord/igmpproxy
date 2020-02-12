@@ -15,28 +15,17 @@
  */
 package org.opencord.igmpproxy;
 
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
+import com.google.common.collect.ImmutableSet;
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.IpAddress;
-import org.onlab.packet.VlanId;
+import org.onlab.packet.MacAddress;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.mastership.MastershipServiceAdapter;
 import org.onosproject.mcast.api.McastListener;
 import org.onosproject.mcast.api.McastRoute;
 import org.onosproject.mcast.api.McastRouteData;
 import org.onosproject.mcast.api.MulticastRouteService;
-import org.onosproject.net.config.ConfigFactory;
-import org.onosproject.net.config.NetworkConfigRegistryAdapter;
 import org.onosproject.net.AnnotationKeys;
 import org.onosproject.net.Annotations;
 import org.onosproject.net.ConnectPoint;
@@ -49,6 +38,8 @@ import org.onosproject.net.Port;
 import org.onosproject.net.PortNumber;
 import org.onosproject.net.SparseAnnotations;
 import org.onosproject.net.config.Config;
+import org.onosproject.net.config.ConfigFactory;
+import org.onosproject.net.config.NetworkConfigRegistryAdapter;
 import org.onosproject.net.config.basics.McastConfig;
 import org.onosproject.net.config.basics.SubjectFactories;
 import org.onosproject.net.device.DeviceServiceAdapter;
@@ -59,13 +50,18 @@ import org.onosproject.net.packet.OutboundPacket;
 import org.onosproject.net.packet.PacketContext;
 import org.onosproject.net.packet.PacketProcessor;
 import org.onosproject.net.packet.PacketServiceAdapter;
-import org.opencord.cordconfig.access.AccessDeviceConfig;
-import org.opencord.cordconfig.access.AccessDeviceData;
+import org.opencord.sadis.BandwidthProfileInformation;
+import org.opencord.sadis.BaseInformationService;
+import org.opencord.sadis.SadisService;
+import org.opencord.sadis.SubscriberAndDeviceInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class IgmpManagerBase {
 
@@ -90,8 +86,10 @@ public class IgmpManagerBase {
     protected static final ConnectPoint CONNECT_POINT_A = new ConnectPoint(DEVICE_ID_OF_A, PORT_A);
     protected static final ConnectPoint CONNECT_POINT_B = new ConnectPoint(DEVICE_ID_OF_B, PORT_B);
 
-    // setOfDevices which will store device id of two olts
-    protected Set<DeviceId> setOfDevices = new HashSet<DeviceId>(Arrays.asList(DEVICE_ID_OF_A, DEVICE_ID_OF_B));
+    protected static final String CLIENT_NAS_PORT_ID = "PON 1/1";
+    protected static final String CLIENT_CIRCUIT_ID = "CIR-PON 1/1";
+    protected String dsBpId = "HSIA-DS";
+
     protected List<Port> lsPorts = new ArrayList<Port>();
     // Flag for adding two different devices in oltData
     protected boolean flagForDevice = true;
@@ -130,7 +128,6 @@ public class IgmpManagerBase {
         }
     }
 
-    static final Class<AccessDeviceConfig> CONFIG_CLASS = AccessDeviceConfig.class;
     static final Class<IgmpproxyConfig> IGMPPROXY_CONFIG_CLASS = IgmpproxyConfig.class;
     static final Class<IgmpproxySsmTranslateConfig> IGMPPROXY_SSM_CONFIG_CLASS = IgmpproxySsmTranslateConfig.class;
     static final Class<McastConfig> MCAST_CONFIG_CLASS = McastConfig.class;
@@ -177,48 +174,6 @@ public class IgmpManagerBase {
     }
 
 
-    static class MockAccessDeviceConfig extends AccessDeviceConfig {
-
-        public MockAccessDeviceConfig() {
-            super();
-        }
-
-        public MockAccessDeviceConfig(DeviceId id) {
-            super();
-            subject = id;
-        }
-
-        @Override
-        public AccessDeviceData getAccessDevice() {
-            PortNumber uplink = PortNumber.portNumber(3);
-            VlanId vlan = VlanId.vlanId((short) 0);
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode defaultVlanNode = null;
-            try {
-                  defaultVlanNode = (JsonNode) mapper.readTree("{\"driver\":\"pmc-olt\" , \"type \" : \"OLT\"}");
-            } catch (IOException e) {
-                  e.printStackTrace();
-            }
-
-            Optional<VlanId> defaultVlan;
-            if (defaultVlanNode.isMissingNode()) {
-                defaultVlan = Optional.empty();
-            } else {
-                defaultVlan = Optional.of(VlanId.vlanId(defaultVlanNode.shortValue()));
-            }
-            return new AccessDeviceData(subject, uplink, vlan, defaultVlan);
-        }
-    }
-
-    ConfigFactory<DeviceId, AccessDeviceConfig> cf =
-            new ConfigFactory<DeviceId, AccessDeviceConfig>(
-               SubjectFactories.DEVICE_SUBJECT_FACTORY, CONFIG_CLASS, "accessDevice") {
-        @Override
-        public AccessDeviceConfig createConfig() {
-            return new MockAccessDeviceConfig();
-        }
-     };
-
      class TestNetworkConfigRegistry extends NetworkConfigRegistryAdapter {
          Boolean igmpOnPodFlag = false;
          TestNetworkConfigRegistry(Boolean igmpFlag) {
@@ -226,36 +181,24 @@ public class IgmpManagerBase {
          }
         @SuppressWarnings("unchecked")
         @Override
-        public <S, C extends Config<S>> C getConfig(S subject, Class<C> configClass) {
-            if (configClass.getName().equalsIgnoreCase("org.opencord.igmpproxy.IgmpproxyConfig")) {
-                IgmpproxyConfig igmpproxyConfig = new MockIgmpProxyConfig(igmpOnPodFlag);
-                return (C) igmpproxyConfig;
-            } else if (configClass.getName().equalsIgnoreCase("org.opencord.cordconfig.access.AccessDeviceConfig")) {
-
-                if (subject.toString().equals(DEVICE_ID_OF_A.toString())) {
-                    AccessDeviceConfig accessDeviceConfig = new MockAccessDeviceConfig(DEVICE_ID_OF_A);
-                return (C) accessDeviceConfig;
-                } else {
-                    AccessDeviceConfig accessDeviceConfig = new MockAccessDeviceConfig(DEVICE_ID_OF_B);
-                    return (C) accessDeviceConfig;
-                }
-            } else {
-                super.getConfig(subject, configClass);
+        public <S> Set<S> getSubjects(Class<S> subjectClass) {
+            if (subjectClass.getName().equalsIgnoreCase("org.onosproject.net.DeviceId")) {
+                return (Set<S>) ImmutableSet.of(DEVICE_ID_OF_A, DEVICE_ID_OF_B);
             }
             return null;
        }
 
-        @SuppressWarnings("unchecked")
-        @Override
-        public <S, C extends Config<S>> ConfigFactory<S, C> getConfigFactory(Class<C> configClass) {
-            return (ConfigFactory<S, C>) cf;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public <S, C extends Config<S>> Set<S> getSubjects(Class<S> subjectClass, Class<C> configClass) {
-            return (Set<S>) setOfDevices;
-        }
+         @SuppressWarnings("unchecked")
+         @Override
+         public <S, C extends Config<S>> C getConfig(S subject, Class<C> configClass) {
+             if (configClass.getName().equalsIgnoreCase("org.opencord.igmpproxy.IgmpproxyConfig")) {
+                 IgmpproxyConfig igmpproxyConfig = new MockIgmpProxyConfig(igmpOnPodFlag);
+                 return (C) igmpproxyConfig;
+             } else {
+                 super.getConfig(subject, configClass);
+             }
+             return null;
+         }
     }
 
 
@@ -442,5 +385,87 @@ public class IgmpManagerBase {
             packetProcessor.process(context);
         }
    }
+
+    protected class MockSadisService implements SadisService {
+
+        @Override
+        public BaseInformationService<SubscriberAndDeviceInformation> getSubscriberInfoService() {
+            return new MockSubService();
+        }
+
+        @Override
+        public BaseInformationService<BandwidthProfileInformation> getBandwidthProfileService() {
+            return new MockBpService();
+        }
+    }
+
+    private class MockBpService implements BaseInformationService<BandwidthProfileInformation> {
+
+        @Override
+        public void invalidateAll() {
+
+        }
+
+        @Override
+        public void invalidateId(String id) {
+
+        }
+
+        @Override
+        public BandwidthProfileInformation get(String id) {
+            if (id.equals(dsBpId)) {
+                BandwidthProfileInformation bpInfo = new BandwidthProfileInformation();
+                bpInfo.setAssuredInformationRate(0);
+                bpInfo.setCommittedInformationRate(10000);
+                bpInfo.setCommittedBurstSize(1000L);
+                bpInfo.setExceededBurstSize(2000L);
+                bpInfo.setExceededInformationRate(20000);
+                return bpInfo;
+            }
+            return null;
+        }
+
+        @Override
+        public BandwidthProfileInformation getfromCache(String id) {
+            return null;
+        }
+    }
+
+    private class MockSubService implements BaseInformationService<SubscriberAndDeviceInformation> {
+        MockSubscriberAndDeviceInformation sub =
+                new MockSubscriberAndDeviceInformation(CLIENT_NAS_PORT_ID,
+                                                       CLIENT_NAS_PORT_ID, CLIENT_CIRCUIT_ID, null, null);
+
+        @Override
+        public SubscriberAndDeviceInformation get(String id) {
+            return sub;
+        }
+
+        @Override
+        public void invalidateAll() {
+        }
+
+        @Override
+        public void invalidateId(String id) {
+        }
+
+        @Override
+        public SubscriberAndDeviceInformation getfromCache(String id) {
+            return null;
+        }
+    }
+
+    private class MockSubscriberAndDeviceInformation extends SubscriberAndDeviceInformation {
+
+        MockSubscriberAndDeviceInformation(String id, String nasPortId,
+                                           String circuitId, MacAddress hardId,
+                                           Ip4Address ipAddress) {
+            this.setHardwareIdentifier(hardId);
+            this.setId(id);
+            this.setIPAddress(ipAddress);
+            this.setNasPortId(nasPortId);
+            this.setCircuitId(circuitId);
+        }
+    }
 
 }
