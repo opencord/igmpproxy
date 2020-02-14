@@ -15,7 +15,6 @@
  */
 package org.opencord.igmpproxy;
 
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -32,6 +31,7 @@ import org.onlab.packet.IPv4;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.IpAddress;
 import org.onlab.packet.VlanId;
+import org.onlab.util.KryoNamespace;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.core.CoreService;
 import org.onosproject.mastership.MastershipService;
@@ -64,6 +64,10 @@ import org.onosproject.net.packet.InboundPacket;
 import org.onosproject.net.packet.PacketContext;
 import org.onosproject.net.packet.PacketProcessor;
 import org.onosproject.net.packet.PacketService;
+import org.onosproject.store.serializers.KryoNamespaces;
+import org.onosproject.store.service.ConsistentMap;
+import org.onosproject.store.service.Serializer;
+import org.onosproject.store.service.StorageService;
 import org.opencord.cordconfig.access.AccessDeviceConfig;
 import org.opencord.cordconfig.access.AccessDeviceData;
 import org.slf4j.Logger;
@@ -103,7 +107,6 @@ public class IgmpManager {
     private static final Class<McastConfig> MCAST_CONFIG_CLASS =
             McastConfig.class;
 
-    public static Map<String, GroupMember> groupMemberMap = Maps.newConcurrentMap();
     private static ApplicationId appId;
     private static Map<DeviceId, AccessDeviceData> oltData = new ConcurrentHashMap<>();
     private static int unSolicitedTimeout = 3; // unit is 1 sec
@@ -130,6 +133,7 @@ public class IgmpManager {
 
     private static boolean pimSSmInterworking = false;
     private static final String DEFAULT_PIMSSM_HOST = "127.0.0.1";
+    private static final String MAP_NAME = "onos-igmpproxy-groupmember-table";
     private final ScheduledExecutorService scheduledExecutorService =
             Executors.newScheduledThreadPool(1);
     @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY)
@@ -148,10 +152,15 @@ public class IgmpManager {
     protected NetworkConfigRegistry networkConfig;
     @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY)
     protected MulticastRouteService multicastService;
+    @Reference(cardinality = ReferenceCardinality.MANDATORY_UNARY)
+    protected StorageService storageService;
+
     private IgmpPacketProcessor processor = new IgmpPacketProcessor();
     private Logger log = LoggerFactory.getLogger(getClass());
     private ApplicationId coreAppId;
     private Map<Ip4Address, Ip4Address> ssmTranslateTable = new ConcurrentHashMap<>();
+    private ConsistentMap<String, GroupMember> groupMembersStore;
+    public Map<String, GroupMember> groupMemberMap;
 
     private InternalNetworkConfigListener configListener =
             new InternalNetworkConfigListener();
@@ -189,6 +198,16 @@ public class IgmpManager {
         coreAppId = coreService.registerApplication(CoreService.CORE_APP_NAME);
         packetService.addProcessor(processor, PacketProcessor.director(4));
         IgmpSender.init(packetService, mastershipService);
+
+        groupMembersStore = storageService.<String, GroupMember>consistentMapBuilder()
+                .withName(MAP_NAME)
+                .withSerializer(Serializer.using(KryoNamespace.newBuilder()
+                        .register(KryoNamespaces.API)
+                        .register(
+                                GroupMember.class
+                        ).build()))
+                .build();
+        groupMemberMap = groupMembersStore.asJavaMap();
 
         if (networkConfig.getConfigFactory(CONFIG_CLASS) == null) {
             configFactory =
@@ -254,6 +273,7 @@ public class IgmpManager {
         deviceService.removeListener(deviceListener);
         packetService.removeProcessor(processor);
         flowRuleService.removeFlowRulesById(appId);
+        groupMembersStore.destroy();
 
         log.info("Stopped");
     }
@@ -364,7 +384,7 @@ public class IgmpManager {
             }
         }
         String groupMemberKey = GroupMember.getkey(groupIp, deviceId, portNumber);
-        GroupMember groupMember = groupMemberMap.get(groupMemberKey);
+        GroupMember groupMember = groupMemberMap.getOrDefault(groupMemberKey, null);
 
         if (join) {
             if (groupMember == null) {
@@ -399,6 +419,8 @@ public class IgmpManager {
             groupMember.resetAllTimers();
             groupMember.updateList(recordType, sourceList);
             groupMember.setLeave(false);
+            //put updated member to the store
+            groupMemberMap.put(groupMemberKey, groupMember);
         } else {
             if (groupMember == null) {
                 log.info("receive leave but no instance, group " + groupIp.toString() +
@@ -410,6 +432,8 @@ public class IgmpManager {
                     leaveAction(groupMember);
                 } else {
                     sendQuery(groupMember);
+                    //put modified group member object to the store
+                    groupMemberMap.replace(groupMemberKey, groupMember);
                 }
             }
         }
@@ -547,11 +571,12 @@ public class IgmpManager {
 
         private void queryMembers() {
             GroupMember groupMember;
-            Set groupMemberSet = groupMemberMap.entrySet();
-            Iterator itr = groupMemberSet.iterator();
-            while (itr.hasNext()) {
-                Map.Entry entry = (Map.Entry) itr.next();
-                groupMember = (GroupMember) entry.getValue();
+            Set<String> keySet = groupMemberMap.keySet();
+            for (String key: keySet) {
+                groupMember = groupMemberMap.get(key);
+                if (groupMember == null) {
+                    continue;
+                }
                 DeviceId did = groupMember.getDeviceId();
                 if (mastershipService.isLocalMaster(did)) {
                     if (groupMember.isLeave()) {
@@ -566,22 +591,31 @@ public class IgmpManager {
         private void lastQuery(GroupMember groupMember) {
             if (groupMember.getLastQueryInterval() < lastQueryInterval) {
                 groupMember.lastQueryInterval(true); // count times
+                //put modified group member object to the store
+                groupMemberMap.replace(groupMember.getkey(), groupMember);
             } else if (groupMember.getLastQueryCount() < lastQueryCount - 1) {
                 sendQuery(groupMember);
                 groupMember.lastQueryInterval(false); // reset count number
                 groupMember.lastQueryCount(true); //count times
+                //put modified group member object to the store
+                groupMemberMap.replace(groupMember.getkey(), groupMember);
             } else if (groupMember.getLastQueryCount() == lastQueryCount - 1) {
                 leaveAction(groupMember);
             }
         }
 
         private void periodicQuery(GroupMember groupMember) {
+            boolean modified = true;
             if (groupMember.getKeepAliveQueryInterval() < keepAliveInterval) {
                 groupMember.keepAliveInterval(true);
+                //put modified group member object to the store
+                groupMemberMap.replace(groupMember.getkey(), groupMember);
             } else if (groupMember.getKeepAliveQueryCount() < keepAliveCount) {
                 sendQuery(groupMember);
                 groupMember.keepAliveInterval(false);
                 groupMember.keepAliveQueryCount(true);
+                //put modified group member object to the store
+                groupMemberMap.replace(groupMember.getkey(), groupMember);
             } else if (groupMember.getKeepAliveQueryCount() == keepAliveCount) {
                 leaveAction(groupMember);
             }

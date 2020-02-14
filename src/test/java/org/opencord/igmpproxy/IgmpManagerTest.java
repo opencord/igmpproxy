@@ -22,6 +22,7 @@ import org.onlab.packet.Ethernet;
 import org.onosproject.core.CoreServiceAdapter;
 import org.onosproject.net.flow.FlowRuleServiceAdapter;
 import org.onosproject.net.flowobjective.FlowObjectiveServiceAdapter;
+import org.onosproject.store.service.TestStorageService;
 
 import static org.junit.Assert.*;
 
@@ -42,6 +43,8 @@ public class IgmpManagerTest extends IgmpManagerBase {
         igmpManager.packetService = new MockPacketService();
         igmpManager.flowRuleService = new FlowRuleServiceAdapter();
         igmpManager.multicastService = new TestMulticastRouteService();
+        igmpManager.storageService = new TestStorageService();
+
         // By default - we send query messages
         SingleStateMachine.sendQuery = true;
     }
@@ -50,7 +53,6 @@ public class IgmpManagerTest extends IgmpManagerBase {
     @After
     public void tearDown() {
         igmpManager.deactivate();
-        IgmpManager.groupMemberMap.clear();
         StateMachine.clearMap();
     }
 
