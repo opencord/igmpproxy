@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc40ad9f_bf47b8e7",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-18T08:36:49Z",
+      "side": 1,
+      "message": "Hi Esin, this was the exact suggestion from Jono. Our agreement was to do it in steps. this patch does the bare minimum to remove the cordconfig. Do you have the bandwidth to tackle this ?",
+      "parentUuid": "93ac34ea_54478cf7",
+      "range": {
+        "startLine": 789,
+        "startChar": 19,
+        "endLine": 789,
+        "endChar": 74
+      },
+      "revId": "8e139a044d638fe87ee830006618b588fce1bf3e",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b95bdfd_ada72aea",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-17T17:51:34Z",
       "side": 1,
       "message": "Move everything inside the base class",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 221,
+        "endChar": 1
+      },
+      "revId": "8e139a044d638fe87ee830006618b588fce1bf3e",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "308256b2_d61cb40a",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-18T08:36:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b95bdfd_ada72aea",
       "range": {
         "startLine": 140,
         "startChar": 0,
