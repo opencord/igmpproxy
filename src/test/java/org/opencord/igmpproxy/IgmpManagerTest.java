@@ -18,6 +18,7 @@ package org.opencord.igmpproxy;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.onlab.junit.TestUtils;
 import org.onlab.packet.Ethernet;
 import org.onosproject.core.CoreServiceAdapter;
 import org.onosproject.net.flow.FlowRuleServiceAdapter;
@@ -25,11 +26,16 @@ import org.onosproject.net.flowobjective.FlowObjectiveServiceAdapter;
 
 import static org.junit.Assert.*;
 
+/**
+ * Set of tests of the ONOS application component.
+ */
 public class IgmpManagerTest extends IgmpManagerBase {
 
     private static final int WAIT_TIMEOUT = 1000;
 
     private IgmpManager igmpManager;
+
+    private IgmpStatisticsManager igmpStatisticsManager;
 
     // Set up the IGMP application.
     @Before
@@ -43,6 +49,11 @@ public class IgmpManagerTest extends IgmpManagerBase {
         igmpManager.flowRuleService = new FlowRuleServiceAdapter();
         igmpManager.multicastService = new TestMulticastRouteService();
         igmpManager.sadisService = new MockSadisService();
+        igmpStatisticsManager = new IgmpStatisticsManager();
+        igmpStatisticsManager.cfgService = new MockCfgService();
+        TestUtils.setField(igmpStatisticsManager, "eventDispatcher", new TestEventDispatcher());
+        igmpStatisticsManager.activate();
+        igmpManager.igmpStatisticsManager = this.igmpStatisticsManager;
         // By default - we send query messages
         SingleStateMachine.sendQuery = true;
     }
@@ -84,16 +95,17 @@ public class IgmpManagerTest extends IgmpManagerBase {
         Ethernet firstPacket = IgmpSender.getInstance().buildIgmpV3Join(GROUP_IP, SOURCE_IP_OF_A);
         Ethernet secondPacket = IgmpSender.getInstance().buildIgmpV3Join(GROUP_IP, SOURCE_IP_OF_B);
         // Sending first packet and here shouldSendjoin flag will be true
-        sendPacket(firstPacket);
+        sendPacket(firstPacket, false);
         // Emitted packet is stored in list savedPackets
         assertNotNull(savedPackets);
         synchronized (savedPackets) {
             savedPackets.wait(WAIT_TIMEOUT);
         }
+
         assertNotNull(savedPackets);
         assertEquals(1, savedPackets.size());
         // Sending the second packet with same group ip address
-        sendPacket(secondPacket);
+        sendPacket(secondPacket, false);
         synchronized (savedPackets) {
             savedPackets.wait(WAIT_TIMEOUT);
         }
@@ -113,7 +125,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
         Ethernet firstPacket = IgmpSender.getInstance().buildIgmpV3Join(GROUP_IP, SOURCE_IP_OF_A);
         Ethernet secondPacket = IgmpSender.getInstance().buildIgmpV3Join(GROUP_IP, SOURCE_IP_OF_B);
         // Sending first packet and here shouldSendjoin flag will be true
-        sendPacket(firstPacket);
+        sendPacket(firstPacket, false);
         // Emitted packet is stored in list savedPackets
         synchronized (savedPackets) {
           savedPackets.wait(WAIT_TIMEOUT);
@@ -122,10 +134,11 @@ public class IgmpManagerTest extends IgmpManagerBase {
         assertEquals(1, savedPackets.size());
         // Sending the second packet with same group ip address which will not be emitted
         // shouldSendJoin flag will be false.
-        sendPacket(secondPacket);
+        sendPacket(secondPacket, false);
         synchronized (savedPackets) {
             savedPackets.wait(WAIT_TIMEOUT);
         }
         assertEquals(1, savedPackets.size());
     }
+
 }
