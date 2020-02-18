@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ef6a3313_e9bc6806",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-18T08:58:35Z",
+      "side": 1,
+      "message": "removed",
+      "parentUuid": "5b1e6dbc_8891b212",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 52
+      },
+      "revId": "2765f9a223dc509cf61744a83614ba1d5c145cf4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ff1fb92_f4d6ad7d",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2020-02-18T08:47:14Z",
       "side": 1,
       "message": "Are we using this stuff regarding the BWProfile ?",
+      "range": {
+        "startLine": 398,
+        "startChar": 0,
+        "endLine": 433,
+        "endChar": 5
+      },
+      "revId": "2765f9a223dc509cf61744a83614ba1d5c145cf4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03dbfdb0_02fdb585",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-18T08:58:35Z",
+      "side": 1,
+      "message": "yes we are line 221 of IgMpManager.java",
+      "parentUuid": "2ff1fb92_f4d6ad7d",
       "range": {
         "startLine": 398,
         "startChar": 0,
