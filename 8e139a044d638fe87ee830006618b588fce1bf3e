@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "93ac34ea_54478cf7",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-18T07:44:47Z",
+      "side": 1,
+      "message": "A possible solution can be: Do not cache SADIS config in oltdata. Go and fetch device config from SADIS each time it is needed. SADIS is a cache; it already caches device data for you.",
+      "range": {
+        "startLine": 789,
+        "startChar": 19,
+        "endLine": 789,
+        "endChar": 74
+      },
+      "revId": "8e139a044d638fe87ee830006618b588fce1bf3e",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b95bdfd_ada72aea",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
         "patchSetId": 5
