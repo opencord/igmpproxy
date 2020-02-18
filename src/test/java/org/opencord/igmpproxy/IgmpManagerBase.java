@@ -20,7 +20,13 @@ import org.onlab.packet.Ethernet;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.IpAddress;
 import org.onlab.packet.MacAddress;
+import org.onosproject.cfg.ComponentConfigService;
+import org.onosproject.cfg.ConfigProperty;
 import org.onosproject.core.ApplicationId;
+import org.onosproject.event.DefaultEventSinkRegistry;
+import org.onosproject.event.Event;
+import org.onosproject.event.EventDeliveryService;
+import org.onosproject.event.EventSink;
 import org.onosproject.mastership.MastershipServiceAdapter;
 import org.onosproject.mcast.api.McastListener;
 import org.onosproject.mcast.api.McastRoute;
@@ -57,6 +63,8 @@ import org.opencord.sadis.SadisService;
 import org.opencord.sadis.SubscriberAndDeviceInformation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import static com.google.common.base.Preconditions.checkState;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -191,6 +199,7 @@ public class IgmpManagerBase {
 
      class TestNetworkConfigRegistry extends NetworkConfigRegistryAdapter {
          Boolean igmpOnPodFlag = false;
+
          TestNetworkConfigRegistry(Boolean igmpFlag) {
              igmpOnPodFlag = igmpFlag;
          }
@@ -377,28 +386,36 @@ public class IgmpManagerBase {
     }
 
     /**
-     * Sends an Ethernet packet to the process method of the Packet Processor.
+     * Sends Ethernet packet to the process method of the Packet Processor.
      *
      * @param reply Ethernet packet
      * @throws InterruptedException
      */
-   void sendPacket(Ethernet reply) {
+   void sendPacket(Ethernet reply, boolean isSingleSend) {
 
         final ByteBuffer byteBuffer = ByteBuffer.wrap(reply.serialize());
 
-        if (flagForPacket) {
-            InboundPacket inPacket = new DefaultInboundPacket(CONNECT_POINT_A, reply, byteBuffer);
-            context = new TestPacketContext(127L, inPacket, null, false);
-            flagForPacket = false;
+        if (isSingleSend) {
+            InboundPacket inBoundPacket = new DefaultInboundPacket(CONNECT_POINT_B, reply, byteBuffer);
+            context = new TestPacketContext(127L, inBoundPacket, null, false);
 
             packetProcessor.process(context);
         } else {
-            InboundPacket inBoundPacket = new DefaultInboundPacket(CONNECT_POINT_B, reply, byteBuffer);
-            context = new TestPacketContext(127L, inBoundPacket, null, false);
-            flagForPacket = true;
+            if (flagForPacket) {
+                InboundPacket inPacket = new DefaultInboundPacket(CONNECT_POINT_A, reply, byteBuffer);
+                context = new TestPacketContext(127L, inPacket, null, false);
+                flagForPacket = false;
 
-            packetProcessor.process(context);
+                packetProcessor.process(context);
+            } else {
+                InboundPacket inBoundPacket = new DefaultInboundPacket(CONNECT_POINT_B, reply, byteBuffer);
+                context = new TestPacketContext(127L, inBoundPacket, null, false);
+                flagForPacket = true;
+
+                packetProcessor.process(context);
+            }
         }
+
    }
 
     protected class MockSadisService implements SadisService {
@@ -481,6 +498,75 @@ public class IgmpManagerBase {
             this.setNasPortId(nasPortId);
             this.setCircuitId(circuitId);
             this.setUplinkPort((int) PORT_NNI.toLong());
+        }
+    }
+
+    protected class MockCfgService implements ComponentConfigService {
+
+        @Override
+        public Set<String> getComponentNames() {
+            return null;
+        }
+
+        @Override
+        public void registerProperties(Class<?> componentClass) {
+
+        }
+
+        @Override
+        public void unregisterProperties(Class<?> componentClass, boolean clear) {
+
+        }
+
+        @Override
+        public Set<ConfigProperty> getProperties(String componentName) {
+            return null;
+        }
+
+        @Override
+        public void setProperty(String componentName, String name, String value) {
+
+        }
+
+        @Override
+        public void preSetProperty(String componentName, String name, String value) {
+
+        }
+
+        @Override
+        public void preSetProperty(String componentName, String name, String value, boolean override) {
+
+        }
+
+        @Override
+        public void unsetProperty(String componentName, String name) {
+
+        }
+
+        @Override
+        public ConfigProperty getProperty(String componentName, String attribute) {
+            return null;
+        }
+
+    }
+
+    public static class TestEventDispatcher extends DefaultEventSinkRegistry implements EventDeliveryService {
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public synchronized void post(Event event) {
+            EventSink sink = getSink(event.getClass());
+            checkState(sink != null, "No sink for event %s", event);
+            sink.process(event);
+        }
+
+        @Override
+        public void setDispatchTimeLimit(long millis) {
+        }
+
+        @Override
+        public long getDispatchTimeLimit() {
+            return 0;
         }
     }
 
