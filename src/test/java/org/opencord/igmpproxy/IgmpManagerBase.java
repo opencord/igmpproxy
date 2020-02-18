@@ -20,6 +20,8 @@ import org.onlab.packet.Ethernet;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.IpAddress;
 import org.onlab.packet.MacAddress;
+import org.onosproject.cfg.ComponentConfigService;
+import org.onosproject.cfg.ConfigProperty;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.mastership.MastershipServiceAdapter;
 import org.onosproject.mcast.api.McastListener;
@@ -484,4 +486,52 @@ public class IgmpManagerBase {
         }
     }
 
+    protected class MockCfgService implements ComponentConfigService {
+
+        @Override
+        public Set<String> getComponentNames() {
+            return null;
+        }
+
+        @Override
+        public void registerProperties(Class<?> componentClass) {
+
+        }
+
+        @Override
+        public void unregisterProperties(Class<?> componentClass, boolean clear) {
+
+        }
+
+        @Override
+        public Set<ConfigProperty> getProperties(String componentName) {
+            return null;
+        }
+
+        @Override
+        public void setProperty(String componentName, String name, String value) {
+
+        }
+
+        @Override
+        public void preSetProperty(String componentName, String name, String value) {
+
+        }
+
+        @Override
+        public void preSetProperty(String componentName, String name, String value, boolean override) {
+
+        }
+
+        @Override
+        public void unsetProperty(String componentName, String name) {
+
+        }
+
+        @Override
+        public ConfigProperty getProperty(String componentName, String attribute) {
+            return null;
+        }
+
+    }
 }
