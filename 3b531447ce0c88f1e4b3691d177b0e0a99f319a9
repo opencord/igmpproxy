@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ab20d41a_2c39e015",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-21T17:31:00Z",
+      "side": 1,
+      "message": "I woudl agree with pier here, iterating over the device service is better.",
+      "parentUuid": "5deb5d14_233abe8f",
+      "range": {
+        "startLine": 284,
+        "startChar": 12,
+        "endLine": 284,
+        "endChar": 25
+      },
+      "revId": "3b531447ce0c88f1e4b3691d177b0e0a99f319a9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9020278a_fd7a2724",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 3
