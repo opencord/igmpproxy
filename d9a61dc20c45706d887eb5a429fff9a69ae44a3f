@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcd9be9a_205162b6",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-02-21T08:51:03Z",
+      "side": 1,
+      "message": "What about the StateMachine ? I think we should change the internal map to be a consistentmap",
+      "range": {
+        "startLine": 298,
+        "startChar": 12,
+        "endLine": 298,
+        "endChar": 24
+      },
+      "revId": "d9a61dc20c45706d887eb5a429fff9a69ae44a3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e927c3e_7c657024",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-02-21T08:51:03Z",
+      "side": 1,
+      "message": "Similarly for the timers. Probably we need an extra coordination between the instances (to make sure that just one instance will take an action)",
+      "range": {
+        "startLine": 565,
+        "startChar": 16,
+        "endLine": 565,
+        "endChar": 25
+      },
+      "revId": "d9a61dc20c45706d887eb5a429fff9a69ae44a3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a6320ed_31794e53",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-02-21T08:51:03Z",
+      "side": 1,
+      "message": "You should be able to use entrySet here",
+      "range": {
+        "startLine": 574,
+        "startChar": 12,
+        "endLine": 579,
+        "endChar": 17
+      },
+      "revId": "d9a61dc20c45706d887eb5a429fff9a69ae44a3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4d2f0b23_c2945a78",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-02-21T08:51:03Z",
+      "side": 1,
+      "message": "where is it used ?",
+      "range": {
+        "startLine": 608,
+        "startChar": 0,
+        "endLine": 608,
+        "endChar": 36
+      },
+      "revId": "d9a61dc20c45706d887eb5a429fff9a69ae44a3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
