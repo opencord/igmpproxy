@@ -198,8 +198,6 @@ public class IgmpManager {
     }
 
     protected BaseInformationService<SubscriberAndDeviceInformation> subsService;
-    private static Map<DeviceId, SubscriberAndDeviceInformation> oltData = new ConcurrentHashMap<>();
-
 
     @Activate
     protected void activate() {
@@ -216,13 +214,6 @@ public class IgmpManager {
         configListener.reconfigureSsmTable(networkConfig.getConfig(appId, IGMPPROXY_SSM_CONFIG_CLASS));
 
         subsService = sadisService.getSubscriberInfoService();
-
-        networkConfig.getSubjects(DeviceId.class).forEach(subject -> {
-            SubscriberAndDeviceInformation olt = subsService.get(subject.toString());
-            if (olt != null) {
-                oltData.put(subject, olt);
-            }
-        });
 
         if (connectPointMode) {
             provisionConnectPointFlows();
@@ -284,19 +275,21 @@ public class IgmpManager {
 
     private void processIgmpConnectPointQuery(IGMPQuery igmpQuery, ConnectPoint cp, int maxResp) {
 
-        DeviceId deviceId = cp.deviceId();
         Ip4Address gAddr = igmpQuery.getGaddr().getIp4Address();
-        maxResp = calculateMaxResp(maxResp);
+        final int maxResponseTime = calculateMaxResp(maxResp);
         //The query is received on the ConnectPoint
         // send query accordingly to the registered OLT devices.
         if (gAddr != null && !gAddr.isZero()) {
-            for (DeviceId devId : oltData.keySet()) {
-                StateMachine.specialQuery(devId, gAddr, maxResp);
-            }
+            networkConfig.getSubjects(DeviceId.class).forEach(deviceId -> {
+                Optional<SubscriberAndDeviceInformation> device = getDevice(deviceId);
+                if (device.isPresent()) {
+                    StateMachine.specialQuery(deviceId, gAddr, maxResponseTime);
+                }
+            });
         } else {
             //Don't know which group is targeted by the query
             //So query all the members(in all the OLTs) and proxy their reports
-            StateMachine.generalQuery(maxResp);
+            StateMachine.generalQuery(maxResponseTime);
         }
     }
 
@@ -369,21 +362,29 @@ public class IgmpManager {
 
         if (join) {
             if (groupMember == null) {
-                if (igmpType == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT) {
-                    groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, true);
-                } else {
-                    groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, false);
-                }
-
                 Optional<ConnectPoint> sourceConfigured = getSource();
                 if (!sourceConfigured.isPresent()) {
                     log.warn("Unable to process IGMP Join from {} since no source " +
                                      "configuration is found.", deviceId);
                     return;
                 }
+
+                PortNumber deviceUplink = getDeviceUplink(deviceId);
+                if (deviceUplink == null) {
+                    log.warn("Unable to process IGMP Join since uplink port " +
+                     "of the device {} is not found.", deviceId);
+                    return;
+                }
+
+                if (igmpType == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT) {
+                    groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, true);
+                } else {
+                    groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, false);
+                }
+
                 HashSet<ConnectPoint> sourceConnectPoints = Sets.newHashSet(sourceConfigured.get());
 
-                StateMachine.join(deviceId, groupIp, srcIp);
+                StateMachine.join(deviceId, groupIp, srcIp, deviceUplink);
                 groupMemberMap.put(groupMemberKey, groupMember);
                 groupMember.updateList(recordType, sourceList);
                 groupMember.getSourceList().forEach(source -> {
@@ -471,8 +472,8 @@ public class IgmpManager {
                     short vlan = ethPkt.getVlanID();
                     DeviceId deviceId = pkt.receivedFrom().deviceId();
 
-                    if (oltData.get(deviceId) == null &&
-                            !isConnectPoint(deviceId, pkt.receivedFrom().port())) {
+                    if (!isConnectPoint(deviceId, pkt.receivedFrom().port()) &&
+                            !getDevice(deviceId).isPresent()) {
                         log.error("Device not registered in netcfg :" + deviceId.toString());
                         return;
                     }
@@ -597,12 +598,14 @@ public class IgmpManager {
 
     }
 
-    public static PortNumber getDeviceUplink(DeviceId devId) {
-        if (oltData.get(devId) != null) {
-            return PortNumber.portNumber(oltData.get(devId).uplinkPort());
-        } else {
+    public PortNumber getDeviceUplink(DeviceId devId) {
+        Device device = deviceService.getDevice(devId);
+        if (device == null || device.serialNumber() == null) {
             return null;
         }
+        Optional<SubscriberAndDeviceInformation> olt = getDevice(device.serialNumber());
+        return olt.isPresent() ? PortNumber.portNumber(olt.get().uplinkPort())
+                : null;
     }
 
     public static boolean isIgmpOnPodBasis() {
@@ -659,12 +662,41 @@ public class IgmpManager {
         return ((!connectPointMode) && getDeviceUplink(device).equals(port));
     }
 
+    /**
+     * Fetches device information associated with the device serial number from SADIS.
+     *
+     * @param serialNumber serial number of a device
+     * @return device information; an empty Optional otherwise.
+     */
+    private Optional<SubscriberAndDeviceInformation> getDevice(String serialNumber) {
+        long start = System.currentTimeMillis();
+        try {
+            return Optional.ofNullable(sadisService.getSubscriberInfoService().get(serialNumber));
+        } finally {
+            log.debug("Device fetched from SADIS. Elapsed {} msec", System.currentTimeMillis() - start);
+        }
+    }
+
+    /**
+     * Fetches device information associated with the device serial number from SADIS.
+     *
+     * @param deviceId device id
+     * @return device information; an empty Optional otherwise.
+     */
+    private Optional<SubscriberAndDeviceInformation> getDevice(DeviceId deviceId) {
+        Device device = deviceService.getDevice(deviceId);
+        if (device == null || device.serialNumber() == null) {
+            return Optional.empty();
+        }
+        return getDevice(device.serialNumber());
+    }
+
     private class InternalDeviceListener implements DeviceListener {
         @Override
         public void event(DeviceEvent event) {
             DeviceId devId = event.subject().id();
             Port p = event.port();
-            if (oltData.get(devId) == null &&
+            if (getDevice(devId).isEmpty() &&
                     !(p != null && isConnectPoint(devId, p.number()))) {
                 return;
             }
@@ -681,7 +713,7 @@ public class IgmpManager {
                     break;
                 case PORT_ADDED:
                     port = p.number();
-                    if (oltData.containsKey(devId) && !isUplink(devId, port) && !isConnectPoint(devId, port)) {
+                    if (getDevice(devId).isPresent() && !isUplink(devId, port) && !isConnectPoint(devId, port)) {
                         processFilterObjective(devId, port, false);
                     } else if (isUplink(devId, port)) {
                         provisionUplinkFlows();
@@ -691,7 +723,7 @@ public class IgmpManager {
                     break;
                 case PORT_UPDATED:
                     port = p.number();
-                    if (oltData.containsKey(devId) && !isUplink(devId, port) && !isConnectPoint(devId, port)) {
+                    if (getDevice(devId).isPresent() && !isUplink(devId, port) && !isConnectPoint(devId, port)) {
                         if (event.port().isEnabled()) {
                             processFilterObjective(devId, port, false);
                         } else {
@@ -855,11 +887,21 @@ public class IgmpManager {
             return;
         }
 
-        oltData.keySet().forEach(deviceId -> provisionUplinkFlows(deviceId));
+        networkConfig.getSubjects(DeviceId.class).forEach(deviceId -> {
+            Optional<SubscriberAndDeviceInformation> device = getDevice(deviceId);
+            if (device.isPresent()) {
+                provisionUplinkFlows(deviceId);
+            }
+        });
     }
+
     private void unprovisionUplinkFlows() {
-        oltData.keySet().forEach(deviceId ->
-                processFilterObjective(deviceId, getDeviceUplink(deviceId), true));
+        networkConfig.getSubjects(DeviceId.class).forEach(deviceId -> {
+            Optional<SubscriberAndDeviceInformation> device = getDevice(deviceId);
+            if (device.isPresent()) {
+                processFilterObjective(deviceId, getDeviceUplink(deviceId), true);
+            }
+        });
     }
 
     private void provisionConnectPointFlows() {
