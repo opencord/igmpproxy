@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "af1fa964_53299783",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2020-02-21T17:31:47Z",
+      "side": 1,
+      "message": "Yes we will need to use the device service because it should also support the case where the SADIS config is fetched from some external system and not present as netcfg.",
+      "parentUuid": "5deb5d14_233abe8f",
+      "range": {
+        "startLine": 284,
+        "startChar": 12,
+        "endLine": 284,
+        "endChar": 25
+      },
+      "revId": "3b531447ce0c88f1e4b3691d177b0e0a99f319a9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9020278a_fd7a2724",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 3
