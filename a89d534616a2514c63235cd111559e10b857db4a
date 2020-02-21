@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "670d06cc_87f595d1",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-21T11:34:20Z",
+      "side": 1,
+      "message": "make it optional and return Optional.empty() better then null since the optical is used in other parts of the class",
+      "range": {
+        "startLine": 601,
+        "startChar": 11,
+        "endLine": 601,
+        "endChar": 21
+      },
+      "revId": "a89d534616a2514c63235cd111559e10b857db4a",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "16bbd973_67e73c04",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-21T11:34:20Z",
+      "side": 1,
+      "message": "please add the parsing fo the port with `nni-` to handle for the case Sadis is misconfigured. see https://gerrit.opencord.org/#/c/17686/",
+      "range": {
+        "startLine": 608,
+        "startChar": 18,
+        "endLine": 608,
+        "endChar": 22
+      },
+      "revId": "a89d534616a2514c63235cd111559e10b857db4a",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f89d4ad_23c79287",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-21T11:34:20Z",
+      "side": 1,
+      "message": "I would rename these methods to getSubscriberAndDeviceInformation to be more representative of what it\u0027s actually done.",
+      "range": {
+        "startLine": 671,
+        "startChar": 53,
+        "endLine": 671,
+        "endChar": 62
+      },
+      "revId": "a89d534616a2514c63235cd111559e10b857db4a",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5fc01d1c_04f71794",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-21T11:34:20Z",
+      "side": 1,
+      "message": "do we need this measurement here ?",
+      "range": {
+        "startLine": 675,
+        "startChar": 0,
+        "endLine": 677,
+        "endChar": 9
+      },
+      "revId": "a89d534616a2514c63235cd111559e10b857db4a",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8516fb51_d003cb37",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-21T11:34:20Z",
+      "side": 1,
+      "message": "I would rename these methods to getSubscriberAndDeviceInformation to be more representative of what it\u0027s actually done.",
+      "range": {
+        "startLine": 686,
+        "startChar": 53,
+        "endLine": 686,
+        "endChar": 62
+      },
+      "revId": "a89d534616a2514c63235cd111559e10b857db4a",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
