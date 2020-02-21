@@ -31,6 +31,7 @@ import org.onosproject.net.Annotations;
 import org.onosproject.net.ConnectPoint;
 import org.onosproject.net.DefaultAnnotations;
 import org.onosproject.net.DefaultDevice;
+import org.onosproject.net.DefaultPort;
 import org.onosproject.net.Device;
 import org.onosproject.net.DeviceId;
 import org.onosproject.net.HostId;
@@ -81,6 +82,7 @@ public class IgmpManagerBase {
     // Uplink ports for two olts A and B
     protected static final PortNumber PORT_A = PortNumber.portNumber(1);
     protected static final PortNumber PORT_B = PortNumber.portNumber(2);
+    protected static final PortNumber PORT_NNI = PortNumber.portNumber(65536);
 
     // Connect Point mode for two olts
     protected static final ConnectPoint CONNECT_POINT_A = new ConnectPoint(DEVICE_ID_OF_A, PORT_A);
@@ -89,6 +91,8 @@ public class IgmpManagerBase {
     protected static final String CLIENT_NAS_PORT_ID = "PON 1/1";
     protected static final String CLIENT_CIRCUIT_ID = "CIR-PON 1/1";
     protected String dsBpId = "HSIA-DS";
+
+    private static final String NNI_PREFIX = "nni";
 
     protected List<Port> lsPorts = new ArrayList<Port>();
     // Flag for adding two different devices in oltData
@@ -125,6 +129,17 @@ public class IgmpManagerBase {
         @Override
         public List<Port> getPorts(DeviceId deviceId) {
             return lsPorts;
+        }
+
+        @Override
+        public Port getPort(DeviceId deviceId, PortNumber portNumber) {
+            if (portNumber.equals(PORT_NNI)) {
+                DefaultAnnotations.Builder annotationsBuilder = DefaultAnnotations.builder()
+                        .set(AnnotationKeys.PORT_NAME, NNI_PREFIX);
+                Port nni = new DefaultPort(null, portNumber, true, annotationsBuilder.build());
+                return nni;
+            }
+            return super.getPort(deviceId, portNumber);
         }
     }
 
@@ -465,6 +480,7 @@ public class IgmpManagerBase {
             this.setIPAddress(ipAddress);
             this.setNasPortId(nasPortId);
             this.setCircuitId(circuitId);
+            this.setUplinkPort((int) PORT_NNI.toLong());
         }
     }
 
