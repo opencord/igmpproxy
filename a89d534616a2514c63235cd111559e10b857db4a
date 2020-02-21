@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "e1372f64_21b4bf5b",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-21T14:03:34Z",
+      "side": 1,
+      "message": "I see, so then I would preface it with log.isDebugEnabled() to do the computation only if the log is actually enabled. Please also put some comment stating the purpose of this.",
+      "parentUuid": "60782388_8ee314a6",
+      "range": {
+        "startLine": 675,
+        "startChar": 0,
+        "endLine": 677,
+        "endChar": 9
+      },
+      "revId": "a89d534616a2514c63235cd111559e10b857db4a",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8516fb51_d003cb37",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
