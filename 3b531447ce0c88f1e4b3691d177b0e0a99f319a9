@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5deb5d14_233abe8f",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-02-21T17:23:30Z",
+      "side": 1,
+      "message": "can we use the DeviceService ?",
+      "range": {
+        "startLine": 284,
+        "startChar": 12,
+        "endLine": 284,
+        "endChar": 25
+      },
+      "revId": "3b531447ce0c88f1e4b3691d177b0e0a99f319a9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9020278a_fd7a2724",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-02-21T17:23:30Z",
+      "side": 1,
+      "message": "Wondering if this can create any problem in an emulated env. Is this strictly needed ?",
+      "range": {
+        "startLine": 604,
+        "startChar": 30,
+        "endLine": 604,
+        "endChar": 59
+      },
+      "revId": "3b531447ce0c88f1e4b3691d177b0e0a99f319a9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "db4b10af_d6db4d7f",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-02-21T17:23:30Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 921,
+        "startChar": 8,
+        "endLine": 921,
+        "endChar": 33
+      },
+      "revId": "3b531447ce0c88f1e4b3691d177b0e0a99f319a9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c3b3fca4_b7ca04d2",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-02-21T17:23:30Z",
+      "side": 1,
+      "message": "It is used many times - I don\u0027t have a strong opinion on that. I am just asking - maybe there is something I did not consider.",
+      "range": {
+        "startLine": 930,
+        "startChar": 8,
+        "endLine": 930,
+        "endChar": 33
+      },
+      "revId": "3b531447ce0c88f1e4b3691d177b0e0a99f319a9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
