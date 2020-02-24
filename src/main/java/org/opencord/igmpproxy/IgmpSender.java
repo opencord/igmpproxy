@@ -195,11 +195,10 @@ public final class IgmpSender {
         return mac;
     }
 
-    public void sendIgmpPacketUplink(Ethernet ethPkt, DeviceId deviceId) {
+    public void sendIgmpPacketUplink(Ethernet ethPkt, DeviceId deviceId, PortNumber upLinkPort) {
         if (!mastershipService.isLocalMaster(deviceId)) {
             return;
         }
-
 
         if (IgmpManager.connectPointMode) {
             if (IgmpManager.connectPoint == null) {
@@ -208,8 +207,7 @@ public final class IgmpSender {
             }
             sendIgmpPacket(ethPkt, IgmpManager.connectPoint.deviceId(), IgmpManager.connectPoint.port());
         } else {
-            PortNumber upLink = IgmpManager.getDeviceUplink(deviceId);
-            sendIgmpPacket(ethPkt, deviceId, upLink);
+            sendIgmpPacket(ethPkt, deviceId, upLinkPort);
         }
     }
 
