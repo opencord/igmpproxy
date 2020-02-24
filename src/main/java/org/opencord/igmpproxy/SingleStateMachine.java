@@ -18,6 +18,7 @@ package org.opencord.igmpproxy;
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.Ip4Address;
 import org.onosproject.net.DeviceId;
+import org.onosproject.net.PortNumber;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -42,6 +43,7 @@ public class SingleStateMachine {
     private DeviceId devId;
     private Ip4Address groupIp;
     private Ip4Address srcIp;
+    private PortNumber upLinkPort;
 
     private AtomicInteger count = new AtomicInteger(DEFAULT_COUNT);
     private int timerId = IgmpTimer.INVALID_TIMER_ID;
@@ -61,10 +63,11 @@ public class SingleStateMachine {
             {nonTransition, delayTransition, idleTransition};
     private int currentState = STATE_NON;
 
-    public SingleStateMachine(DeviceId devId, Ip4Address groupIp, Ip4Address src) {
+    public SingleStateMachine(DeviceId devId, Ip4Address groupIp, Ip4Address src, PortNumber upLinkPort) {
         this.devId = devId;
         this.groupIp = groupIp;
         this.srcIp = src;
+        this.upLinkPort = upLinkPort;
     }
 
     public Ip4Address getGroupIp() {
@@ -137,7 +140,7 @@ public class SingleStateMachine {
         public void leave(boolean messageOutAllowed) {
             if (messageOutAllowed) {
                 Ethernet eth = IgmpSender.getInstance().buildIgmpV3Leave(groupIp, srcIp);
-                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId);
+                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId, upLinkPort);
             }
         }
 
@@ -153,7 +156,7 @@ public class SingleStateMachine {
         public void join(boolean messageOutAllowed) {
             if (messageOutAllowed) {
                 Ethernet eth = IgmpSender.getInstance().buildIgmpV3Join(groupIp, srcIp);
-                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId);
+                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId, upLinkPort);
                 timeOut = getTimeOut(IgmpManager.getUnsolicitedTimeout());
                 timerId = IgmpTimer.start(SingleStateMachine.this, timeOut);
             }
@@ -171,7 +174,7 @@ public class SingleStateMachine {
         public void timeOut() {
             if (sendQuery) {
                 Ethernet eth = IgmpSender.getInstance().buildIgmpV3ResponseQuery(groupIp, srcIp);
-                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId);
+                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId, upLinkPort);
                 timeOut = DEFAULT_MAX_RESP;
             }
         }
