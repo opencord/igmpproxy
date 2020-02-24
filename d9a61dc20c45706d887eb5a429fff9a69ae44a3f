@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c922c9b2_5f4111cb",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-24T11:56:36Z",
+      "side": 1,
+      "message": "I agree with it. However, StateMachine is a plain java class and needs to access ONOS storage service. I think I can follow the pattern in McastHandler of SegmentRouting; storage service is given to McastHandler through its constructor by SG.",
+      "parentUuid": "bcd9be9a_205162b6",
+      "range": {
+        "startLine": 298,
+        "startChar": 12,
+        "endLine": 298,
+        "endChar": 24
+      },
+      "revId": "d9a61dc20c45706d887eb5a429fff9a69ae44a3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e927c3e_7c657024",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "6303bc20_c578bdb9",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-24T11:56:36Z",
+      "side": 1,
+      "message": "On line 581, there is a mastership check based on device. Is this check enough? If not, It seems we need some kind of cluster leadership check here. I don\u0027t know what service is used in ONOS for that purpose; I need an example usage.",
+      "parentUuid": "d82d2099_538f06e2",
+      "range": {
+        "startLine": 565,
+        "startChar": 16,
+        "endLine": 565,
+        "endChar": 25
+      },
+      "revId": "d9a61dc20c45706d887eb5a429fff9a69ae44a3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a6320ed_31794e53",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "ec1f0db4_9a9065d0",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-24T11:56:36Z",
+      "side": 1,
+      "message": "is there any special purpose of using entrySet here? I just thought it would be better to fetch items one by one, instead of pulling all storage info into the memory in one go.",
+      "parentUuid": "8a6320ed_31794e53",
+      "range": {
+        "startLine": 574,
+        "startChar": 12,
+        "endLine": 579,
+        "endChar": 17
+      },
+      "revId": "d9a61dc20c45706d887eb5a429fff9a69ae44a3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d2f0b23_c2945a78",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
@@ -106,6 +178,30 @@
       "writtenOn": "2020-02-21T08:51:03Z",
       "side": 1,
       "message": "where is it used ?",
+      "range": {
+        "startLine": 608,
+        "startChar": 0,
+        "endLine": 608,
+        "endChar": 36
+      },
+      "revId": "d9a61dc20c45706d887eb5a429fff9a69ae44a3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9479b92e_04f931df",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-24T11:56:36Z",
+      "side": 1,
+      "message": "I will remove it",
+      "parentUuid": "4d2f0b23_c2945a78",
       "range": {
         "startLine": 608,
         "startChar": 0,
