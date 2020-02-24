@@ -18,6 +18,8 @@ package org.opencord.igmpproxy;
 import com.google.common.collect.Maps;
 import org.onlab.packet.Ip4Address;
 import org.onosproject.net.DeviceId;
+import org.onosproject.net.PortNumber;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -52,11 +54,11 @@ public final class StateMachine {
         map.remove(getId(devId, groupIp));
     }
 
-    public static boolean join(DeviceId devId, Ip4Address groupIp, Ip4Address srcIP) {
+    public static boolean join(DeviceId devId, Ip4Address groupIp, Ip4Address srcIP, PortNumber upLinkPort) {
         SingleStateMachine machine = get(devId, groupIp);
 
         if (null == machine) {
-            machine = new SingleStateMachine(devId, groupIp, srcIP);
+            machine = new SingleStateMachine(devId, groupIp, srcIP, upLinkPort);
             map.put(getId(devId, groupIp), machine);
 
             boolean shouldSendJoin = true;
