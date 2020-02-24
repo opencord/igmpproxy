@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "3d631cb8_aa0784de",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-24T07:44:39Z",
+      "side": 1,
+      "message": "If sadis is called with a null argument, it will probably return an empty result. In this case, I could not see any point in calling sadis with a null argument. Could you?\n\nI also noticed that  I should return Optional.empty() on line 605 instead of null in case serial number is null.",
+      "parentUuid": "9020278a_fd7a2724",
+      "range": {
+        "startLine": 604,
+        "startChar": 30,
+        "endLine": 604,
+        "endChar": 59
+      },
+      "revId": "3b531447ce0c88f1e4b3691d177b0e0a99f319a9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db4b10af_d6db4d7f",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 3
@@ -130,6 +154,30 @@
       "writtenOn": "2020-02-21T17:23:30Z",
       "side": 1,
       "message": "It is used many times - I don\u0027t have a strong opinion on that. I am just asking - maybe there is something I did not consider.",
+      "range": {
+        "startLine": 930,
+        "startChar": 8,
+        "endLine": 930,
+        "endChar": 33
+      },
+      "revId": "3b531447ce0c88f1e4b3691d177b0e0a99f319a9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83c77ea4_fca590e7",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 930,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-24T07:44:39Z",
+      "side": 1,
+      "message": "Maybe we should merely unprovision devices that we have just provisioned in provisionUplinkFlows method.",
+      "parentUuid": "c3b3fca4_b7ca04d2",
       "range": {
         "startLine": 930,
         "startChar": 8,
