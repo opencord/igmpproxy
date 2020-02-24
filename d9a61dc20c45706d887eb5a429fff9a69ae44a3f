@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "d82d2099_538f06e2",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-24T08:25:59Z",
+      "side": 1,
+      "message": "could probably be don on a mastership basis",
+      "parentUuid": "3e927c3e_7c657024",
+      "range": {
+        "startLine": 565,
+        "startChar": 16,
+        "endLine": 565,
+        "endChar": 25
+      },
+      "revId": "d9a61dc20c45706d887eb5a429fff9a69ae44a3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a6320ed_31794e53",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
