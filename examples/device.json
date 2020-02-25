@@ -7,6 +7,14 @@
       "accessDevice": {
         "uplink": 1048576,
         "vlan": 0
+      },
+      "ports":{
+        "1048576":{
+          "number":1048576,
+          "annotations":{
+            "portName": "nni-1048576"
+          }
+        }
       }
     }
   }

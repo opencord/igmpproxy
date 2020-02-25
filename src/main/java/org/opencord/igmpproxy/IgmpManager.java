@@ -75,7 +75,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -480,10 +479,13 @@ public class IgmpManager {
                     }
 
                     IGMP igmp = (IGMP) ipv4Pkt.getPayload();
+
+                    Optional<PortNumber> deviceUpLinkOpt = getDeviceUplink(deviceId);
+                    PortNumber upLinkPort =  deviceUpLinkOpt.isPresent() ? deviceUpLinkOpt.get() : null;
                     switch (igmp.getIgmpType()) {
                         case IGMP.TYPE_IGMPV3_MEMBERSHIP_QUERY:
                             //Discard Query from OLT’s non-uplink port’s
-                            if (!pkt.receivedFrom().port().equals(getDeviceUplink(deviceId))) {
+                            if (!pkt.receivedFrom().port().equals(upLinkPort)) {
                                 if (isConnectPoint(deviceId, pkt.receivedFrom().port())) {
                                     log.info("IGMP Picked up query from connectPoint");
                                     //OK to process packet
@@ -493,7 +495,7 @@ public class IgmpManager {
                                     break;
                                 } else {
                                     //Not OK to process packet
-                                    log.warn("IGMP Picked up query from non-uplink port");
+                                    log.warn("IGMP Picked up query from non-uplink port {}", upLinkPort);
                                     return;
                                 }
                             }
@@ -508,7 +510,7 @@ public class IgmpManager {
                         case IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT:
                         case IGMP.TYPE_IGMPV2_LEAVE_GROUP:
                             //Discard join/leave from OLT’s uplink port’s
-                            if (pkt.receivedFrom().port().equals(getDeviceUplink(deviceId)) ||
+                            if (pkt.receivedFrom().port().equals(upLinkPort) ||
                                     isConnectPoint(deviceId, pkt.receivedFrom().port())) {
                                 log.info("IGMP Picked up join/leave from uplink/connectPoint port");
                                 return;
@@ -680,7 +682,11 @@ public class IgmpManager {
     }
 
     private boolean isUplink(DeviceId device, PortNumber port) {
-        return ((!connectPointMode) && getDeviceUplink(device).equals(port));
+        if (connectPointMode) {
+            return false;
+        }
+        Optional<PortNumber> upLinkPort = getDeviceUplink(device);
+        return upLinkPort.isPresent() && upLinkPort.equals(port);
     }
 
     /**
@@ -892,14 +898,6 @@ public class IgmpManager {
                     break;
             }
         }
-    }
-
-    private void provisionDefaultFlows(DeviceId deviceId) {
-        List<Port> ports = deviceService.getPorts(deviceId);
-
-        ports.stream()
-                .filter(p -> (!getDeviceUplink(((Device) p.element()).id()).equals(p.number()) && p.isEnabled()))
-                .forEach(p -> processFilterObjective((DeviceId) p.element().id(), p.number(), false));
     }
 
     private void provisionUplinkFlows(DeviceId deviceId) {
