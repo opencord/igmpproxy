@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2e1ebac_a774e709",
+        "filename": "examples/device.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-25T16:35:28Z",
+      "side": 1,
+      "message": "why are we adding this to net cfg ? it should come from the device",
+      "range": {
+        "startLine": 11,
+        "startChar": 6,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "bbd57d9af14ce8e7c9ea6698b58d065bd33e250f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
