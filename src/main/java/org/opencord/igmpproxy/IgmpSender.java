@@ -55,6 +55,8 @@ public final class IgmpSender {
     private byte igmpCos = DEFAULT_COS;
     private int maxResp = DEFAULT_MEX_RESP;
     private Logger log = LoggerFactory.getLogger(getClass());
+    // Boolean to verify valid igmp packet
+    public static boolean validIgmpPacket = false;
 
     private IgmpSender(PacketService packetService, MastershipService mastershipService) {
         this.packetService = packetService;
@@ -220,7 +222,12 @@ public final class IgmpSender {
                 .setOutput(portNumber).build();
         OutboundPacket packet = new DefaultOutboundPacket(deviceId,
                 treatment, ByteBuffer.wrap(ethPkt.serialize()));
+        validIgmpPacket = true;
         packetService.emit(packet);
 
     }
+
+    public static boolean isValidIgmpPacket() {
+        return validIgmpPacket;
+     }
 }

@@ -18,11 +18,17 @@ package org.opencord.igmpproxy;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.onlab.junit.TestUtils;
 import org.onlab.packet.Ethernet;
 import org.onosproject.core.CoreServiceAdapter;
+import org.onosproject.event.DefaultEventSinkRegistry;
+import org.onosproject.event.Event;
+import org.onosproject.event.EventDeliveryService;
+import org.onosproject.event.EventSink;
 import org.onosproject.net.flow.FlowRuleServiceAdapter;
 import org.onosproject.net.flowobjective.FlowObjectiveServiceAdapter;
 
+import static com.google.common.base.Preconditions.checkState;
 import static org.junit.Assert.*;
 
 public class IgmpManagerTest extends IgmpManagerBase {
@@ -30,6 +36,27 @@ public class IgmpManagerTest extends IgmpManagerBase {
     private static final int WAIT_TIMEOUT = 1000;
 
     private IgmpManager igmpManager;
+    private IgmpStatisticsManager igmpStatisticsManager;
+
+    public static class TestEventDispatcher extends DefaultEventSinkRegistry
+    implements EventDeliveryService {
+          @Override
+          @SuppressWarnings("unchecked")
+          public synchronized void post(Event event) {
+             EventSink sink = getSink(event.getClass());
+             checkState(sink != null, "No sink for event %s", event);
+             sink.process(event);
+          }
+
+          @Override
+          public void setDispatchTimeLimit(long millis) {
+          }
+
+          @Override
+          public long getDispatchTimeLimit() {
+            return 0;
+          }
+   }
 
     // Set up the IGMP application.
     @Before
@@ -43,6 +70,10 @@ public class IgmpManagerTest extends IgmpManagerBase {
         igmpManager.flowRuleService = new FlowRuleServiceAdapter();
         igmpManager.multicastService = new TestMulticastRouteService();
         igmpManager.sadisService = new MockSadisService();
+        igmpStatisticsManager = new IgmpStatisticsManager();
+        TestUtils.setField(igmpStatisticsManager, "eventDispatcher", new TestEventDispatcher());
+        igmpStatisticsManager.activate();
+        igmpManager.igmpStatisticsManager = this.igmpStatisticsManager;
         // By default - we send query messages
         SingleStateMachine.sendQuery = true;
     }
