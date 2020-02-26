@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0828d3f8_5a567f9d",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 629,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-26T11:52:16Z",
+      "side": 1,
+      "message": "During porting the feature to IgmpManager 1.2, I noticed that putting a log here might be helpful for the people who work with emulated environments. That is why it is not in the master branch yet. I\u0027ve just submitted the following patch for some corrections\u0026enhancement on the master branch. I will add this log to this patch.\n\nhttps://gerrit.opencord.org/#/c/17792/",
+      "parentUuid": "21f1b848_39f60784",
+      "range": {
+        "startLine": 623,
+        "startChar": 0,
+        "endLine": 629,
+        "endChar": 23
+      },
+      "revId": "794e701e9952fa3c10d1102cdace50c66c7dce27",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e9c4991_01793b92",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
@@ -83,6 +107,54 @@
       "writtenOn": "2020-02-26T09:51:04Z",
       "side": 1,
       "message": "should be upLinkPort.get().equals(port)",
+      "parentUuid": "7e9c4991_01793b92",
+      "range": {
+        "startLine": 682,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 5
+      },
+      "revId": "794e701e9952fa3c10d1102cdace50c66c7dce27",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "63a033b9_76d1ecf3",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-26T11:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb862e96_2ff791d4",
+      "range": {
+        "startLine": 682,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 5
+      },
+      "revId": "794e701e9952fa3c10d1102cdace50c66c7dce27",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bced19b5_14914573",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-26T11:52:16Z",
+      "side": 1,
+      "message": "I submitted a new patch for these kinds of corrections\u0026enhancements.\n\nhttps://gerrit.opencord.org/#/c/17792/",
       "parentUuid": "7e9c4991_01793b92",
       "range": {
         "startLine": 682,

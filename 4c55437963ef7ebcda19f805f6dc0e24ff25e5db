@@ -22,6 +22,30 @@
       "revId": "4c55437963ef7ebcda19f805f6dc0e24ff25e5db",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e5ac624_b8718bf8",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 845,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-26T11:52:16Z",
+      "side": 0,
+      "message": "Please check https://gerrit.opencord.org/#/c/17792/",
+      "parentUuid": "767eb242_490dba96",
+      "range": {
+        "startLine": 841,
+        "startChar": 0,
+        "endLine": 845,
+        "endChar": 102
+      },
+      "revId": "4c55437963ef7ebcda19f805f6dc0e24ff25e5db",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
