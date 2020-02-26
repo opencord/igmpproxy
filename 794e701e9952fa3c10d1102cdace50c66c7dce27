@@ -69,6 +69,30 @@
       "revId": "794e701e9952fa3c10d1102cdace50c66c7dce27",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fb862e96_2ff791d4",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-02-26T09:51:04Z",
+      "side": 1,
+      "message": "should be upLinkPort.get().equals(port)",
+      "parentUuid": "7e9c4991_01793b92",
+      "range": {
+        "startLine": 682,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 5
+      },
+      "revId": "794e701e9952fa3c10d1102cdace50c66c7dce27",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
