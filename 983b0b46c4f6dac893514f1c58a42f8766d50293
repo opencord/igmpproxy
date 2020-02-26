@@ -22,6 +22,30 @@
       "revId": "983b0b46c4f6dac893514f1c58a42f8766d50293",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f54ee71a_1a028d7f",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 633,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-02-26T12:47:50Z",
+      "side": 1,
+      "message": "yes",
+      "parentUuid": "fafaab7b_34410167",
+      "range": {
+        "startLine": 633,
+        "startChar": 16,
+        "endLine": 633,
+        "endChar": 20
+      },
+      "revId": "983b0b46c4f6dac893514f1c58a42f8766d50293",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
