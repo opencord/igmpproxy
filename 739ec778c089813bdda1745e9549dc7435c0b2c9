@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3805735b_8f221e57",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-02T08:52:04Z",
+      "side": 1,
+      "message": "please use the declared constant STATISTICS_GENERATION_PERIOD to avoid issues if that has to be changed.",
+      "range": {
+        "startLine": 266,
+        "startChar": 42,
+        "endLine": 266,
+        "endChar": 77
+      },
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f5d51071_88b391a2",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-02T08:52:04Z",
+      "side": 1,
+      "message": "this check is useless since this switch statement is already for the precise type.",
+      "range": {
+        "startLine": 561,
+        "startChar": 28,
+        "endLine": 561,
+        "endChar": 85
+      },
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9f97bc41_cac68164",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-02T08:52:04Z",
+      "side": 1,
+      "message": "debug too",
+      "range": {
+        "startLine": 1013,
+        "startChar": 16,
+        "endLine": 1013,
+        "endChar": 20
+      },
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6b41bf6_e6a6b4e2",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatistics.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-02T08:52:04Z",
+      "side": 1,
+      "message": "some documentation and javadoc on these classes is needed",
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0a4ec4aa_f1d85fc8",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsDelegate.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-02T08:52:04Z",
+      "side": 1,
+      "message": "IGMP",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44579b57_0eee4737",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-02T08:52:04Z",
+      "side": 1,
+      "message": "again missing javadoc",
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "703d383e_a4292d9b",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-02T08:52:04Z",
+      "side": 1,
+      "message": "also set the igmpStats and statsDelegate to null",
+      "range": {
+        "startLine": 54,
+        "startChar": 12,
+        "endLine": 54,
+        "endChar": 66
+      },
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5bb3a9c6_560cfaba",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-02T08:52:04Z",
+      "side": 1,
+      "message": "for consistency with other services move them to the top of the class after initial elements",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 56,
+        "endChar": 9
+      },
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a32d3d1_60621c21",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-02T08:52:04Z",
+      "side": 1,
+      "message": "formatting is wrong.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 9
+      },
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
