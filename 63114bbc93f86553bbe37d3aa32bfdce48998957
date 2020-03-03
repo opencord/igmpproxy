@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c693c041_2a92aa53",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T14:12:12Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 257,
+        "startChar": 8,
+        "endLine": 257,
+        "endChar": 37
+      },
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e0370f6_cf0799b9",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T14:12:12Z",
+      "side": 1,
+      "message": "please use STATISTICS_GENERATION_PERIOD",
+      "range": {
+        "startLine": 268,
+        "startChar": 42,
+        "endLine": 268,
+        "endChar": 77
+      },
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e429eab9_5253bdb1",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T14:12:12Z",
+      "side": 1,
+      "message": "wrong formatting",
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "924337b4_65789d13",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T14:12:12Z",
+      "side": 1,
+      "message": "it\u0027s always the case the a IGMPV3 is always also a IGMPV2 ? because without the break you are increasing also that one.",
+      "range": {
+        "startLine": 565,
+        "startChar": 0,
+        "endLine": 568,
+        "endChar": 98
+      },
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3ef43c1_2a65d72b",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 595,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T14:12:12Z",
+      "side": 1,
+      "message": "for a cleaner and more readable implementation I woudl extract this as a method, and then call it on a case by case basis for each case at 565, 567, 569 and then issue a break in each case.",
+      "range": {
+        "startLine": 573,
+        "startChar": 0,
+        "endLine": 595,
+        "endChar": 29
+      },
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ef908d6e_c3220d94",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T14:12:12Z",
+      "side": 1,
+      "message": "warn",
+      "range": {
+        "startLine": 599,
+        "startChar": 32,
+        "endLine": 599,
+        "endChar": 36
+      },
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7a6340a8_da1d8d76",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 606,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T14:12:12Z",
+      "side": 1,
+      "message": "please remove, altough is not from your patch.",
+      "range": {
+        "startLine": 606,
+        "startChar": 20,
+        "endLine": 606,
+        "endChar": 41
+      },
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d43a908f_875afb43",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T14:12:12Z",
+      "side": 1,
+      "message": "please avoid the whitespace here, valid for all classes that have it in the patch.",
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ecdf2ea_c884cdc1",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T14:12:12Z",
+      "side": 1,
+      "message": "I woudl aslo add a test that checks the message that is sent out",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 5
+      },
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
