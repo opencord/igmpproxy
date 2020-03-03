@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "7dd82d2a_b31ed776",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T13:53:21Z",
+      "side": 1,
+      "message": "I see, ok",
+      "parentUuid": "0231b4d3_6b3fcab2",
+      "range": {
+        "startLine": 561,
+        "startChar": 27,
+        "endLine": 561,
+        "endChar": 83
+      },
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f97bc41_cac68164",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
