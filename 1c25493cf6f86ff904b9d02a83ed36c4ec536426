@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f992f60_92849160",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T13:53:21Z",
+      "side": 1,
+      "message": "after this you need to cancel the scheduled future and call again\nscheduledFuture \u003d executorForIgmp.scheduleAtFixedRate(igmpStatisticsPublisher,\n                0, statisticsGenerationPeriodInSeconds, TimeUnit.SECONDS);",
+      "range": {
+        "startLine": 269,
+        "startChar": 8,
+        "endLine": 271,
+        "endChar": 49
+      },
+      "revId": "1c25493cf6f86ff904b9d02a83ed36c4ec536426",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
