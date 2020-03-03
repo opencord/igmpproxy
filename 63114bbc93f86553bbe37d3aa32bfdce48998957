@@ -194,6 +194,30 @@
       "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "abe98986_5f44af58",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-03T14:52:47Z",
+      "side": 1,
+      "message": "Can we add test cases for this as well other jira items related to igmp stats in other jira?",
+      "parentUuid": "1ecdf2ea_c884cdc1",
+      "range": {
+        "startLine": 146,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 5
+      },
+      "revId": "63114bbc93f86553bbe37d3aa32bfdce48998957",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
