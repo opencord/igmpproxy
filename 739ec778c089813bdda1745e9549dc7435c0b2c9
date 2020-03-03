@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "0231b4d3_6b3fcab2",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-03T13:43:47Z",
+      "side": 1,
+      "message": "This is required because the above 2 cases TYPE_IGMPV3_MEMBERSHIP_REPORT and TYPE_IGMPV2_MEMBERSHIP_REPORT does not have break. All 3 including V2_LEAVE is handled in this case.",
+      "range": {
+        "startLine": 561,
+        "startChar": 27,
+        "endLine": 561,
+        "endChar": 83
+      },
+      "revId": "739ec778c089813bdda1745e9549dc7435c0b2c9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f97bc41_cac68164",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
