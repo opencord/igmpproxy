@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b63bc37c_54bb2577",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T11:06:03Z",
+      "side": 1,
+      "message": "you are not actually checking for the cfg value of STATISTICS_GENERATION_PERIOD.\nyou need to do something like \nif (context !\u003d null) {\n            Dictionary\u003c?, ?\u003e properties \u003d context.getProperties();\n            statisticsGenerationPeriodInSeconds \u003d getEventGenerationPeriod(properties, statisticsGenerationPeriodInSeconds);\n}\nand a new method\nprivate int getEventGenerationPeriod(Dictionary\u003c?, ?\u003e properties, int statisticsGenerationPeriodInSeconds) {\n        int newStatisticsGenerationPeriodInSeconds;\n        try {\n            String s \u003d get(properties, STATISTICS_GENERATION_PERIOD);\n            newStatisticsGenerationPeriodInSeconds \u003d isNullOrEmpty(s) ? pollFrequency : Integer.parseInt(s.trim());\n        } catch (NumberFormatException | ClassCastException e) {\n            newStatisticsGenerationPeriodInSeconds \u003d EVENT_GENERATION_PERIOD_DEFAULT;\n        }\n        return newStatisticsGenerationPeriodInSeconds;\n}",
+      "range": {
+        "startLine": 250,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 74
+      },
+      "revId": "de7a47ae38578cbb6ba3156acecaedaa66ae4588",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8987eb1_4f605ee5",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T11:06:03Z",
+      "side": 1,
+      "message": "no modified() method to account for changes in the cfg of StatisticsGenerationPeriodInSeconds",
+      "revId": "de7a47ae38578cbb6ba3156acecaedaa66ae4588",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6cdda759_afd9280a",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 990,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T11:06:03Z",
+      "side": 1,
+      "message": "debug for all the logs in the private class",
+      "range": {
+        "startLine": 990,
+        "startChar": 16,
+        "endLine": 990,
+        "endChar": 20
+      },
+      "revId": "de7a47ae38578cbb6ba3156acecaedaa66ae4588",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "433baa11_ed297338",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1010,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T11:06:03Z",
+      "side": 1,
+      "message": "MINOR, make it symmetrical",
+      "range": {
+        "startLine": 1010,
+        "startChar": 22,
+        "endLine": 1010,
+        "endChar": 44
+      },
+      "revId": "de7a47ae38578cbb6ba3156acecaedaa66ae4588",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d79a32f2_f64b92a1",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatistics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T11:06:03Z",
+      "side": 1,
+      "message": "javadoc for class and public methods",
+      "revId": "de7a47ae38578cbb6ba3156acecaedaa66ae4588",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c1463a35_617c0d1f",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsDelegate.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T11:06:03Z",
+      "side": 1,
+      "message": "IGMP",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "de7a47ae38578cbb6ba3156acecaedaa66ae4588",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ce22817e_381c78a8",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T11:06:03Z",
+      "side": 1,
+      "message": "javadoc",
+      "revId": "de7a47ae38578cbb6ba3156acecaedaa66ae4588",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89dc2297_d6706ef2",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T11:06:03Z",
+      "side": 1,
+      "message": "aslo put stats and delegate to null",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 58
+      },
+      "revId": "de7a47ae38578cbb6ba3156acecaedaa66ae4588",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3a88a6de_306d3b0c",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-03T11:06:03Z",
+      "side": 1,
+      "message": "wrong formatting",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 9
+      },
+      "revId": "de7a47ae38578cbb6ba3156acecaedaa66ae4588",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
