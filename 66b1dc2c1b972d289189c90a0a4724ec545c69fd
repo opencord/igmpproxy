@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dac7777a_08b69356",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-06T15:05:25Z",
+      "side": 1,
+      "message": "Same concerns on another review - what is the benefit of having this code here ?",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 45
+      },
+      "revId": "66b1dc2c1b972d289189c90a0a4724ec545c69fd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "897cbc0e_4d115890",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-06T15:05:25Z",
+      "side": 1,
+      "message": "this code needs some guards and handling of the exceptions.",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 74
+      },
+      "revId": "66b1dc2c1b972d289189c90a0a4724ec545c69fd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2dfddfb_30480464",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-06T15:05:25Z",
+      "side": 1,
+      "message": "this code can throw NPE - wondering if we want to expose a notifyDelegate method (and internally we check if delegate !\u003dnull)",
+      "range": {
+        "startLine": 1043,
+        "startChar": 34,
+        "endLine": 1043,
+        "endChar": 50
+      },
+      "revId": "66b1dc2c1b972d289189c90a0a4724ec545c69fd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f9be924a_7c2bf5f7",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsEvent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-06T15:05:25Z",
+      "side": 1,
+      "message": "do we plan to have several types of stats ?",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "66b1dc2c1b972d289189c90a0a4724ec545c69fd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a0e8f020_9e41cbda",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-06T15:05:25Z",
+      "side": 1,
+      "message": "we are not testing the listener",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "66b1dc2c1b972d289189c90a0a4724ec545c69fd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
