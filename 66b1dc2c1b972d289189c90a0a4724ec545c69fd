@@ -166,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "73021449_0d618eee",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsEvent.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-09T17:17:47Z",
+      "side": 1,
+      "message": "As of now no. In future we can have, like STATS_RESET.",
+      "parentUuid": "f9be924a_7c2bf5f7",
+      "range": {
+        "startLine": 35,
+        "startChar": 8,
+        "endLine": 35,
+        "endChar": 20
+      },
+      "revId": "66b1dc2c1b972d289189c90a0a4724ec545c69fd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0e8f020_9e41cbda",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerTest.java",
         "patchSetId": 5
