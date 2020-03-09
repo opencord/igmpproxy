@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e05b570f_0f760f70",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-09T17:11:18Z",
+      "side": 1,
+      "message": "Moved to IgmpStatisticsManager",
+      "parentUuid": "dac7777a_08b69356",
+      "range": {
+        "startLine": 215,
+        "startChar": 0,
+        "endLine": 217,
+        "endChar": 45
+      },
+      "revId": "66b1dc2c1b972d289189c90a0a4724ec545c69fd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "897cbc0e_4d115890",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "287df005_7c586354",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-09T17:11:18Z",
+      "side": 1,
+      "message": "Moved to IgmpStatisticsManager. Handled RejectedExecutionException \u0026 IllegalArgumentException as per osgi documentation ScheduledExecutorService throws these exceptions\n\nRejectedExecutionException - if the task cannot be scheduled for execution\nNullPointerException - if command is null\nIllegalArgumentException - if period less than or equal to zero\n\nNot handling NPE as command is created.",
+      "parentUuid": "897cbc0e_4d115890",
+      "range": {
+        "startLine": 263,
+        "startChar": 0,
+        "endLine": 273,
+        "endChar": 74
+      },
+      "revId": "66b1dc2c1b972d289189c90a0a4724ec545c69fd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2dfddfb_30480464",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2020-03-06T15:05:25Z",
       "side": 1,
       "message": "this code can throw NPE - wondering if we want to expose a notifyDelegate method (and internally we check if delegate !\u003dnull)",
+      "range": {
+        "startLine": 1043,
+        "startChar": 34,
+        "endLine": 1043,
+        "endChar": 50
+      },
+      "revId": "66b1dc2c1b972d289189c90a0a4724ec545c69fd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31f6316c_4db8d49f",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-09T17:11:18Z",
+      "side": 1,
+      "message": "Moved to IgmpStatisticsManager and added null check.",
+      "parentUuid": "b2dfddfb_30480464",
       "range": {
         "startLine": 1043,
         "startChar": 34,
