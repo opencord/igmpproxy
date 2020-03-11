@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df3a4864_a8e66f76",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-11T15:32:46Z",
+      "side": 1,
+      "message": "reduce to 500",
+      "range": {
+        "startLine": 33,
+        "startChar": 44,
+        "endLine": 33,
+        "endChar": 48
+      },
+      "revId": "57bb690bef9d8bebcafaf09dc04a2584c74d1090",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "584dd6da_82586a9c",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-11T15:32:46Z",
+      "side": 1,
+      "message": "assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () -\u003e\n                assertEquals((long) 2, igmpStatisticsManager.getIgmpStats().getTotalMsgReceived().longValue()));",
+      "range": {
+        "startLine": 86,
+        "startChar": 8,
+        "endLine": 86,
+        "endChar": 20
+      },
+      "revId": "57bb690bef9d8bebcafaf09dc04a2584c74d1090",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
