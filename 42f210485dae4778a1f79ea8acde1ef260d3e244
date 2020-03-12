@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dba572bf_e2a91b6d",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-12T10:25:29Z",
+      "side": 1,
+      "message": "This method is containing existing code which we carved out from switch. \n\nI think the reason behind is, org.onlab.packet.IgmpGroup is  an abstract class extended by 2 classes IGMPQuery and IGMPMembership. I am not sure if IGMPQuery type would come here in any case, but still handled to be treated as IGMPMembership.",
+      "parentUuid": "a0a7573a_ffad779c",
+      "range": {
+        "startLine": 563,
+        "startChar": 40,
+        "endLine": 565,
+        "endChar": 78
+      },
+      "revId": "42f210485dae4778a1f79ea8acde1ef260d3e244",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b4ab60ac_5f8d9c29",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 9
