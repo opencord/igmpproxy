@@ -16,6 +16,47 @@
       "revId": "7916175d2d8362d8e938f749c98849ceaeadd435",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9eea970c_3d60f935",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsDelegate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-12T16:08:30Z",
+      "side": 1,
+      "message": "You don\u0027t need anymore the delegate since you are handling everything inside the stats manager",
+      "parentUuid": "688b98a0_279f1026",
+      "revId": "7916175d2d8362d8e938f749c98849ceaeadd435",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9e2138c8_5cc04473",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-12T16:08:30Z",
+      "side": 1,
+      "message": "You don\u0027t need these extra steps - just do post. The delegate framework was meant for apps having Manager and Stores - here is not needed - it is an overkill",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 13
+      },
+      "revId": "7916175d2d8362d8e938f749c98849ceaeadd435",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
