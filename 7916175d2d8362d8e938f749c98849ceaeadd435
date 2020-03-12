@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "688b98a0_279f1026",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsDelegate.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-12T14:00:16Z",
+      "side": 1,
+      "message": "I woudl avoid using the delegate and go for the pattern that AAA uses on a listener based class. Please check the AAAStatisticsManager",
+      "revId": "7916175d2d8362d8e938f749c98849ceaeadd435",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
