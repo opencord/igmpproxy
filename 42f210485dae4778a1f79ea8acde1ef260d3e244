@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0a7573a_ffad779c",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 565,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-12T09:34:06Z",
+      "side": 1,
+      "message": "This confuses me a bit, the type is Query but then you create a IGMPMembership ?and report it as Membership. Please explain. Also, line 564 and 565 can be combined",
+      "range": {
+        "startLine": 563,
+        "startChar": 40,
+        "endLine": 565,
+        "endChar": 78
+      },
+      "revId": "42f210485dae4778a1f79ea8acde1ef260d3e244",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4ab60ac_5f8d9c29",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-12T09:34:06Z",
+      "side": 1,
+      "message": "handle the case where the group is not of these two types",
+      "revId": "42f210485dae4778a1f79ea8acde1ef260d3e244",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "13d45f25_d7205250",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-12T09:34:06Z",
+      "side": 1,
+      "message": "javadoc",
+      "revId": "42f210485dae4778a1f79ea8acde1ef260d3e244",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
