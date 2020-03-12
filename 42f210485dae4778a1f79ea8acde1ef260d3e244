@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "9cbb95ce_38e513f7",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-12T10:46:57Z",
+      "side": 1,
+      "message": "Removed else if. As in org.onlab.packet, IGMPGroup is extended by only IGMPMembership and IGMPQuery.",
+      "parentUuid": "b4ab60ac_5f8d9c29",
+      "revId": "42f210485dae4778a1f79ea8acde1ef260d3e244",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13d45f25_d7205250",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
         "patchSetId": 9
@@ -77,6 +95,24 @@
       "writtenOn": "2020-03-12T09:34:06Z",
       "side": 1,
       "message": "javadoc",
+      "revId": "42f210485dae4778a1f79ea8acde1ef260d3e244",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2368df99_26ff9ea4",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-12T10:46:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13d45f25_d7205250",
       "revId": "42f210485dae4778a1f79ea8acde1ef260d3e244",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
