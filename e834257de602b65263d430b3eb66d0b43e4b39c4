@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "703a4e06_ceea0d14",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatistics.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2020-03-13T16:32:34Z",
+      "side": 1,
+      "message": "I would just increment this in the other methods that record specific message counters, so the client doesn\u0027t have to make another call.\nI.e. in the increaseIgmpv2MembershipReport() method increment the totalMsgReceived counter as well as the original one.",
+      "revId": "e834257de602b65263d430b3eb66d0b43e4b39c4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
