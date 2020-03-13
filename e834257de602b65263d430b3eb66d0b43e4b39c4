@@ -16,6 +16,98 @@
       "revId": "e834257de602b65263d430b3eb66d0b43e4b39c4",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e10dad6f_e58eb4b0",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-13T16:58:36Z",
+      "side": 1,
+      "message": "you should protect this part from the exceptions. You can find examples in other apps",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 49
+      },
+      "revId": "e834257de602b65263d430b3eb66d0b43e4b39c4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f52bd004_6aecb791",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-13T16:58:36Z",
+      "side": 1,
+      "message": "we should stop also the task",
+      "range": {
+        "startLine": 98,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 5
+      },
+      "revId": "e834257de602b65263d430b3eb66d0b43e4b39c4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c4ed0881_bd65b43a",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-13T16:58:36Z",
+      "side": 1,
+      "message": "what is this flag ?",
+      "range": {
+        "startLine": 394,
+        "startChar": 43,
+        "endLine": 394,
+        "endChar": 55
+      },
+      "revId": "e834257de602b65263d430b3eb66d0b43e4b39c4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b0d95afa_6831880d",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-13T16:58:36Z",
+      "side": 1,
+      "message": "I would like to have a test also for the event generation - in this case you have to build a mock of the listener - eventually you can make the generation period accessible from the tests (package private should be enough)",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "e834257de602b65263d430b3eb66d0b43e4b39c4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
