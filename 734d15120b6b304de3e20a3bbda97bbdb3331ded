@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95bca23c_fb4f4dfc",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatistics.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000005
+      },
+      "writtenOn": "2020-03-13T15:38:59Z",
+      "side": 1,
+      "message": "This is not thread safe because you are creating a new AtomicLong each time. \nWhy not just increment igmpMsgReceived every time you see one of the packets that need to be countered? I.e. increment it in increaseIgmpv1Membership(), increaseIgmpv2Membership(), etc.",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 5
+      },
+      "revId": "734d15120b6b304de3e20a3bbda97bbdb3331ded",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
