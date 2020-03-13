@@ -57,6 +57,30 @@
       "revId": "7916175d2d8362d8e938f749c98849ceaeadd435",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a8b107e_e5e6fcc6",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-13T10:35:18Z",
+      "side": 1,
+      "message": "ok, should i also make changes to use leadershipService and clusterService to publish stats cluster wide? or just post method instead of delegate?",
+      "parentUuid": "9e2138c8_5cc04473",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 13
+      },
+      "revId": "7916175d2d8362d8e938f749c98849ceaeadd435",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
