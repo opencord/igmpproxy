@@ -132,6 +132,30 @@
       "revId": "e834257de602b65263d430b3eb66d0b43e4b39c4",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c786c7c5_9fcca9d5",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-14T13:50:15Z",
+      "side": 1,
+      "message": "Done. I was not able to lower the generation time in default, will look more into it. Tried changing using mockNetCfg.setProperty, but after that we need to again register property?",
+      "parentUuid": "b0d95afa_6831880d",
+      "range": {
+        "startLine": 35,
+        "startChar": 13,
+        "endLine": 35,
+        "endChar": 31
+      },
+      "revId": "e834257de602b65263d430b3eb66d0b43e4b39c4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
