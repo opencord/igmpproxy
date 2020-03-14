@@ -88,6 +88,30 @@
     },
     {
       "key": {
+        "uuid": "c5a0e1f2_9a4ceb03",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1000618
+      },
+      "writtenOn": "2020-03-14T13:48:10Z",
+      "side": 1,
+      "message": "Other testcases in IgmpManagerTest for onPodBasis changes the value of flagForPacket and process next packet with different connectPoint. For statistics we dont want that. To byepass, we are using this flag.",
+      "parentUuid": "c4ed0881_bd65b43a",
+      "range": {
+        "startLine": 394,
+        "startChar": 43,
+        "endLine": 394,
+        "endChar": 55
+      },
+      "revId": "e834257de602b65263d430b3eb66d0b43e4b39c4",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0d95afa_6831880d",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
         "patchSetId": 12
