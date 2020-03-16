@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49e7c74c_78e51afd",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatisticsManager.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-16T13:09:25Z",
+      "side": 1,
+      "message": "Two alternatives:\n1) make this protect -\u003e you can either use TestUtils\n2) package private (remove private keyword) -\u003e you can access directly from the test",
+      "range": {
+        "startLine": 64,
+        "startChar": 4,
+        "endLine": 64,
+        "endChar": 11
+      },
+      "revId": "e55a9456a65899735e59788a2cc37d5d856e0f1d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b5afce8_408e6d05",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-16T13:09:25Z",
+      "side": 1,
+      "message": "maybe we can further lower",
+      "range": {
+        "startLine": 42,
+        "startChar": 53,
+        "endLine": 42,
+        "endChar": 58
+      },
+      "revId": "e55a9456a65899735e59788a2cc37d5d856e0f1d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
