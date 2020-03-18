@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5f87d3a2_ffc1eedc",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-18T13:52:53Z",
+      "side": 1,
+      "message": "Added null pointer check. We are casting the IP packets into IPV4 while processing the packet. Also here the checksum method is implemented for IGMPv2 packets only hence checking for group 0 as there will be only one group",
+      "parentUuid": "68b83d06_a3cae8a3",
+      "range": {
+        "startLine": 1005,
+        "startChar": 25,
+        "endLine": 1005,
+        "endChar": 84
+      },
+      "revId": "4ebc5d99f1379c463503feedd79503f4ff07f731",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a708f13_cc8fc745",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
         "patchSetId": 1
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "f85bc6ad_02bf0ab6",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-18T13:52:53Z",
+      "side": 1,
+      "message": "Here we are checking the length of IGMP packets recieved. For IGMPv2 we are comparing length with IGMPv2.HEADER_LENGTH and for IGMPv3 with IGMPv3.MINIMUM_HEDER_LEN",
+      "parentUuid": "314fa5bb_627b4192",
+      "range": {
+        "startLine": 232,
+        "startChar": 15,
+        "endLine": 233,
+        "endChar": 21
+      },
+      "revId": "4ebc5d99f1379c463503feedd79503f4ff07f731",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11a8f1c6_f7fcd880",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
         "patchSetId": 1
@@ -82,6 +130,24 @@
       "writtenOn": "2020-03-18T12:34:38Z",
       "side": 1,
       "message": "add else clause to warn about unknown packet",
+      "revId": "4ebc5d99f1379c463503feedd79503f4ff07f731",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c80f28ff_7bafaa33",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-18T13:52:53Z",
+      "side": 1,
+      "message": "Unknown packets will be discarded before calling sendIgmpPacket() method.",
+      "parentUuid": "11a8f1c6_f7fcd880",
       "revId": "4ebc5d99f1379c463503feedd79503f4ff07f731",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
