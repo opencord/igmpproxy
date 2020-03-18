@@ -17,6 +17,8 @@ package org.opencord.igmpproxy;
 
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.IGMP;
+import org.onlab.packet.IGMP.IGMPv2;
+import org.onlab.packet.IGMP.IGMPv3;
 import org.onlab.packet.IGMPMembership;
 import org.onlab.packet.IGMPQuery;
 import org.onlab.packet.IPv4;
@@ -49,6 +51,7 @@ public final class IgmpSender {
     private static IgmpSender instance = null;
     private PacketService packetService;
     private MastershipService mastershipService;
+    private IgmpStatisticsService igmpStatisticsService;
     private boolean withRAUplink = true;
     private boolean withRADownlink = false;
     private short mvlan = DEFAULT_MVLAN;
@@ -56,13 +59,16 @@ public final class IgmpSender {
     private int maxResp = DEFAULT_MEX_RESP;
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    private IgmpSender(PacketService packetService, MastershipService mastershipService) {
+    private IgmpSender(PacketService packetService, MastershipService mastershipService,
+             IgmpStatisticsService igmpStatisticsService) {
         this.packetService = packetService;
         this.mastershipService = mastershipService;
+        this.igmpStatisticsService = igmpStatisticsService;
     }
 
-    public static void init(PacketService packetService, MastershipService mastershipService) {
-        instance = new IgmpSender(packetService, mastershipService);
+    public static void init(PacketService packetService, MastershipService mastershipService,
+            IgmpStatisticsService igmpStatisticsService) {
+        instance = new IgmpSender(packetService, mastershipService, igmpStatisticsService);
     }
 
     public static IgmpSender getInstance() {
@@ -118,7 +124,7 @@ public final class IgmpSender {
         return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_QUERY, groupIp, null, sourceIp, false);
     }
 
-    private Ethernet buildIgmpPacket(byte type, Ip4Address groupIp, IGMPMembership igmpMembership,
+    protected Ethernet buildIgmpPacket(byte type, Ip4Address groupIp, IGMPMembership igmpMembership,
                                      Ip4Address sourceIp, boolean isV2Query) {
 
         IGMP igmpPacket;
@@ -164,6 +170,7 @@ public final class IgmpSender {
             case IGMP.TYPE_IGMPV2_LEAVE_GROUP:
                 return null;
             default:
+                igmpStatisticsService.getIgmpStats().increaseUnknownIgmpTypePacketsRxCounter();
                 return null;
         }
 
@@ -216,10 +223,23 @@ public final class IgmpSender {
             return;
         }
 
+        IPv4 ipv4Pkt = (IPv4) ethPkt.getPayload();
+        IGMP igmp = (IGMP) ipv4Pkt.getPayload();
+        // We are checking the length of packets. Right now the counter value will be 0 because of internal translation
+        // As packet length will always be valid
+        // This counter will be useful in future if we change the procedure to generate the packets.
+        if ((igmp.getIgmpType() == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT
+             || igmp.getIgmpType() == IGMP.TYPE_IGMPV2_LEAVE_GROUP) && igmp.serialize().length < IGMPv2.HEADER_LENGTH) {
+                 igmpStatisticsService.getIgmpStats().increaseInvalidIgmpLength();
+        } else if (igmp.getIgmpType() == IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT
+            && igmp.serialize().length < IGMPv3.MINIMUM_HEADER_LEN) {
+                 igmpStatisticsService.getIgmpStats().increaseInvalidIgmpLength();
+        }
         TrafficTreatment treatment = DefaultTrafficTreatment.builder()
                 .setOutput(portNumber).build();
         OutboundPacket packet = new DefaultOutboundPacket(deviceId,
                 treatment, ByteBuffer.wrap(ethPkt.serialize()));
+        igmpStatisticsService.getIgmpStats().increaseValidIgmpPacketCounter();
         packetService.emit(packet);
 
     }
