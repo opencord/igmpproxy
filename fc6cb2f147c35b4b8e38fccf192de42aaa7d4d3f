@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4dfe4d3b_76bc31c5",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 1015,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-18T14:36:34Z",
+      "side": 1,
+      "message": "probably you can return false also here if the groups are empty to avoid further computation",
+      "revId": "fc6cb2f147c35b4b8e38fccf192de42aaa7d4d3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23118731_e4805241",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpStatistics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-18T14:36:34Z",
+      "side": 1,
+      "message": "useless space",
+      "revId": "fc6cb2f147c35b4b8e38fccf192de42aaa7d4d3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8a829f6_d8ab43af",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-18T14:36:34Z",
+      "side": 1,
+      "message": "extract and reuse",
+      "range": {
+        "startLine": 122,
+        "startChar": 54,
+        "endLine": 122,
+        "endChar": 85
+      },
+      "revId": "fc6cb2f147c35b4b8e38fccf192de42aaa7d4d3f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
