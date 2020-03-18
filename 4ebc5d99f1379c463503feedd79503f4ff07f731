@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68b83d06_a3cae8a3",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-18T12:34:38Z",
+      "side": 1,
+      "message": "this can produce different NPE should be checked for existence. Please check that get(0) is not null, that getAddr is not null and that you get a valid IP4 address.\nMoreover why only Ipv4 is considered ? Ipv6 will fail but is still a valid IGMP message.  \nAlso why is only gourd 0 considered ?",
+      "range": {
+        "startLine": 1005,
+        "startChar": 25,
+        "endLine": 1005,
+        "endChar": 84
+      },
+      "revId": "4ebc5d99f1379c463503feedd79503f4ff07f731",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4a708f13_cc8fc745",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-18T12:34:38Z",
+      "side": 1,
+      "message": "Ipv6 ?",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 48
+      },
+      "revId": "4ebc5d99f1379c463503feedd79503f4ff07f731",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "314fa5bb_627b4192",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-18T12:34:38Z",
+      "side": 1,
+      "message": "this can be combined",
+      "range": {
+        "startLine": 232,
+        "startChar": 15,
+        "endLine": 233,
+        "endChar": 21
+      },
+      "revId": "4ebc5d99f1379c463503feedd79503f4ff07f731",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11a8f1c6_f7fcd880",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-18T12:34:38Z",
+      "side": 1,
+      "message": "add else clause to warn about unknown packet",
+      "revId": "4ebc5d99f1379c463503feedd79503f4ff07f731",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
