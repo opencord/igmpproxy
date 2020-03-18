@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fc9145b2_1a564114",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-18T14:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47148648_627678ff",
+      "range": {
+        "startLine": 1003,
+        "startChar": 22,
+        "endLine": 1003,
+        "endChar": 35
+      },
+      "revId": "cd709d16b59c40dacd92e3c430c009b631cd7903",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad37d438_00e9b8da",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-18T13:59:05Z",
       "side": 1,
       "message": "you could do it in one line:\nif (igmp.getGroups().get(0) !\u003d null \u0026\u0026 igmp.getGroups().get(0).getGaddr() !\u003d null \u0026\u0026 igmp.getGroups().get(0).getGaddr().isIp4()) {\n\n} else {\n    return false;\n}\n\nI\u0027ve added the return false because there is no need to do any other computation if that fails, correct ?",
+      "range": {
+        "startLine": 1007,
+        "startChar": 11,
+        "endLine": 1008,
+        "endChar": 65
+      },
+      "revId": "cd709d16b59c40dacd92e3c430c009b631cd7903",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9b706dc4_5eae27fd",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1008,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-18T14:26:15Z",
+      "side": 1,
+      "message": "Modified. Yes if compuattion fails it will return false.",
+      "parentUuid": "ad37d438_00e9b8da",
       "range": {
         "startLine": 1007,
         "startChar": 11,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4d17f77b_919e507e",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-18T14:26:15Z",
+      "side": 1,
+      "message": "No we are not handling IPv4 packets.",
+      "parentUuid": "a130082f_411d0969",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 226,
+        "endChar": 48
+      },
+      "revId": "cd709d16b59c40dacd92e3c430c009b631cd7903",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f465b36_dba0c0c4",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "dcc54add_ac31d08b",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-18T14:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f465b36_dba0c0c4",
+      "range": {
+        "startLine": 227,
+        "startChar": 8,
+        "endLine": 231,
+        "endChar": 14
+      },
+      "revId": "cd709d16b59c40dacd92e3c430c009b631cd7903",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c659265e_f97e4d91",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2020-03-18T13:59:05Z",
       "side": 1,
       "message": "again one line here is possibile \n} else if (igmp.getIgmpType() \u003d\u003d IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT \u0026\u0026 igmp.serialize().length \u003c IGMPv3.MINIMUM_HEADER_LEN) {",
+      "range": {
+        "startLine": 232,
+        "startChar": 8,
+        "endLine": 233,
+        "endChar": 17
+      },
+      "revId": "cd709d16b59c40dacd92e3c430c009b631cd7903",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d28d6f8_da6102b7",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-18T14:26:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c659265e_f97e4d91",
       "range": {
         "startLine": 232,
         "startChar": 8,
