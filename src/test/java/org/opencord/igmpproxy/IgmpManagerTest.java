@@ -96,7 +96,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
         Ethernet firstPacket = IgmpSender.getInstance().buildIgmpV3Join(GROUP_IP, SOURCE_IP_OF_A);
         Ethernet secondPacket = IgmpSender.getInstance().buildIgmpV3Join(GROUP_IP, SOURCE_IP_OF_B);
         // Sending first packet and here shouldSendjoin flag will be true
-        sendPacket(firstPacket, false);
+        sendPacket(firstPacket);
         // Emitted packet is stored in list savedPackets
         assertNotNull(savedPackets);
         synchronized (savedPackets) {
@@ -106,7 +106,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
         assertNotNull(savedPackets);
         assertEquals(1, savedPackets.size());
         // Sending the second packet with same group ip address
-        sendPacket(secondPacket, false);
+        sendPacket(secondPacket);
         synchronized (savedPackets) {
             savedPackets.wait(WAIT_TIMEOUT);
         }
@@ -126,7 +126,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
         Ethernet firstPacket = IgmpSender.getInstance().buildIgmpV3Join(GROUP_IP, SOURCE_IP_OF_A);
         Ethernet secondPacket = IgmpSender.getInstance().buildIgmpV3Join(GROUP_IP, SOURCE_IP_OF_B);
         // Sending first packet and here shouldSendjoin flag will be true
-        sendPacket(firstPacket, false);
+        sendPacket(firstPacket);
         // Emitted packet is stored in list savedPackets
         synchronized (savedPackets) {
           savedPackets.wait(WAIT_TIMEOUT);
@@ -135,7 +135,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
         assertEquals(1, savedPackets.size());
         // Sending the second packet with same group ip address which will not be emitted
         // shouldSendJoin flag will be false.
-        sendPacket(secondPacket, false);
+        sendPacket(secondPacket);
         synchronized (savedPackets) {
             savedPackets.wait(WAIT_TIMEOUT);
         }
