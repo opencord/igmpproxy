@@ -51,6 +51,34 @@ public class IgmpStatistics {
     //Total number of invalid IGMP messages received
     private AtomicLong invalidIgmpMsgReceived = new AtomicLong();
 
+    //Counter for unknown igmp type
+    private AtomicLong unknownIgmpTypePacketsRxCounter = new AtomicLong();
+    // Counter for igmp report with wrong mode.
+    private AtomicLong reportsRxWithWrongModeCounter = new AtomicLong();
+    // Counter for failed join due to insufficient permission access
+    private AtomicLong failJoinReqInsuffPermissionAccessCounter = new AtomicLong();
+    // Counter for invalid group ip address i.e not a valid multicast address.
+    private AtomicLong failJoinReqUnknownMulticastIpCounter = new AtomicLong();
+    // Counter for unconfigured group
+    private AtomicLong unconfiguredGroupCounter = new AtomicLong();
+    // Counter for valid igmp packet
+    private AtomicLong validIgmpPacketCounter = new AtomicLong();
+    // Counter for current number of igmp channel joins
+    private AtomicLong igmpChannelJoinCounter = new AtomicLong();
+    // Counter for current group number
+    private AtomicLong currentGrpNumCounter = new AtomicLong();
+    // Counter for igmp Checksum
+    private AtomicLong igmpValidChecksumCounter = new AtomicLong();
+    // Counter for Invalid Igmp Length
+    private AtomicLong invalidIgmpLength = new AtomicLong();
+
+    //Total number of general IGMP membership query messages received
+    private AtomicLong igmpGeneralMembershipQuery = new AtomicLong();
+    //Total number of group specific IGMP membership query messages received
+    private AtomicLong igmpGrpSpecificMembershipQuery = new AtomicLong();
+    //Total number of group and source specific IGMP membership query messages received
+    private AtomicLong igmpGrpAndSrcSpecificMembershipQuery = new AtomicLong();
+
     public Long getIgmpJoinReq() {
         return igmpJoinReq.get();
     }
@@ -154,6 +182,109 @@ public class IgmpStatistics {
 
     public void increaseTotalMsgReceived() {
         totalMsgReceived.incrementAndGet();
+    }
+
+    public Long getValidIgmpPacketCounter() {
+        return validIgmpPacketCounter.get();
+    }
+
+    public void increaseValidIgmpPacketCounter() {
+        validIgmpPacketCounter.incrementAndGet();
+    }
+
+    public Long getCurrentGrpNumCounter() {
+        return currentGrpNumCounter.get();
+    }
+
+    public void increaseCurrentGrpNumCounter() {
+        currentGrpNumCounter.incrementAndGet();
+    }
+
+    public Long getIgmpChannelJoinCounter() {
+        return igmpChannelJoinCounter.get();
+    }
+    public Long getIgmpValidChecksumCounter() {
+        return igmpValidChecksumCounter.get();
+    }
+
+    public void increaseIgmpChannelJoinCounter() {
+        igmpChannelJoinCounter.incrementAndGet();
+    }
+
+    public void increaseIgmpValidChecksumCounter() {
+        igmpValidChecksumCounter.incrementAndGet();
+    }
+
+    public Long getUnconfiguredGroupCounter() {
+        return unconfiguredGroupCounter.get();
+    }
+
+    public void increaseUnconfiguredGroupCounter() {
+        unconfiguredGroupCounter.incrementAndGet();
+    }
+
+    public Long getFailJoinReqUnknownMulticastIpCounter() {
+        return failJoinReqUnknownMulticastIpCounter.get();
+    }
+
+    public void increaseFailJoinReqUnknownMulticastIpCounter() {
+        failJoinReqUnknownMulticastIpCounter.incrementAndGet();
+    }
+
+    public Long getFailJoinReqInsuffPermissionAccessCounter() {
+        return failJoinReqInsuffPermissionAccessCounter.get();
+    }
+
+    public void increaseFailJoinReqInsuffPermissionAccessCounter() {
+        failJoinReqInsuffPermissionAccessCounter.incrementAndGet();
+    }
+
+    public Long getReportsRxWithWrongModeCounter() {
+        return reportsRxWithWrongModeCounter.get();
+    }
+
+    public Long getUnknownIgmpTypePacketsRxCounter() {
+        return unknownIgmpTypePacketsRxCounter.get();
+    }
+
+    public void increaseUnknownIgmpTypePacketsRxCounter() {
+        unknownIgmpTypePacketsRxCounter.incrementAndGet();
+    }
+
+    public void increaseReportsRxWithWrongModeCounter() {
+        reportsRxWithWrongModeCounter.incrementAndGet();
+    }
+
+    public Long getInvalidIgmpLength() {
+        return invalidIgmpLength.get();
+    }
+
+    public void increaseInvalidIgmpLength() {
+        invalidIgmpLength.incrementAndGet();
+    }
+
+    public Long getIgmpGeneralMembershipQuery() {
+        return igmpGeneralMembershipQuery.get();
+    }
+
+    public Long getIgmpGrpSpecificMembershipQuery() {
+        return igmpGrpSpecificMembershipQuery.get();
+    }
+
+    public Long getIgmpGrpAndSrcSpecificMembershipQuery() {
+        return igmpGrpAndSrcSpecificMembershipQuery.get();
+    }
+
+    public void increaseIgmpGeneralMembershipQuery() {
+        igmpGeneralMembershipQuery.incrementAndGet();
+    }
+
+    public void increaseIgmpGrpSpecificMembershipQuery() {
+        igmpGrpSpecificMembershipQuery.incrementAndGet();
+    }
+
+    public void increaseIgmpGrpAndSrcSpecificMembershipQuery() {
+        igmpGrpAndSrcSpecificMembershipQuery.incrementAndGet();
     }
 
 }
