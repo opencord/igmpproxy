@@ -72,6 +72,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -202,12 +204,14 @@ public class IgmpManager {
 
     protected BaseInformationService<SubscriberAndDeviceInformation> subsService;
 
+    private List<Byte> validMembershipModes = Arrays.asList((byte) 1, (byte) 2, (byte) 3, (byte) 4, (byte) 5, (byte) 6);
+
     @Activate
     protected void activate() {
         appId = coreService.registerApplication(APP_NAME);
         coreAppId = coreService.registerApplication(CoreService.CORE_APP_NAME);
         packetService.addProcessor(processor, PacketProcessor.director(4));
-        IgmpSender.init(packetService, mastershipService);
+        IgmpSender.init(packetService, mastershipService, igmpStatisticsManager);
 
         networkConfig.registerConfigFactory(igmpproxySsmConfigFactory);
         networkConfig.registerConfigFactory(igmpproxyConfigFactory);
@@ -268,8 +272,10 @@ public class IgmpManager {
         maxResp = calculateMaxResp(maxResp);
         if (gAddr != null && !gAddr.isZero()) {
             StateMachine.specialQuery(deviceId, gAddr, maxResp);
+            igmpStatisticsManager.getIgmpStats().increaseIgmpGrpSpecificMembershipQuery();
         } else {
             StateMachine.generalQuery(deviceId, maxResp);
+            igmpStatisticsManager.getIgmpStats().increaseIgmpGeneralMembershipQuery();
         }
     }
 
@@ -284,12 +290,15 @@ public class IgmpManager {
                 Optional<SubscriberAndDeviceInformation> accessDevice = getSubscriberAndDeviceInformation(device.id());
                 if (accessDevice.isPresent()) {
                     StateMachine.specialQuery(device.id(), gAddr, maxResponseTime);
+                    igmpStatisticsManager.getIgmpStats().increaseIgmpGrpAndSrcSpecificMembershipQuery();
                 }
             });
+            igmpStatisticsManager.getIgmpStats().increaseCurrentGrpNumCounter();
         } else {
             //Don't know which group is targeted by the query
             //So query all the members(in all the OLTs) and proxy their reports
             StateMachine.generalQuery(maxResponseTime);
+            igmpStatisticsManager.getIgmpStats().increaseIgmpGeneralMembershipQuery();
         }
     }
 
@@ -315,6 +324,7 @@ public class IgmpManager {
         Ip4Address groupIp = igmpGroup.getGaddr().getIp4Address();
         if (!groupIp.isMulticast()) {
             log.info(groupIp.toString() + " is not a valid group address");
+            igmpStatisticsManager.getIgmpStats().increaseFailJoinReqUnknownMulticastIpCounter();
             return;
         }
         Ip4Address srcIp = getDeviceIp(deviceId);
@@ -324,6 +334,9 @@ public class IgmpManager {
 
         ArrayList<Ip4Address> sourceList = new ArrayList<>();
 
+        if (!validMembershipModes.contains(recordType)) {
+            igmpStatisticsManager.getIgmpStats().increaseReportsRxWithWrongModeCounter();
+        }
         if (igmpGroup.getSources().size() > 0) {
             igmpGroup.getSources().forEach(source -> sourceList.add(source.getIp4Address()));
             if (recordType == IGMPMembership.CHANGE_TO_EXCLUDE_MODE ||
@@ -368,6 +381,7 @@ public class IgmpManager {
                     igmpStatisticsManager.getIgmpStats().increaseIgmpFailJoinReq();
                     log.warn("Unable to process IGMP Join from {} since no source " +
                                      "configuration is found.", deviceId);
+                    igmpStatisticsManager.getIgmpStats().increaseFailJoinReqInsuffPermissionAccessCounter();
                     return;
                 }
 
@@ -389,6 +403,7 @@ public class IgmpManager {
                 boolean isJoined = StateMachine.join(deviceId, groupIp, srcIp, deviceUplink.get());
                 if (isJoined) {
                     igmpStatisticsManager.getIgmpStats().increaseIgmpSuccessJoinRejoinReq();
+                    igmpStatisticsManager.getIgmpStats().increaseIgmpChannelJoinCounter();
                 } else {
                     igmpStatisticsManager.getIgmpStats().increaseIgmpFailJoinReq();
                 }
@@ -403,6 +418,7 @@ public class IgmpManager {
                     //add sink to the route
                     multicastService.addSinks(route, Sets.newHashSet(cp));
                 });
+                igmpStatisticsManager.getIgmpStats().increaseUnconfiguredGroupCounter();
 
             }
             groupMember.resetAllTimers();
@@ -413,6 +429,7 @@ public class IgmpManager {
             if (groupMember == null) {
                 log.info("receive leave but no instance, group " + groupIp.toString() +
                         " device:" + deviceId.toString() + " port:" + portNumber.toString());
+                igmpStatisticsManager.getIgmpStats().increaseUnconfiguredGroupCounter();
                 return;
             } else {
                 groupMember.setLeave(true);
@@ -486,11 +503,15 @@ public class IgmpManager {
                     if (!isConnectPoint(deviceId, pkt.receivedFrom().port()) &&
                             !getSubscriberAndDeviceInformation(deviceId).isPresent()) {
                         log.error("Device not registered in netcfg :" + deviceId.toString());
+                        igmpStatisticsManager.getIgmpStats().increaseFailJoinReqInsuffPermissionAccessCounter();
                         return;
                     }
 
                     IGMP igmp = (IGMP) ipv4Pkt.getPayload();
 
+                    if (validIPv4Checksum(igmp)) {
+                        igmpStatisticsManager.getIgmpStats().increaseIgmpValidChecksumCounter();
+                    }
                     Optional<PortNumber> deviceUpLinkOpt = getDeviceUplink(deviceId);
                     PortNumber upLinkPort =  deviceUpLinkOpt.isPresent() ? deviceUpLinkOpt.get() : null;
                     switch (igmp.getIgmpType()) {
@@ -978,4 +999,23 @@ public class IgmpManager {
         processFilterObjective(connectPoint.deviceId(), connectPoint.port(), true);
     }
 
+    // Valid checksum method to validate checksum for IGMPv2 packets. from IPv4 packets.
+    protected boolean validIPv4Checksum(IGMP igmp) {
+        int accumulation = (((int) igmp.getIgmpType()) & 0xff) << 8;
+        accumulation += ((int) igmp.getMaxRespField()) & 0xff;
+        if (!igmp.getGroups().isEmpty()) {
+            if (igmp.getGroups().get(0) != null && igmp.getGroups().get(0).getGaddr() != null
+                && igmp.getGroups().get(0).getGaddr().isIp4()) {
+                    int ipaddr = igmp.getGroups().get(0).getGaddr().getIp4Address().toInt();
+                    accumulation += (ipaddr >> 16) & 0xffff;
+                    accumulation += ipaddr & 0xffff;
+            }
+        } else {
+            return false;
+        }
+        accumulation = (accumulation >> 16 & 0xffff)
+                + (accumulation & 0xffff);
+        short checksum = (short) (~accumulation & 0xffff);
+        return checksum == igmp.getChecksum();
+    }
 }
