@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99efe999_d52c9ba9",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-19T15:23:05Z",
+      "side": 1,
+      "message": "did you face a case where these counters increase ? It seems to me that we are building internally these packets - it should not be possible this scenario",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 82
+      },
+      "revId": "b46fc269a41232484941c950ab9f6dee608a924f",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
