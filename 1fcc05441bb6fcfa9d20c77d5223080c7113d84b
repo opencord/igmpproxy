@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f5695bf_9cfd93c0",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-19T06:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a913866f_87a452ae",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 120
+      },
+      "revId": "1fcc05441bb6fcfa9d20c77d5223080c7113d84b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a237b5c2_eb7d433a",
         "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2020-03-18T18:06:52Z",
       "side": 1,
       "message": "Can you improve this comment ?",
+      "range": {
+        "startLine": 1002,
+        "startChar": 0,
+        "endLine": 1002,
+        "endChar": 88
+      },
+      "revId": "1fcc05441bb6fcfa9d20c77d5223080c7113d84b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9fb09f45_ae94882f",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-19T06:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a237b5c2_eb7d433a",
       "range": {
         "startLine": 1002,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8ded567d_16d4f06c",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-19T06:32:37Z",
+      "side": 1,
+      "message": "validChecksum() method in IGMPv2 class is protected hence we are calculating the checksum again to verify.",
+      "parentUuid": "741220f0_e9dbad0d",
+      "range": {
+        "startLine": 1003,
+        "startChar": 4,
+        "endLine": 1020,
+        "endChar": 5
+      },
+      "revId": "1fcc05441bb6fcfa9d20c77d5223080c7113d84b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39f42c73_53769b62",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "3c015315_10b25ce0",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 457,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-19T06:32:37Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "39f42c73_53769b62",
+      "range": {
+        "startLine": 444,
+        "startChar": 0,
+        "endLine": 457,
+        "endChar": 4
+      },
+      "revId": "1fcc05441bb6fcfa9d20c77d5223080c7113d84b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "48a8d93b_ba59539f",
         "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
         "patchSetId": 4
@@ -105,6 +201,30 @@
       "writtenOn": "2020-03-18T18:06:52Z",
       "side": 1,
       "message": "Why you need to check \u003e 1 ?",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 101
+      },
+      "revId": "1fcc05441bb6fcfa9d20c77d5223080c7113d84b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e9e8685_b5507828",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000653
+      },
+      "writtenOn": "2020-03-19T06:32:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "48a8d93b_ba59539f",
       "range": {
         "startLine": 105,
         "startChar": 0,
