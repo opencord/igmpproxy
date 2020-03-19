@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d1cab89_20b9aadc",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-19T08:15:02Z",
+      "side": 1,
+      "message": "Can you tell me why are you increasing this counter ?",
+      "range": {
+        "startLine": 424,
+        "startChar": 0,
+        "endLine": 424,
+        "endChar": 88
+      },
+      "revId": "c44407bbe75a4534e66f8e94f2d7dec39b8b9c28",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "23745e03_17a437bf",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-19T08:15:02Z",
+      "side": 1,
+      "message": "As optimization, I believe that here you can safely increase the checksum counter",
+      "revId": "c44407bbe75a4534e66f8e94f2d7dec39b8b9c28",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11bef9d6_307d399c",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-19T08:15:02Z",
+      "side": 1,
+      "message": "You can remove this. The reason is that validChecksum is used during the deserialization.",
+      "range": {
+        "startLine": 515,
+        "startChar": 0,
+        "endLine": 517,
+        "endChar": 21
+      },
+      "revId": "c44407bbe75a4534e66f8e94f2d7dec39b8b9c28",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04f44e12_d3972fc6",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-19T08:15:02Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 1005,
+        "startChar": 0,
+        "endLine": 1023,
+        "endChar": 5
+      },
+      "revId": "c44407bbe75a4534e66f8e94f2d7dec39b8b9c28",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f39e4de5_4405299e",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpSender.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-19T08:15:02Z",
+      "side": 1,
+      "message": "not clear to me these counters - can you please elaborate more ? What are you counting here ?\n\nI believe they are a bit misleading",
+      "range": {
+        "startLine": 225,
+        "startChar": 0,
+        "endLine": 239,
+        "endChar": 35
+      },
+      "revId": "c44407bbe75a4534e66f8e94f2d7dec39b8b9c28",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ca4e1259_33a6d24c",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-19T08:15:02Z",
+      "side": 1,
+      "message": "why is 1 ?",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 111
+      },
+      "revId": "c44407bbe75a4534e66f8e94f2d7dec39b8b9c28",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3417eed2_99908a58",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-19T08:15:02Z",
+      "side": 1,
+      "message": "Improve comment here - saying that is a specific query",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 21
+      },
+      "revId": "c44407bbe75a4534e66f8e94f2d7dec39b8b9c28",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1d4946db_c3710dd0",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpStatisticsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-03-19T08:15:02Z",
+      "side": 1,
+      "message": "Add a comment here",
+      "range": {
+        "startLine": 144,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 46
+      },
+      "revId": "c44407bbe75a4534e66f8e94f2d7dec39b8b9c28",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
