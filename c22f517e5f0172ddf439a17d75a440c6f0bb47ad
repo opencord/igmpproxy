@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ca9d632_27b579d1",
+        "filename": "src/main/java/org/opencord/igmpproxy/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-19T12:44:07Z",
+      "side": 1,
+      "message": "please avoid star imports.add the 6 elements you are importing one by one to make sure we are not polluting the class with useless items.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 90,
+        "endChar": 48
+      },
+      "revId": "c22f517e5f0172ddf439a17d75a440c6f0bb47ad",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f7aa000_8c408f0a",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-19T12:44:07Z",
+      "side": 1,
+      "message": "please avoid this flag, 2 methods can be created as per other comment, they make the code almost impossibile to follow",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 124,
+        "endChar": 49
+      },
+      "revId": "c22f517e5f0172ddf439a17d75a440c6f0bb47ad",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7b6145cf_2a8260ab",
+        "filename": "src/test/java/org/opencord/igmpproxy/IgmpManagerBase.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-03-19T12:44:07Z",
+      "side": 1,
+      "message": "please create two methods, one for unknown type and the other one for the v3 membership report in order to avoid the flagForUnknownType",
+      "range": {
+        "startLine": 669,
+        "startChar": 0,
+        "endLine": 678,
+        "endChar": 5
+      },
+      "revId": "c22f517e5f0172ddf439a17d75a440c6f0bb47ad",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
