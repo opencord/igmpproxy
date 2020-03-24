@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "a68e2420_21cd56ea",
+        "filename": "api/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000461
+      },
+      "writtenOn": "2020-03-24T20:43:25Z",
+      "side": 1,
+      "message": "2020",
+      "range": {
+        "startLine": 3,
+        "startChar": 14,
+        "endLine": 3,
+        "endChar": 18
+      },
+      "revId": "c69be4d51ae2fa0d4a220a885ced3a33509e8ced",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b5de087_e6dd5fe9",
+        "filename": "app/features.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000461
+      },
+      "writtenOn": "2020-03-24T20:43:25Z",
+      "side": 1,
+      "message": "2020",
+      "range": {
+        "startLine": 3,
+        "startChar": 14,
+        "endLine": 3,
+        "endChar": 18
+      },
+      "revId": "c69be4d51ae2fa0d4a220a885ced3a33509e8ced",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "190d9630_37dff63a",
+        "filename": "app/pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000461
+      },
+      "writtenOn": "2020-03-24T20:43:25Z",
+      "side": 1,
+      "message": "2020",
+      "range": {
+        "startLine": 3,
+        "startChar": 14,
+        "endLine": 3,
+        "endChar": 18
+      },
+      "revId": "c69be4d51ae2fa0d4a220a885ced3a33509e8ced",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "01120cb6_ab165d3a",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/package-info.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000461
+      },
+      "writtenOn": "2020-03-24T20:43:25Z",
+      "side": 1,
+      "message": "2020",
+      "range": {
+        "startLine": 2,
+        "startChar": 13,
+        "endLine": 2,
+        "endChar": 17
+      },
+      "revId": "c69be4d51ae2fa0d4a220a885ced3a33509e8ced",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6c39f59_1aeba274",
         "filename": "pom.xml",
         "patchSetId": 3
@@ -16,6 +108,29 @@
       "range": {
         "startLine": 25,
         "startChar": 22,
+        "endLine": 25,
+        "endChar": 25
+      },
+      "revId": "c69be4d51ae2fa0d4a220a885ced3a33509e8ced",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6e031e0_0194cda9",
+        "filename": "pom.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000461
+      },
+      "writtenOn": "2020-03-24T20:43:25Z",
+      "side": 1,
+      "message": "2.2.1",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
         "endLine": 25,
         "endChar": 25
       },
