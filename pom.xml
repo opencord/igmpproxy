@@ -22,88 +22,18 @@
     <parent>
         <groupId>org.onosproject</groupId>
         <artifactId>onos-dependencies</artifactId>
-        <version>2.2.1-b3</version>
+        <version>2.2.1</version>
     </parent>
 
     <groupId>org.opencord</groupId>
     <artifactId>onos-app-igmpproxy</artifactId>
     <version>2.0.0-SNAPSHOT</version>
-    <packaging>bundle</packaging>
+    <packaging>pom</packaging>
 
-    <description>IGMP proxy app</description>
-
-    <properties>
-        <onos.app.name>org.opencord.igmpproxy</onos.app.name>
-        <onos.app.category>Traffic Steering</onos.app.category>
-        <onos.app.title>IGMP proxy app</onos.app.title>
-        <onos.app.url>http://opencord.org</onos.app.url>
-        <onos.app.readme>IGMP implementation.</onos.app.readme>
-        <onos.app.requires>
-            org.onosproject.mcast
-        </onos.app.requires>
-        <sadis.api.version>5.0.0</sadis.api.version>
-    </properties>
-
-
-    <dependencies>
-        <dependency>
-            <groupId>org.onosproject</groupId>
-            <artifactId>onos-api</artifactId>
-            <version>${onos.version}</version>
-            <scope>provided</scope>
-            <classifier>tests</classifier>
-        </dependency>
-
-        <dependency>
-            <groupId>org.onosproject</groupId>
-            <artifactId>onos-cli</artifactId>
-            <version>${onos.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.onosproject</groupId>
-            <artifactId>onlab-osgi</artifactId>
-            <version>${onos.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.onosproject</groupId>
-            <artifactId>onlab-junit</artifactId>
-            <version>${onos.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.onosproject</groupId>
-            <artifactId>onlab-misc</artifactId>
-            <version>${onos.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.opencord</groupId>
-            <artifactId>sadis-api</artifactId>
-            <version>${sadis.api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.onosproject</groupId>
-            <artifactId>onos-apps-mcast-api</artifactId>
-            <version>${onos.version}</version>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.onosproject</groupId>
-                <artifactId>onos-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+    <modules>
+        <module>app</module>
+        <module>api</module>
+    </modules>
 
     <repositories>
         <repository>
@@ -130,4 +60,10 @@
             </snapshots>
         </repository>
     </repositories>
+    <distributionManagement>
+        <snapshotRepository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

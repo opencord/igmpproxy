@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.opencord.igmpproxy;
+package org.opencord.igmpproxy.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.onlab.junit.TestTools.assertAfter;
@@ -31,7 +31,10 @@ import org.onosproject.core.CoreServiceAdapter;
 import org.onosproject.net.flow.FlowRuleServiceAdapter;
 import org.onosproject.net.flowobjective.FlowObjectiveServiceAdapter;
 
+import org.opencord.igmpproxy.IgmpStatisticsEvent;
+
 import com.google.common.collect.Lists;
+import org.opencord.igmpproxy.IgmpStatisticsEventListener;
 
 /**
  * Set of tests of the ONOS application component for IGMP Statistics.
