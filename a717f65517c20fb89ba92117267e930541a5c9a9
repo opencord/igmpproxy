@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a06340a_edd38e06",
+        "filename": "app/pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000461
+      },
+      "writtenOn": "2020-03-24T20:50:53Z",
+      "side": 1,
+      "message": "onos-igmpproxy-api",
+      "range": {
+        "startLine": 92,
+        "startChar": 24,
+        "endLine": 92,
+        "endChar": 37
+      },
+      "revId": "a717f65517c20fb89ba92117267e930541a5c9a9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
