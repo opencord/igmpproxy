@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-present Open Networking Foundation
+ * Copyright 2017-present Open Networking Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,7 @@
  * limitations under the License.
  */
 
-package org.opencord.igmpproxy;
-
 /**
- * Constants for default values of configurable properties.
+ * Implementation of IGMPProxy application.
  */
-public final class OsgiPropertyConstants {
-
-    private OsgiPropertyConstants() {
-    }
-
-    public static final String STATISTICS_GENERATION_PERIOD = "statisticsGenerationPeriodInSeconds";
-    public static final int STATISTICS_GENERATION_PERIOD_DEFAULT = 20;
-
-}
+package org.opencord.igmpproxy.impl;
