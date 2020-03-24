@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.opencord.igmpproxy;
+package org.opencord.igmpproxy.impl;
 
 import org.junit.After;
 import org.junit.Before;
@@ -23,7 +23,7 @@ import org.onlab.packet.Ethernet;
 import org.onosproject.core.CoreServiceAdapter;
 import org.onosproject.net.flow.FlowRuleServiceAdapter;
 import org.onosproject.net.flowobjective.FlowObjectiveServiceAdapter;
-import org.opencord.igmpproxy.IgmpManagerBase.MockComponentContext;
+import org.opencord.igmpproxy.impl.IgmpManagerBase.MockComponentContext;
 
 import static org.junit.Assert.*;
 

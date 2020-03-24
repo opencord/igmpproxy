@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.opencord.igmpproxy;
+package org.opencord.igmpproxy.impl;
 
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.Ip4Address;

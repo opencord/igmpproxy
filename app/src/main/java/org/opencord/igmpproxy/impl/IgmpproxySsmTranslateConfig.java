@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.opencord.igmpproxy;
+package org.opencord.igmpproxy.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.common.collect.Lists;
 import org.onlab.packet.IpAddress;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.mcast.api.McastRoute;
 import org.onosproject.net.config.Config;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,7 +55,7 @@ public class IgmpproxySsmTranslateConfig extends Config<ApplicationId> {
      * @return SSM translations
      */
     public List<McastRoute> getSsmTranslations() {
-        List<McastRoute> translations = new ArrayList();
+        List<McastRoute> translations = Lists.newArrayList();
         for (JsonNode node : array) {
             translations.add(
                     new McastRoute(

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.opencord.igmpproxy;
+package org.opencord.igmpproxy.impl;
 
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.IGMP;
@@ -32,6 +32,7 @@ import org.onosproject.net.flow.TrafficTreatment;
 import org.onosproject.net.packet.DefaultOutboundPacket;
 import org.onosproject.net.packet.OutboundPacket;
 import org.onosproject.net.packet.PacketService;
+import org.opencord.igmpproxy.IgmpStatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

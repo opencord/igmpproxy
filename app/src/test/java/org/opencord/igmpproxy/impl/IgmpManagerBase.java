@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.opencord.igmpproxy;
+package org.opencord.igmpproxy.impl;
 
 import com.google.common.collect.ImmutableSet;
 import org.onlab.packet.Ethernet;
@@ -247,7 +247,7 @@ public class IgmpManagerBase {
          @SuppressWarnings("unchecked")
          @Override
          public <S, C extends Config<S>> C getConfig(S subject, Class<C> configClass) {
-             if (configClass.getName().equalsIgnoreCase("org.opencord.igmpproxy.IgmpproxyConfig")) {
+             if (configClass.getName().equalsIgnoreCase("org.opencord.igmpproxy.impl.IgmpproxyConfig")) {
                  IgmpproxyConfig igmpproxyConfig = new MockIgmpProxyConfig(igmpOnPodFlag);
                  return (C) igmpproxyConfig;
              } else {

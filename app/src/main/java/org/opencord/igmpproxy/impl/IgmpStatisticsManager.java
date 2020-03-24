@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.opencord.igmpproxy;
+package org.opencord.igmpproxy.impl;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.ComponentContext;
@@ -28,6 +28,13 @@ import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 
+import org.opencord.igmpproxy.IgmpStatistics;
+import org.opencord.igmpproxy.IgmpStatisticsService;
+import org.opencord.igmpproxy.IgmpStatisticsEvent;
+import org.opencord.igmpproxy.IgmpStatisticsEventListener;
+
+import static org.opencord.igmpproxy.impl.OsgiPropertyConstants.STATISTICS_GENERATION_PERIOD;
+import static org.opencord.igmpproxy.impl.OsgiPropertyConstants.STATISTICS_GENERATION_PERIOD_DEFAULT;
 import static org.slf4j.LoggerFactory.getLogger;
 
 import java.util.Dictionary;
@@ -40,8 +47,6 @@ import org.slf4j.Logger;
 
 import com.google.common.base.Strings;
 
-import static org.opencord.igmpproxy.OsgiPropertyConstants.STATISTICS_GENERATION_PERIOD;
-import static org.opencord.igmpproxy.OsgiPropertyConstants.STATISTICS_GENERATION_PERIOD_DEFAULT;
 
 
 /**

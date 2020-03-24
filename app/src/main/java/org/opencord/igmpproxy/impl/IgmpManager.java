@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.opencord.igmpproxy;
+package org.opencord.igmpproxy.impl;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.onosproject.net.Device;
+import org.opencord.igmpproxy.IgmpStatisticsService;
 import org.opencord.sadis.BaseInformationService;
 import org.opencord.sadis.SadisService;
 import org.opencord.sadis.SubscriberAndDeviceInformation;

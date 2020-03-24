@@ -15,8 +15,10 @@
   ~ limitations under the License.
   -->
 <app name="org.opencord.igmpproxy" origin="Nokia" version="${project.version}"
-        featuresRepo="mvn:${project.groupId}/${project.artifactId}/${project.version}/xml/features"
-        features="${project.artifactId}">
+     category="Traffic Steering" url="http://onosproject.org" title="IGMPProxy application for CORD"
+     featuresRepo="mvn:${project.groupId}/${project.artifactId}/${project.version}/xml/features"
+     features="${project.artifactId}" apps="org.onosproject.mcast,org.opencord.sadis">
     <description>IGMP PROXY APP</description>
     <artifact>mvn:${project.groupId}/${project.artifactId}/${project.version}</artifact>
+    <artifact>mvn:${project.groupId}/onos-app-igmpproxy-api/${project.version}</artifact>
 </app>
