@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d83b31f_35536a6d",
+        "filename": "app/app.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000461
+      },
+      "writtenOn": "2020-03-24T20:35:19Z",
+      "side": 1,
+      "message": "onos-app-igmpproxy-api",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "5d22b50c4d44177d9c5da99a91f40f1bab7deed1",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "04afdf97_d9752c00",
+        "filename": "app/features.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000461
+      },
+      "writtenOn": "2020-03-24T20:35:19Z",
+      "side": 1,
+      "message": "onos-app-igmpproxy-api",
+      "range": {
+        "startLine": 21,
+        "startChar": 39,
+        "endLine": 21,
+        "endChar": 52
+      },
+      "revId": "5d22b50c4d44177d9c5da99a91f40f1bab7deed1",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
