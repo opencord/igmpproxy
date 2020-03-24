@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.opencord.igmpproxy;
+package org.opencord.igmpproxy.impl;
 
 import org.onosproject.core.ApplicationId;
 import org.onosproject.net.ConnectPoint;
