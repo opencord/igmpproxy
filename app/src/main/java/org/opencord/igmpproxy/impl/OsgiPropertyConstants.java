@@ -27,4 +27,7 @@ public final class OsgiPropertyConstants {
     public static final String STATISTICS_GENERATION_PERIOD = "statisticsGenerationPeriodInSeconds";
     public static final int STATISTICS_GENERATION_PERIOD_DEFAULT = 20;
 
+    public static final String PEAK_STATISTICS_GENERATION_PERIOD = "peakStatisticsGenerationPeriodInSeconds";
+    public static final int PEAK_STATISTICS_GENERATION_PERIOD_DEFAULT = 5;
+
 }

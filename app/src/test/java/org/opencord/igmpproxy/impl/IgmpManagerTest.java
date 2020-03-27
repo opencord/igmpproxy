@@ -38,6 +38,8 @@ public class IgmpManagerTest extends IgmpManagerBase {
 
     private IgmpStatisticsManager igmpStatisticsManager;
 
+    private IgmpPeakStatisticsManager igmpPeakStatisticsManager;
+
     // Set up the IGMP application.
     @Before
     public void setUp() {
@@ -52,9 +54,13 @@ public class IgmpManagerTest extends IgmpManagerBase {
         igmpManager.sadisService = new MockSadisService();
         igmpStatisticsManager = new IgmpStatisticsManager();
         igmpStatisticsManager.cfgService = new MockCfgService();
+        igmpPeakStatisticsManager = new IgmpPeakStatisticsManager();
+        igmpPeakStatisticsManager.cfgService = new MockCfgService();
         TestUtils.setField(igmpStatisticsManager, "eventDispatcher", new TestEventDispatcher());
+        TestUtils.setField(igmpPeakStatisticsManager, "eventDispatcher", new TestEventDispatcher());
         igmpStatisticsManager.activate(new MockComponentContext());
         igmpManager.igmpStatisticsManager = this.igmpStatisticsManager;
+        igmpManager.igmpPeakStatisticsManager = this.igmpPeakStatisticsManager;
         // By default - we send query messages
         SingleStateMachine.sendQuery = true;
     }

@@ -18,6 +18,7 @@ package org.opencord.igmpproxy.impl;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import org.onosproject.net.Device;
+import org.opencord.igmpproxy.IgmpPeakStatisticsService;
 import org.opencord.igmpproxy.IgmpStatisticsService;
 import org.opencord.sadis.BaseInformationService;
 import org.opencord.sadis.SadisService;
@@ -37,6 +38,7 @@ import org.onlab.packet.IPv4;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.IpAddress;
 import org.onlab.packet.VlanId;
+import org.onlab.util.SafeRecurringTask;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.core.CoreService;
 import org.onosproject.mastership.MastershipService;
@@ -72,10 +74,12 @@ import org.onosproject.net.packet.PacketService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
@@ -86,7 +90,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static org.onlab.packet.IGMPMembership.MODE_IS_INCLUDE;
 import static org.onlab.packet.IGMPMembership.MODE_IS_EXCLUDE;
@@ -175,6 +181,9 @@ public class IgmpManager {
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected IgmpStatisticsService igmpStatisticsManager;
 
+    @Reference(cardinality = ReferenceCardinality.MANDATORY)
+    protected IgmpPeakStatisticsService igmpPeakStatisticsManager;
+
     private IgmpPacketProcessor processor = new IgmpPacketProcessor();
     private Logger log = LoggerFactory.getLogger(getClass());
     private ApplicationId coreAppId;
@@ -215,6 +224,9 @@ public class IgmpManager {
     private List<Byte> validMembershipModes = Arrays.asList(MODE_IS_INCLUDE,  MODE_IS_EXCLUDE, CHANGE_TO_INCLUDE_MODE,
                               CHANGE_TO_EXCLUDE_MODE, ALLOW_NEW_SOURCES, BLOCK_OLD_SOURCES);
 
+    ScheduledExecutorService executorForIgmpPeak;
+    private ScheduledFuture<?> peakCalculator;
+
     @Activate
     protected void activate() {
         appId = coreService.registerApplication(APP_NAME);
@@ -245,6 +257,10 @@ public class IgmpManager {
         scheduledExecutorService.scheduleAtFixedRate(new IgmpProxyTimerTask(), 1000, 1000, TimeUnit.MILLISECONDS);
         eventExecutor = newSingleThreadScheduledExecutor(groupedThreads("cord/igmpproxy",
                                                                         "events-igmp-%d", log));
+
+        executorForIgmpPeak = Executors.newScheduledThreadPool(1);
+        peakCalculator = executorForIgmpPeak.scheduleAtFixedRate(SafeRecurringTask.wrap(this::calculatePeak),
+                0, 1, TimeUnit.SECONDS);
         log.info("Started");
     }
 
@@ -413,6 +429,7 @@ public class IgmpManager {
                 if (isJoined) {
                     igmpStatisticsManager.getIgmpStats().increaseIgmpSuccessJoinRejoinReq();
                     igmpStatisticsManager.getIgmpStats().increaseIgmpChannelJoinCounter();
+                    igmpPeakStatisticsManager.getPeakStatistics().increasePeakConnectionCount();
                 } else {
                     igmpStatisticsManager.getIgmpStats().increaseIgmpFailJoinReq();
                 }
@@ -453,6 +470,7 @@ public class IgmpManager {
 
     private void leaveAction(GroupMember groupMember) {
         igmpStatisticsManager.getIgmpStats().increaseIgmpDisconnect();
+        igmpPeakStatisticsManager.getPeakStatistics().increasePeakDisconnectCount();
         ConnectPoint cp = new ConnectPoint(groupMember.getDeviceId(), groupMember.getPortNumber());
         StateMachine.leave(groupMember.getDeviceId(), groupMember.getGroupIp());
         groupMember.getSourceList().forEach(source -> multicastService.removeSinks(
@@ -507,6 +525,7 @@ public class IgmpManager {
                     }
 
                     igmpStatisticsManager.getIgmpStats().increaseIgmpValidChecksumCounter();
+                    igmpPeakStatisticsManager.getPeakStatistics().increasePeakMsgCount();
                     short vlan = ethPkt.getVlanID();
                     DeviceId deviceId = pkt.receivedFrom().deviceId();
 
@@ -1007,4 +1026,38 @@ public class IgmpManager {
         processFilterObjective(connectPoint.deviceId(), connectPoint.port(), true);
     }
 
+    //private class CalculatePeak implements Runnable {
+    Map<String, AtomicLong> testMap = new HashMap<String, AtomicLong>();
+     public void calculatePeak() {
+          log.debug("Calculating peaks");
+          //store ts in a var
+          Instant timeStamp = Instant.now();
+          // Peak message per second and duration of peak message
+          // check current value with existing.
+          if (igmpPeakStatisticsManager.getPeakStatistics().getPeakMsgCount()
+                    .longValue() > getMaxValue(
+                        igmpPeakStatisticsManager.getPeakStatistics().getPeakMsgCountMap())) {
+               // We got new peak value for message received, set peak duration to zero.
+               igmpPeakStatisticsManager.getPeakStatistics().getPeakMsgDuration().set(0);
+          } else {
+               igmpPeakStatisticsManager.getPeakStatistics().increasePeakMsgDuration();
+          }
+          igmpPeakStatisticsManager.getPeakStatistics().getPeakMsgCountMap().put(timeStamp,
+                    igmpPeakStatisticsManager.getPeakStatistics().getPeakMsgCount());
+          igmpPeakStatisticsManager.getPeakStatistics().getPeakMsgCountMap().put(timeStamp,
+                    igmpPeakStatisticsManager.getPeakStatistics().getPeakMsgDuration());
+          igmpPeakStatisticsManager.getPeakStatistics().getPeakStatsMap().put("PeakMsgCount ",
+                    igmpPeakStatisticsManager.getPeakStatistics().getPeakMsgCountMap());
+
+     }
+
+     private long getMaxValue(Map<Instant, AtomicLong> map) {
+          long maxValue = 0;
+          for (Map.Entry<Instant, AtomicLong> entry : map.entrySet()) {
+              if (entry != null && entry.getValue().get() > maxValue) {
+                   maxValue = entry.getValue().get();
+              }
+          }
+          return maxValue;
+     }
 }
