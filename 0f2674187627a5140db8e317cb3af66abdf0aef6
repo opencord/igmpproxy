@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e98d402c_86392300",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/IgmpPeakStatistics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-03T15:51:11Z",
+      "side": 1,
+      "message": "I think this map can be avoided and",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 113
+      },
+      "revId": "0f2674187627a5140db8e317cb3af66abdf0aef6",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "80189205_67707566",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/IgmpPeakStatistics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-03T15:51:11Z",
+      "side": 1,
+      "message": "missing javadoc on all of this.",
+      "revId": "0f2674187627a5140db8e317cb3af66abdf0aef6",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e202dd0e_273a8079",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-03T15:51:11Z",
+      "side": 1,
+      "message": "make these configurable via a property of the class",
+      "range": {
+        "startLine": 263,
+        "startChar": 15,
+        "endLine": 263,
+        "endChar": 21
+      },
+      "revId": "0f2674187627a5140db8e317cb3af66abdf0aef6",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6d24336a_aa115d1c",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-03T15:51:11Z",
+      "side": 1,
+      "message": "can be moved to IgmpStatisticsManager.java",
+      "range": {
+        "startLine": 261,
+        "startChar": 0,
+        "endLine": 263,
+        "endChar": 40
+      },
+      "revId": "0f2674187627a5140db8e317cb3af66abdf0aef6",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "25cb763d_e14ae2e8",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-03T15:51:11Z",
+      "side": 1,
+      "message": "can be removed",
+      "range": {
+        "startLine": 1030,
+        "startChar": 0,
+        "endLine": 1030,
+        "endChar": 72
+      },
+      "revId": "0f2674187627a5140db8e317cb3af66abdf0aef6",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3dd9bf8_479d0920",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1062,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-03T15:51:11Z",
+      "side": 1,
+      "message": "why is this here ? please put in IgmpStatisticsManager.java ?",
+      "range": {
+        "startLine": 1031,
+        "startChar": 5,
+        "endLine": 1062,
+        "endChar": 6
+      },
+      "revId": "0f2674187627a5140db8e317cb3af66abdf0aef6",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d29c4298_515d8e9d",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpPeakStatisticsManager.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-03T15:51:11Z",
+      "side": 1,
+      "message": "I believe this can be completely removed and can be placed in the IgmpStatisticsManager.java class",
+      "revId": "0f2674187627a5140db8e317cb3af66abdf0aef6",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ba11e24a_6b04971e",
+        "filename": "app/src/test/java/org/opencord/igmpproxy/impl/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-03T15:51:11Z",
+      "side": 1,
+      "message": "please add tests for the peak statistics.",
+      "revId": "0f2674187627a5140db8e317cb3af66abdf0aef6",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35ceb073_fd5fa749",
+        "filename": "app/src/test/java/org/opencord/igmpproxy/impl/IgmpManagerTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-03T15:51:11Z",
+      "side": 1,
+      "message": "change name",
+      "range": {
+        "startLine": 60,
+        "startChar": 55,
+        "endLine": 60,
+        "endChar": 70
+      },
+      "revId": "0f2674187627a5140db8e317cb3af66abdf0aef6",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
