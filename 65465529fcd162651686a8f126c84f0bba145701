@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9bb412de_ad59a2ed",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-04-06T16:14:03Z",
+      "side": 1,
+      "message": "maybe it is better to fix this message",
+      "range": {
+        "startLine": 569,
+        "startChar": 49,
+        "endLine": 569,
+        "endChar": 51
+      },
+      "revId": "65465529fcd162651686a8f126c84f0bba145701",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0825d8ef_34880df1",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
         "patchSetId": 2
