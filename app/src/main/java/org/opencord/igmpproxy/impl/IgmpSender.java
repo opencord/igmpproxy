@@ -43,6 +43,7 @@ import java.nio.ByteBuffer;
  */
 public final class IgmpSender {
     static final String V3_REPORT_ADDRESS = "224.0.0.22";
+    static final String V2_LEAVE_DST = "224.0.0.2";
     static final String MAC_ADDRESS = "DE:AD:BE:EF:BA:11";
     static final short DEFAULT_MVLAN = 4000;
     static final byte DEFAULT_COS = 7;
@@ -103,6 +104,15 @@ public final class IgmpSender {
         return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT, groupIp, igmpMembership, sourceIp, false);
     }
 
+    public Ethernet buildIgmpV2Join(Ip4Address groupIp, Ip4Address sourceIp) {
+        IGMPMembership igmpMembership = new IGMPMembership(groupIp);
+        return buildIgmpPacket(IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT, groupIp, igmpMembership, sourceIp, true);
+    }
+
+    public Ethernet buildIgmpV2ResponseQuery(Ip4Address groupIp, Ip4Address sourceIp) {
+        return buildIgmpV2Join(groupIp, sourceIp);
+    }
+
     public Ethernet buildIgmpV3ResponseQuery(Ip4Address groupIp, Ip4Address sourceIp) {
         IGMPMembership igmpMembership = new IGMPMembership(groupIp);
         igmpMembership.setRecordType(IGMPMembership.MODE_IS_EXCLUDE);
@@ -115,6 +125,11 @@ public final class IgmpSender {
         igmpMembership.setRecordType(IGMPMembership.CHANGE_TO_INCLUDE_MODE);
 
         return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT, groupIp, igmpMembership, sourceIp, false);
+    }
+
+    public Ethernet buildIgmpV2Leave(Ip4Address groupIp, Ip4Address sourceIp) {
+        IGMPMembership igmpMembership = new IGMPMembership(groupIp);
+        return buildIgmpPacket(IGMP.TYPE_IGMPV2_LEAVE_GROUP, groupIp, igmpMembership, sourceIp, true);
     }
 
     public Ethernet buildIgmpV2Query(Ip4Address groupIp, Ip4Address sourceIp) {
@@ -157,11 +172,8 @@ public final class IgmpSender {
                     return null;
                 }
                 igmpPacket.addGroup(igmpMembership);
-                if (type == IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT) {
-                    ip4Packet.setDestinationAddress(Ip4Address.valueOf(V3_REPORT_ADDRESS).toInt());
-                } else {
-                    ip4Packet.setDestinationAddress(groupIp.toInt());
-                }
+                ip4Packet.setDestinationAddress(Ip4Address.valueOf(V3_REPORT_ADDRESS).toInt());
+
                 if (withRAUplink) {
                     ip4Packet.setOptions(RA_BYTES);
                 }
@@ -169,7 +181,15 @@ public final class IgmpSender {
 
             case IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT:
             case IGMP.TYPE_IGMPV2_LEAVE_GROUP:
-                return null;
+                if (igmpMembership == null) {
+                    return null;
+                }
+                igmpPacket.addGroup(igmpMembership);
+                int dst = (type == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT ?
+                        groupIp.toInt() :
+                        Ip4Address.valueOf(V2_LEAVE_DST).toInt());
+                ip4Packet.setDestinationAddress(dst);
+                break;
             default:
                 igmpStatisticsService.getIgmpStats().increaseUnknownIgmpTypePacketsRxCounter();
                 return null;

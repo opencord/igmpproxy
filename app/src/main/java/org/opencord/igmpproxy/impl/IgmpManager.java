@@ -132,6 +132,7 @@ public class IgmpManager {
     private static ConnectPoint sourceDeviceAndPort = null;
     private static boolean enableIgmpProvisioning = false;
     private static boolean igmpOnPodBasis = false;
+    private static boolean outgoingIgmpWithV3 = true;
 
     private static final Integer MAX_PRIORITY = 10000;
     private static final String INSTALLED = "installed";
@@ -208,6 +209,10 @@ public class IgmpManager {
 
     public static int getUnsolicitedTimeout() {
         return unSolicitedTimeout;
+    }
+
+    public static boolean outgoingIgmpWithV3() {
+        return outgoingIgmpWithV3;
     }
 
     protected BaseInformationService<SubscriberAndDeviceInformation> subsService;
@@ -870,6 +875,7 @@ public class IgmpManager {
             pimSSmInterworking = newCfg.pimSsmInterworking();
             enableIgmpProvisioning = newCfg.enableIgmpProvisioning();
             igmpOnPodBasis = newCfg.igmpOnPodBasis();
+            outgoingIgmpWithV3 = newCfg.outgoingIgmpWithV3();
 
             if (connectPointMode != newCfg.connectPointMode() ||
                     connectPoint != newCfg.connectPoint()) {
