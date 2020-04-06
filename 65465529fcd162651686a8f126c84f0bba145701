@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0825d8ef_34880df1",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-06T12:13:11Z",
+      "side": 1,
+      "message": "this does not allow incremental config. if a subsequent config comes without this parameter il will default to True and override a possibly configured false. I\u0027d say please treat it as the connectPointMode and compare oldCfg and newCfg.",
+      "range": {
+        "startLine": 878,
+        "startChar": 11,
+        "endLine": 878,
+        "endChar": 61
+      },
+      "revId": "65465529fcd162651686a8f126c84f0bba145701",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c1e82e0_df580a18",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpproxyConfig.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-04-06T12:13:11Z",
+      "side": 1,
+      "message": "you might want to return null here to differentiate a config where the parameter is not present and then check it in the manager.",
+      "range": {
+        "startLine": 222,
+        "startChar": 19,
+        "endLine": 222,
+        "endChar": 49
+      },
+      "revId": "65465529fcd162651686a8f126c84f0bba145701",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
