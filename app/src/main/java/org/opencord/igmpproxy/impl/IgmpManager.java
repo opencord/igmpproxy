@@ -132,6 +132,7 @@ public class IgmpManager {
     private static ConnectPoint sourceDeviceAndPort = null;
     private static boolean enableIgmpProvisioning = false;
     private static boolean igmpOnPodBasis = false;
+    private static boolean outgoingIgmpWithV3 = true;
 
     private static final Integer MAX_PRIORITY = 10000;
     private static final String INSTALLED = "installed";
@@ -208,6 +209,10 @@ public class IgmpManager {
 
     public static int getUnsolicitedTimeout() {
         return unSolicitedTimeout;
+    }
+
+    public static boolean outgoingIgmpWithV3() {
+        return outgoingIgmpWithV3;
     }
 
     protected BaseInformationService<SubscriberAndDeviceInformation> subsService;
@@ -561,7 +566,7 @@ public class IgmpManager {
                             break;
 
                         default:
-                            log.warn("wrong IGMP v3 type:" + igmp.getIgmpType());
+                            log.warn("Unknown IGMP message type:" + igmp.getIgmpType());
                             igmpStatisticsManager.getIgmpStats().increaseInvalidIgmpMsgReceived();
                             igmpStatisticsManager.getIgmpStats().increaseUnknownIgmpTypePacketsRxCounter();
                             break;
@@ -870,6 +875,10 @@ public class IgmpManager {
             pimSSmInterworking = newCfg.pimSsmInterworking();
             enableIgmpProvisioning = newCfg.enableIgmpProvisioning();
             igmpOnPodBasis = newCfg.igmpOnPodBasis();
+            if (newCfg.outgoingIgmpWithV3() != null &&
+                    outgoingIgmpWithV3 != newCfg.outgoingIgmpWithV3()) {
+                outgoingIgmpWithV3 = newCfg.outgoingIgmpWithV3();
+            }
 
             if (connectPointMode != newCfg.connectPointMode() ||
                     connectPoint != newCfg.connectPoint()) {

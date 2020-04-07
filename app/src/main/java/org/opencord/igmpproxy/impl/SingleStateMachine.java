@@ -139,7 +139,9 @@ public class SingleStateMachine {
 
         public void leave(boolean messageOutAllowed) {
             if (messageOutAllowed) {
-                Ethernet eth = IgmpSender.getInstance().buildIgmpV3Leave(groupIp, srcIp);
+                Ethernet eth = IgmpManager.outgoingIgmpWithV3() ?
+                        IgmpSender.getInstance().buildIgmpV3Leave(groupIp, srcIp) :
+                        IgmpSender.getInstance().buildIgmpV2Leave(groupIp, srcIp);
                 IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId, upLinkPort);
             }
         }
@@ -155,7 +157,9 @@ public class SingleStateMachine {
     class NonMember extends State {
         public void join(boolean messageOutAllowed) {
             if (messageOutAllowed) {
-                Ethernet eth = IgmpSender.getInstance().buildIgmpV3Join(groupIp, srcIp);
+                Ethernet eth = IgmpManager.outgoingIgmpWithV3() ?
+                        IgmpSender.getInstance().buildIgmpV3Join(groupIp, srcIp) :
+                        IgmpSender.getInstance().buildIgmpV2Join(groupIp, srcIp);
                 IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId, upLinkPort);
                 timeOut = getTimeOut(IgmpManager.getUnsolicitedTimeout());
                 timerId = IgmpTimer.start(SingleStateMachine.this, timeOut);
@@ -173,7 +177,9 @@ public class SingleStateMachine {
 
         public void timeOut() {
             if (sendQuery) {
-                Ethernet eth = IgmpSender.getInstance().buildIgmpV3ResponseQuery(groupIp, srcIp);
+                Ethernet eth = IgmpManager.outgoingIgmpWithV3() ?
+                        IgmpSender.getInstance().buildIgmpV3ResponseQuery(groupIp, srcIp) :
+                        IgmpSender.getInstance().buildIgmpV2ResponseQuery(groupIp, srcIp);
                 IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId, upLinkPort);
                 timeOut = DEFAULT_MAX_RESP;
             }
