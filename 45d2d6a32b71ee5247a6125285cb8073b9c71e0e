@@ -22,6 +22,30 @@
       "revId": "45d2d6a32b71ee5247a6125285cb8073b9c71e0e",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a05ef4fd_dc7224d5",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpSender.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-05-04T14:24:24Z",
+      "side": 1,
+      "message": "Padding is not required for the packet whose length is more than 60. We set this flag without checking the length of a packet since the length is already checked in the serialize method of Ethernet object and padding bits are added if needed. I think there is no need to explicitly add controls here to be sure whether we need this flag or not.",
+      "parentUuid": "24833472_e484ae63",
+      "range": {
+        "startLine": 155,
+        "startChar": 14,
+        "endLine": 155,
+        "endChar": 15
+      },
+      "revId": "45d2d6a32b71ee5247a6125285cb8073b9c71e0e",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
