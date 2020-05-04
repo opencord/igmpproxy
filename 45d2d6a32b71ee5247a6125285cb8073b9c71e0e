@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24833472_e484ae63",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpSender.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-04T13:45:43Z",
+      "side": 1,
+      "message": "is this always required ?",
+      "range": {
+        "startLine": 155,
+        "startChar": 14,
+        "endLine": 155,
+        "endChar": 15
+      },
+      "revId": "45d2d6a32b71ee5247a6125285cb8073b9c71e0e",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
