@@ -152,6 +152,7 @@ public final class IgmpSender {
 
         IPv4 ip4Packet = new IPv4();
         Ethernet ethPkt = new Ethernet();
+        ethPkt.setPad(true);
 
         igmpPacket.setIgmpType(type);
 
