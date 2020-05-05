@@ -1,5 +1,5 @@
 /*
- * Copyright 2019-present Open Networking Foundation
+ * Copyright 2017-present Open Networking Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package org.opencord.igmpproxy;
 
-package org.opencord.igmpproxy.impl;
+import org.onosproject.net.DeviceId;
 
 /**
- * Constants for default values of configurable properties.
+ * Leadership control service.
  */
-public final class OsgiPropertyConstants {
-
-    private OsgiPropertyConstants() {
-    }
-
-    public static final String STATISTICS_GENERATION_PERIOD = "statisticsGenerationPeriodInSeconds";
-    public static final int STATISTICS_GENERATION_PERIOD_DEFAULT = 20;
+public interface IgmpLeadershipService {
+    /**
+     * Makes leadership control.
+     *
+     * @param deviceId received deviceId
+     * @return if it is leadership of this device, return true
+     */
+    boolean isLocalLeader(DeviceId deviceId);
 }

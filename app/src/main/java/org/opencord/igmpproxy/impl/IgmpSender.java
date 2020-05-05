@@ -24,7 +24,6 @@ import org.onlab.packet.IGMPQuery;
 import org.onlab.packet.IPv4;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.MacAddress;
-import org.onosproject.mastership.MastershipService;
 import org.onosproject.net.DeviceId;
 import org.onosproject.net.PortNumber;
 import org.onosproject.net.flow.DefaultTrafficTreatment;
@@ -32,6 +31,7 @@ import org.onosproject.net.flow.TrafficTreatment;
 import org.onosproject.net.packet.DefaultOutboundPacket;
 import org.onosproject.net.packet.OutboundPacket;
 import org.onosproject.net.packet.PacketService;
+import org.opencord.igmpproxy.IgmpLeadershipService;
 import org.opencord.igmpproxy.IgmpStatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,7 @@ public final class IgmpSender {
 
     private static IgmpSender instance = null;
     private PacketService packetService;
-    private MastershipService mastershipService;
+    private IgmpLeadershipService igmpLeadershipService;
     private IgmpStatisticsService igmpStatisticsService;
     private boolean withRAUplink = true;
     private boolean withRADownlink = false;
@@ -61,16 +61,16 @@ public final class IgmpSender {
     private int maxResp = DEFAULT_MEX_RESP;
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    private IgmpSender(PacketService packetService, MastershipService mastershipService,
+    private IgmpSender(PacketService packetService, IgmpLeadershipService igmpLeadershipService,
              IgmpStatisticsService igmpStatisticsService) {
         this.packetService = packetService;
-        this.mastershipService = mastershipService;
+        this.igmpLeadershipService = igmpLeadershipService;
         this.igmpStatisticsService = igmpStatisticsService;
     }
 
-    public static void init(PacketService packetService, MastershipService mastershipService,
+    public static void init(PacketService packetService, IgmpLeadershipService igmpLeadershipService,
             IgmpStatisticsService igmpStatisticsService) {
-        instance = new IgmpSender(packetService, mastershipService, igmpStatisticsService);
+        instance = new IgmpSender(packetService, igmpLeadershipService, igmpStatisticsService);
     }
 
     public static IgmpSender getInstance() {
@@ -170,6 +170,7 @@ public final class IgmpSender {
 
             case IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT:
                 if (igmpMembership == null) {
+                    log.debug("Igmp membership is not found. igmp-type {} ", type);
                     return null;
                 }
                 igmpPacket.addGroup(igmpMembership);
@@ -183,6 +184,7 @@ public final class IgmpSender {
             case IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT:
             case IGMP.TYPE_IGMPV2_LEAVE_GROUP:
                 if (igmpMembership == null) {
+                    log.debug("Igmp membership is not found. igmp-type {} ", type);
                     return null;
                 }
                 igmpPacket.addGroup(igmpMembership);
@@ -192,6 +194,7 @@ public final class IgmpSender {
                 ip4Packet.setDestinationAddress(dst);
                 break;
             default:
+                log.debug("Unknown igmp type: {} ", type);
                 igmpStatisticsService.getIgmpStats().increaseUnknownIgmpTypePacketsRxCounter();
                 return null;
         }
@@ -225,7 +228,7 @@ public final class IgmpSender {
     }
 
     public void sendIgmpPacketUplink(Ethernet ethPkt, DeviceId deviceId, PortNumber upLinkPort) {
-        if (!mastershipService.isLocalMaster(deviceId)) {
+        if (!igmpLeadershipService.isLocalLeader(deviceId)) {
             return;
         }
 
@@ -241,7 +244,7 @@ public final class IgmpSender {
     }
 
     public void sendIgmpPacket(Ethernet ethPkt, DeviceId deviceId, PortNumber portNumber) {
-        if (!mastershipService.isLocalMaster(deviceId)) {
+        if (!igmpLeadershipService.isLocalLeader(deviceId)) {
             return;
         }
 
