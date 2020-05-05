@@ -15,6 +15,6 @@
  */
 
 /**
- * Created by onos on 17-3-9.
+ * Package of igmpproxy.
  */
 package org.opencord.igmpproxy;

@@ -21,6 +21,7 @@ import static org.onlab.junit.TestTools.assertAfter;
 
 import java.util.List;
 
+import com.google.common.collect.Maps;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,6 +54,7 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
     @Before
     public void setUp() {
         igmpManager = new IgmpManager();
+        igmpManager.igmpLeadershipService = new TestIgmpLeaderShipService();
         igmpManager.coreService = new CoreServiceAdapter();
         igmpManager.mastershipService = new MockMastershipService();
         igmpManager.flowObjectiveService = new FlowObjectiveServiceAdapter();
@@ -61,6 +63,11 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
         igmpManager.flowRuleService = new FlowRuleServiceAdapter();
         igmpManager.multicastService = new TestMulticastRouteService();
         igmpManager.sadisService = new MockSadisService();
+        igmpManager.groupMemberStore = new TestGroupMemberStoreService();
+        StateMachineManager stateMachineService = new StateMachineManager();
+        stateMachineService.stateMachineStore = new TestStateMachineStoreService(Maps.newConcurrentMap());
+        stateMachineService.activate(new MockComponentContext());
+        igmpManager.stateMachineService = stateMachineService;
         igmpStatisticsManager = new IgmpStatisticsManager();
         igmpStatisticsManager.cfgService = new MockCfgService();
         igmpStatisticsManager.addListener(mockListener);
@@ -68,7 +75,7 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
         igmpStatisticsManager.activate(new MockComponentContext());
         igmpManager.igmpStatisticsManager = this.igmpStatisticsManager;
         // By default - we send query messages
-        SingleStateMachine.sendQuery = true;
+        StateMachineManager.sendQuery = true;
     }
 
     // Tear Down the IGMP application.
@@ -76,14 +83,13 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
     public void tearDown() {
         igmpStatisticsManager.removeListener(mockListener);
         igmpStatisticsManager.deactivate();
-        IgmpManager.groupMemberMap.clear();
-        StateMachine.clearMap();
+        igmpManager.stateMachineService.clearAllMaps();
     }
 
     //Test Igmp Statistics.
     @Test
     public void testIgmpStatistics() throws InterruptedException {
-        SingleStateMachine.sendQuery = false;
+        StateMachineManager.sendQuery = false;
         igmpManager.networkConfig = new TestNetworkConfigRegistry(false);
         igmpManager.activate();
 
@@ -103,7 +109,7 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
         }
 
         assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () ->
-            assertEquals((long) 2, igmpStatisticsManager.getIgmpStats().getTotalMsgReceived().longValue()));
+                assertEquals((long) 2, igmpStatisticsManager.getIgmpStats().getTotalMsgReceived().longValue()));
         assertEquals((long) 1, igmpStatisticsManager.getIgmpStats().getIgmpJoinReq().longValue());
         assertEquals((long) 2, igmpStatisticsManager.getIgmpStats().getIgmpv3MembershipReport().longValue());
         assertEquals((long) 1, igmpStatisticsManager.getIgmpStats().getIgmpSuccessJoinRejoinReq().longValue());
@@ -119,18 +125,18 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
     //Test packet with Unknown Multicast IpAddress
     @Test
     public void testIgmpUnknownMulticastIpAddress() throws InterruptedException {
-        SingleStateMachine.sendQuery = false;
+        StateMachineManager.sendQuery = false;
 
         igmpManager.networkConfig = new TestNetworkConfigRegistry(false);
         igmpManager.activate();
 
         Ethernet firstPacket =
-             IgmpSender.getInstance().buildIgmpV3Join(UNKNOWN_GRP_IP, SOURCE_IP_OF_A);
+                IgmpSender.getInstance().buildIgmpV3Join(UNKNOWN_GRP_IP, SOURCE_IP_OF_A);
         // Sending first packet
         sendPacket(firstPacket);
         assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () ->
-        assertEquals((long) 1,
-             igmpStatisticsManager.getIgmpStats().getFailJoinReqUnknownMulticastIpCounter().longValue()));
+                assertEquals((long) 1,
+                        igmpStatisticsManager.getIgmpStats().getFailJoinReqUnknownMulticastIpCounter().longValue()));
     }
 
     //Test Igmp Query Statistics.
@@ -146,15 +152,15 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
 
         //IGMPV3 General Membership Query packet
         Ethernet igmpv3MembershipQueryPkt1 =
-              IgmpSender.getInstance().buildIgmpV3Query(Ip4Address.valueOf(0), SOURCE_IP_OF_A);
+                IgmpSender.getInstance().buildIgmpV3Query(Ip4Address.valueOf(0), SOURCE_IP_OF_A);
         sendPacket(igmpv3MembershipQueryPkt1);
         assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () ->
+                assertEquals(igmpStatisticsManager.getIgmpStats()
+                        .getIgmpGrpAndSrcSpecificMembershipQuery().longValue(), 1));
         assertEquals(igmpStatisticsManager.getIgmpStats()
-            .getIgmpGrpAndSrcSpecificMembershipQuery().longValue(), 1));
+                .getIgmpGeneralMembershipQuery().longValue(), 1);
         assertEquals(igmpStatisticsManager.getIgmpStats()
-            .getIgmpGeneralMembershipQuery().longValue(), 1);
-        assertEquals(igmpStatisticsManager.getIgmpStats()
-             .getCurrentGrpNumCounter().longValue(), 1);
+                .getCurrentGrpNumCounter().longValue(), 1);
     }
 
     //Test Events
@@ -163,10 +169,10 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
         final int waitEventGeneration = igmpStatisticsManager.statisticsGenerationPeriodInSeconds * 1000;
         //assert that event listened as the app activates
         assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () ->
-            assertEquals(mockListener.events.size(), 1));
+                assertEquals(mockListener.events.size(), 1));
 
         assertAfter(waitEventGeneration / 2, waitEventGeneration, () ->
-            assertEquals(mockListener.events.size(), 2));
+                assertEquals(mockListener.events.size(), 2));
 
         for (IgmpStatisticsEvent event : mockListener.events) {
             assertEquals(event.type(), IgmpStatisticsEvent.Type.STATS_UPDATE);
@@ -176,7 +182,7 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
     //Test packet with Unknown Wrong Membership mode
     @Test
     public void testWrongIgmpPacket() throws InterruptedException {
-        SingleStateMachine.sendQuery = false;
+        StateMachineManager.sendQuery = false;
 
         igmpManager.networkConfig = new TestNetworkConfigRegistry(false);
         igmpManager.activate();
@@ -185,14 +191,14 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
         // Sending first packet
         sendPacket(firstPacket);
         assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () ->
-        assertEquals((long) 1,
-            igmpStatisticsManager.getIgmpStats().getReportsRxWithWrongModeCounter().longValue()));
+                assertEquals((long) 1,
+                        igmpStatisticsManager.getIgmpStats().getReportsRxWithWrongModeCounter().longValue()));
     }
 
     //Test packet with Unknown IGMP type.
     @Test
     public void testUnknownIgmpPacket() throws InterruptedException {
-        SingleStateMachine.sendQuery = false;
+        StateMachineManager.sendQuery = false;
 
         igmpManager.networkConfig = new TestNetworkConfigRegistry(false);
         igmpManager.activate();
@@ -201,14 +207,14 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
         // Sending first packet
         sendPacket(firstPacket);
         assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () ->
-        assertEquals((long) 1,
-            igmpStatisticsManager.getIgmpStats().getUnknownIgmpTypePacketsRxCounter().longValue()));
+                assertEquals((long) 1,
+                        igmpStatisticsManager.getIgmpStats().getUnknownIgmpTypePacketsRxCounter().longValue()));
     }
 
     //Test packet with Insufficient Permission.
     @Test
     public void testSufficientPermission() throws InterruptedException {
-        SingleStateMachine.sendQuery = false;
+        StateMachineManager.sendQuery = false;
 
         flagForPermission = true;
         igmpManager.networkConfig = new TestNetworkConfigRegistry(false);
@@ -218,8 +224,9 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
         // Sending first packet
         sendPacket(firstPacket);
         assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () ->
-        assertEquals((long) 1,
-            igmpStatisticsManager.getIgmpStats().getFailJoinReqInsuffPermissionAccessCounter().longValue()));
+                assertEquals((long) 1,
+                        igmpStatisticsManager.getIgmpStats()
+                                .getFailJoinReqInsuffPermissionAccessCounter().longValue()));
     }
 
     public class MockIgmpStatisticsEventListener implements IgmpStatisticsEventListener {
