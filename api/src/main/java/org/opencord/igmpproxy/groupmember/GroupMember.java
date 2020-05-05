@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.opencord.igmpproxy.impl;
+package org.opencord.igmpproxy.groupmember;
 
 import org.onlab.packet.IGMPMembership;
 import org.onlab.packet.Ip4Address;
@@ -27,12 +27,13 @@ import java.util.Iterator;
 /**
  * Date struct to keep Igmp member infomations.
  */
-public final class  GroupMember {
+public final class GroupMember {
 
     private final VlanId vlan;
     private final DeviceId deviceId;
     private final PortNumber portNumber;
     private final Ip4Address groupIp;
+    private final GroupMemberId groupMemberId;
     private final boolean v2;
     private byte recordType = IGMPMembership.MODE_IS_INCLUDE;
     private ArrayList<Ip4Address> sourceList = new ArrayList<>();
@@ -47,19 +48,16 @@ public final class  GroupMember {
         this.vlan = vlan;
         this.deviceId = deviceId;
         this.portNumber = portNum;
+        this.groupMemberId = GroupMemberId.of(groupIp, deviceId, portNum);
         v2 = isV2;
     }
 
-    static String getkey(Ip4Address groupIp, DeviceId deviceId, PortNumber portNum) {
-        return groupIp.toString() + deviceId.toString() + portNum.toString();
-    }
-
     public String getkey() {
-        return GroupMember.getkey(groupIp, deviceId, portNumber);
+        return groupMemberId.toString();
     }
 
-    public String getId() {
-        return getkey();
+    public GroupMemberId getGroupMemberId() {
+        return groupMemberId;
     }
 
     public VlanId getvlan() {

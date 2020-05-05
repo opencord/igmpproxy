@@ -26,5 +26,6 @@ public final class OsgiPropertyConstants {
 
     public static final String STATISTICS_GENERATION_PERIOD = "statisticsGenerationPeriodInSeconds";
     public static final int STATISTICS_GENERATION_PERIOD_DEFAULT = 20;
-
+    public static final String DISTRIBUTED = "distributed";
+    public static final boolean DISTRIBUTED_DEFALT_VALUE = true;
 }
