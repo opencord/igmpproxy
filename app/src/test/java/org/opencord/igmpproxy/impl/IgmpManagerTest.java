@@ -15,6 +15,7 @@
  */
 package org.opencord.igmpproxy.impl;
 
+import com.google.common.collect.Maps;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,6 @@ import org.onlab.packet.Ethernet;
 import org.onosproject.core.CoreServiceAdapter;
 import org.onosproject.net.flow.FlowRuleServiceAdapter;
 import org.onosproject.net.flowobjective.FlowObjectiveServiceAdapter;
-import org.opencord.igmpproxy.impl.IgmpManagerBase.MockComponentContext;
 
 import static org.junit.Assert.*;
 
@@ -42,6 +42,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
     @Before
     public void setUp() {
         igmpManager = new IgmpManager();
+        igmpManager.igmpLeadershipService = new TestIgmpLeaderShipService();
         igmpManager.coreService = new CoreServiceAdapter();
         igmpManager.mastershipService = new MockMastershipService();
         igmpManager.flowObjectiveService = new FlowObjectiveServiceAdapter();
@@ -55,16 +56,22 @@ public class IgmpManagerTest extends IgmpManagerBase {
         TestUtils.setField(igmpStatisticsManager, "eventDispatcher", new TestEventDispatcher());
         igmpStatisticsManager.activate(new MockComponentContext());
         igmpManager.igmpStatisticsManager = this.igmpStatisticsManager;
+
+        igmpManager.groupMemberStore = new TestGroupMemberStoreService();
+        StateMachineManager stateMachineManager = new StateMachineManager();
+        stateMachineManager.stateMachineStore = new TestStateMachineStoreService(Maps.newConcurrentMap());
+        stateMachineManager.activate(new MockComponentContext());
+        igmpManager.stateMachineService = stateMachineManager;
+
         // By default - we send query messages
-        SingleStateMachine.sendQuery = true;
+        StateMachineManager.sendQuery = true;
     }
 
     // Tear Down the IGMP application.
     @After
     public void tearDown() {
         igmpManager.deactivate();
-        IgmpManager.groupMemberMap.clear();
-        StateMachine.clearMap();
+        igmpManager.stateMachineService.clearAllMaps();
     }
 
     // Checking the Default value of IGMP_ON_POD_BASIS.
@@ -88,7 +95,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
     @Test
     public void testIgmpOnPodBasisDefaultValue() throws InterruptedException {
         // We need to count join messages sent on the upstream
-        SingleStateMachine.sendQuery = false;
+        StateMachineManager.sendQuery = false;
 
         igmpManager.networkConfig = new TestNetworkConfigRegistry(false);
         igmpManager.activate();
@@ -118,7 +125,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
     @Test
     public void testIgmpOnPodBasisTrueValue() throws InterruptedException {
         // We need to count join messages
-        SingleStateMachine.sendQuery = false;
+        StateMachineManager.sendQuery = false;
 
         igmpManager.networkConfig = new TestNetworkConfigRegistry(true);
         igmpManager.activate();
@@ -129,7 +136,7 @@ public class IgmpManagerTest extends IgmpManagerBase {
         sendPacket(firstPacket);
         // Emitted packet is stored in list savedPackets
         synchronized (savedPackets) {
-          savedPackets.wait(WAIT_TIMEOUT);
+            savedPackets.wait(WAIT_TIMEOUT);
         }
         assertNotNull(savedPackets);
         assertEquals(1, savedPackets.size());
