@@ -19,125 +19,130 @@ import org.onlab.packet.Ethernet;
 import org.onlab.packet.Ip4Address;
 import org.onosproject.net.DeviceId;
 import org.onosproject.net.PortNumber;
+import org.opencord.igmpproxy.statemacine.StateMachine;
+import org.opencord.igmpproxy.statemacine.State;
+import org.opencord.igmpproxy.statemacine.StateConstants;
+import org.opencord.igmpproxy.statemacine.StateMachineId;
+import org.opencord.igmpproxy.statemacine.StateMachineInfo;
+import org.opencord.igmpproxy.statemacine.StateMachineStore;
 
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 /**
- * State machine for single IGMP group member. The state machine is implemented on
- * RFC 2236 "6. Host State Diagram".
+ * State machine implementation.
  */
-public class SingleStateMachine {
-    // Only for tests purposes
-    static boolean sendQuery = true;
-
-    static final int STATE_NON = 0;
-    static final int STATE_DELAY = 1;
-    static final int STATE_IDLE = 2;
-    static final int TRANSITION_JOIN = 0;
-    static final int TRANSITION_LEAVE = 1;
-    static final int TRANSITION_QUERY = 2;
-    static final int TRANSITION_TIMEOUT = 3;
-    static final int DEFAULT_MAX_RESP = 0xfffffff;
-    static final int DEFAULT_COUNT = 1;
-    private DeviceId devId;
-    private Ip4Address groupIp;
-    private Ip4Address srcIp;
-    private PortNumber upLinkPort;
-
-    private AtomicInteger count = new AtomicInteger(DEFAULT_COUNT);
-    private int timerId = IgmpTimer.INVALID_TIMER_ID;
-    private int timeOut = DEFAULT_MAX_RESP;
-    private State[] states =
-            {
-                    new NonMember(), new DelayMember(), new IdleMember()
-            };
+public class SingleStateMachine implements StateMachine {
+    private StateMachineInfo stateMachineInfo;
+    private State[] states = {
+            new NonMember(), new DelayMember(), new IdleMember()
+    };
     private int[] nonTransition =
-            {STATE_DELAY, STATE_NON, STATE_NON, STATE_NON};
+            {StateConstants.STATE_DELAY, StateConstants.STATE_NON,
+                    StateConstants.STATE_NON, StateConstants.STATE_NON};
     private int[] delayTransition =
-            {STATE_DELAY, STATE_NON, STATE_DELAY, STATE_IDLE};
+            {StateConstants.STATE_DELAY, StateConstants.STATE_NON,
+                    StateConstants.STATE_DELAY, StateConstants.STATE_IDLE};
     private int[] idleTransition =
-            {STATE_IDLE, STATE_NON, STATE_DELAY, STATE_IDLE};
+            {StateConstants.STATE_IDLE, StateConstants.STATE_NON,
+                    StateConstants.STATE_DELAY, StateConstants.STATE_IDLE};
     //THE TRANSITION TABLE
     private int[][] transition =
             {nonTransition, delayTransition, idleTransition};
-    private int currentState = STATE_NON;
 
-    public SingleStateMachine(DeviceId devId, Ip4Address groupIp, Ip4Address src, PortNumber upLinkPort) {
-        this.devId = devId;
-        this.groupIp = groupIp;
-        this.srcIp = src;
-        this.upLinkPort = upLinkPort;
+    private StateMachineStore stateMachineStore;
+
+    public SingleStateMachine(StateMachineInfo info, StateMachineStore stateMachineStore) {
+        this.stateMachineInfo = info;
+        this.stateMachineStore = stateMachineStore;
     }
 
+    @Override
+    public StateMachineId getStateMachineId() {
+        return this.stateMachineInfo.getStateMachineId();
+    }
+
+    @Override
+    public void setStateMachineInfo(StateMachineInfo info) {
+        this.stateMachineInfo = info;
+    }
+
+    @Override
     public Ip4Address getGroupIp() {
-        return groupIp;
+        return this.stateMachineInfo.getStateMachineId().getGroupIp();
     }
 
+    @Override
     public DeviceId getDeviceId() {
-        return devId;
-    }
-    public boolean increaseCounter() {
-        count.incrementAndGet();
-        return true;
+        return this.stateMachineInfo.getStateMachineId().getDeviceId();
     }
 
-    public boolean decreaseCounter() {
-        if (count.get() > 0) {
-            count.decrementAndGet();
-            return true;
-        } else {
-            return false;
-        }
+    @Override
+    public Integer getTimeOut() {
+        return this.stateMachineInfo.getTimeOut();
     }
 
-    public int getCounter() {
-        return count.get();
+    @Override
+    public StateMachineInfo getInfo() {
+        return this.stateMachineInfo;
     }
+
+    @Override
     public int currentState() {
-        return currentState;
+        return this.stateMachineInfo.getCurrentState();
     }
 
-    private void next(int msg) {
-        currentState = transition[currentState][msg];
-    }
-
+    @Override
     public void join(boolean messageOutAllowed) {
-        states[currentState].join(messageOutAllowed);
-        next(TRANSITION_JOIN);
+        int currentState = this.stateMachineInfo.getCurrentState();
+        State state = states[currentState];
+        state.join(messageOutAllowed);
+        next(StateConstants.TRANSITION_JOIN);
     }
 
+    @Override
     public void leave(boolean messageOutAllowed) {
-        states[currentState].leave(messageOutAllowed);
-        next(TRANSITION_LEAVE);
+        int currentState = this.stateMachineInfo.getCurrentState();
+        State state = states[currentState];
+        state.leave(messageOutAllowed);
+        next(StateConstants.TRANSITION_LEAVE);
     }
 
+    @Override
     public void query(int maxResp) {
-        states[currentState].query(maxResp);
-        next(TRANSITION_QUERY);
+        int currentState = this.stateMachineInfo.getCurrentState();
+        State state = states[currentState];
+        state.query(maxResp);
+        next(StateConstants.TRANSITION_QUERY);
     }
 
-    public void timeOut() {
-        states[currentState].timeOut();
-        next(TRANSITION_TIMEOUT);
+    @Override
+    public void timeOut(boolean sendQuery) {
+        int currentState = this.stateMachineInfo.getCurrentState();
+        State state = states[currentState];
+        state.timeOut(sendQuery);
+        next(StateConstants.TRANSITION_TIMEOUT);
     }
 
-    int getTimeOut(int maxTimeOut) {
-        Random random = new Random();
-        return Math.abs(random.nextInt()) % maxTimeOut;
+    protected void next(int msg) {
+        int currentState = this.stateMachineInfo.getCurrentState();
+        this.stateMachineInfo.setCurrentState(transition[currentState][msg]);
     }
 
-    protected void cancelTimer() {
-        if (IgmpTimer.INVALID_TIMER_ID != timerId) {
-            IgmpTimer.cancel(timerId);
+    private abstract class AbstractState implements State {
+
+        protected AbstractState() {
         }
-    }
 
-    class State {
         public void join(boolean messageOutAllowed) {
         }
 
         public void leave(boolean messageOutAllowed) {
+            DeviceId devId = stateMachineInfo.getStateMachineId().getDeviceId();
+            Ip4Address groupIp = stateMachineInfo.getStateMachineId().getGroupIp();
+            Ip4Address srcIp = stateMachineInfo.getSrcIp();
+            PortNumber upLinkPort = stateMachineInfo.getUpLinkPort();
+
             if (messageOutAllowed) {
                 Ethernet eth = IgmpManager.outgoingIgmpWithV3() ?
                         IgmpSender.getInstance().buildIgmpV3Leave(groupIp, srcIp) :
@@ -149,48 +154,77 @@ public class SingleStateMachine {
         public void query(int maxResp) {
         }
 
-        public void timeOut() {
+        public void timeOut(boolean sendQuery) {
         }
 
-    }
-
-    class NonMember extends State {
-        public void join(boolean messageOutAllowed) {
-            if (messageOutAllowed) {
-                Ethernet eth = IgmpManager.outgoingIgmpWithV3() ?
-                        IgmpSender.getInstance().buildIgmpV3Join(groupIp, srcIp) :
-                        IgmpSender.getInstance().buildIgmpV2Join(groupIp, srcIp);
-                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId, upLinkPort);
-                timeOut = getTimeOut(IgmpManager.getUnsolicitedTimeout());
-                timerId = IgmpTimer.start(SingleStateMachine.this, timeOut);
-            }
+        protected int getTimeOut(int maxTimeOut) {
+            Random random = new Random();
+            return Math.abs(random.nextInt()) % maxTimeOut;
         }
     }
 
-    class DelayMember extends State {
+    private class DelayMember extends AbstractState {
+        public DelayMember() {
+            super();
+        }
+
+        @Override
         public void query(int maxResp) {
-            if (maxResp < timeOut) {
-                timeOut = getTimeOut(maxResp);
-                timerId = IgmpTimer.reset(timerId, SingleStateMachine.this, timeOut);
+            if (maxResp < stateMachineInfo.getTimeOut()) {
+                int timeout = getTimeOut(maxResp);
+                stateMachineStore.resetTimer(stateMachineInfo.getStateMachineId(), timeout);
             }
         }
 
-        public void timeOut() {
+        @Override
+        public void timeOut(boolean sendQuery) {
             if (sendQuery) {
+                DeviceId devId = stateMachineInfo.getStateMachineId().getDeviceId();
+                Ip4Address groupIp = stateMachineInfo.getStateMachineId().getGroupIp();
+                Ip4Address srcIp = stateMachineInfo.getSrcIp();
+                PortNumber upLinkPort = stateMachineInfo.getUpLinkPort();
+
                 Ethernet eth = IgmpManager.outgoingIgmpWithV3() ?
                         IgmpSender.getInstance().buildIgmpV3ResponseQuery(groupIp, srcIp) :
                         IgmpSender.getInstance().buildIgmpV2ResponseQuery(groupIp, srcIp);
                 IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId, upLinkPort);
-                timeOut = DEFAULT_MAX_RESP;
+                stateMachineStore.setMaxTimeout(stateMachineInfo.getStateMachineId());
             }
         }
-
     }
 
-    class IdleMember extends State {
+    private class IdleMember extends AbstractState {
+        public IdleMember() {
+            super();
+        }
+
+        @Override
         public void query(int maxResp) {
-            timeOut = getTimeOut(maxResp);
-            timerId = IgmpTimer.start(SingleStateMachine.this, timeOut);
+            int timeout = this.getTimeOut(maxResp);
+            stateMachineStore.startTimer(stateMachineInfo.getStateMachineId(), timeout);
+        }
+    }
+
+    private class NonMember extends AbstractState {
+        public NonMember() {
+            super();
+        }
+
+        @Override
+        public void join(boolean messageOutAllowed) {
+            if (messageOutAllowed) {
+                DeviceId devId = stateMachineInfo.getStateMachineId().getDeviceId();
+                Ip4Address groupIp = stateMachineInfo.getStateMachineId().getGroupIp();
+                Ip4Address srcIp = stateMachineInfo.getSrcIp();
+                PortNumber upLinkPort = stateMachineInfo.getUpLinkPort();
+
+                Ethernet eth = IgmpManager.outgoingIgmpWithV3() ?
+                        IgmpSender.getInstance().buildIgmpV3Join(groupIp, srcIp) :
+                        IgmpSender.getInstance().buildIgmpV2Join(groupIp, srcIp);
+                IgmpSender.getInstance().sendIgmpPacketUplink(eth, devId, upLinkPort);
+                int timeout = this.getTimeOut(IgmpManager.getUnsolicitedTimeout());
+                stateMachineStore.startTimer(stateMachineInfo.getStateMachineId(), timeout);
+            }
         }
     }
 }
