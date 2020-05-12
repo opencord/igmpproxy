@@ -1,0 +1,343 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d57d5a5_7ece1da4",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/groupmember/GroupMemberId.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "missing javadoc (valid for all method and ll public classes)",
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "638a70bb_710ce549",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/groupmember/GroupMemberId.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "maybe put a separator between these \"-\" would do fine",
+      "range": {
+        "startLine": 42,
+        "startChar": 8,
+        "endLine": 42,
+        "endChar": 77
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2cb09c39_76fc363c",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemacine/StateMachineService.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "reuse values from StateConstants",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 31
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aca8b588_1fb71c9c",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemacine/StateMachineStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "why are you not returning the whole Map here ? this seems convoluted for nothing. also the entrySet() is not a great name for the method getStateMachineMap() is better",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 64
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "013fab2c_dce9c9af",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/timer/IgmpTimerStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "why is this not directly folded into the StateMachineStore as per design document ? it seems that the timer is a property of the state machine, it does nt need to be distributed in itself.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b35c7548_c931e08f",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "this method shoudl perform cleanup of every store map and state.",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da7d5835_3f7e5e57",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "again, her the time could be an attribute of the state machine, with no need for two stores.",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "688bd953_231d4c8f",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "put this class in a separate file.",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 254,
+        "endChar": 62
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43d16f55_f379f149",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/GroupMemberStoreImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "I really see no reason to have two stores. what is the reasoning behind not using always the distributed ?\nvalid for the StateMachine and the Timer stores too. The Atomix consistent maps are designed to work in a single instance and a multi instance environment.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 9
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "83859cec_6473c518",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/SimpleGroupMemberStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "this can be entirely removed.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 70
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d14c31bb_73b956f2",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/AbstractStateMachineStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "return an ImmutableCopy.of() in order not to iterate on the original distributed map.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 5
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1512cc6a_6859b147",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/AbstractStateMachineStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "you can just return the map here, same comment also on the entrySet() name as done before",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 5
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f6646a20_9b1cf432",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/SimpleStateMachineStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "this can be entirely removed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 72
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "36831159_8a73dea7",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/timer/DistributedIgmpTimerStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "fold this into the DistributedStateMachineStore with the IGMPTImer as an attribute fo the state machine itself.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f31f0cfe_98f2e312",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/timer/SimpleIgmpTimerStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-12T09:40:19Z",
+      "side": 1,
+      "message": "this can be entirely removed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 66
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
