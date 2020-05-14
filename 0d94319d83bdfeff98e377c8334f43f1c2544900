@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6af9ea53_17661a8f",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemacine/StateMachineInfo.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-14T12:48:12Z",
+      "side": 1,
+      "message": "I would avoid separating StateMachine and StateMachineInfo, it creates confusion, combine them into one single object.",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 29
+      },
+      "revId": "0d94319d83bdfeff98e377c8334f43f1c2544900",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "953c577e_8e78d903",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-14T12:48:12Z",
+      "side": 1,
+      "message": "I still see no reasons why the timer should be in its own separate store. Th StateMachine object can have a Timer attribute held in itself. This way the timer is distributed with the StateMachine and no TimerStore is needed.",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 42
+      },
+      "revId": "0d94319d83bdfeff98e377c8334f43f1c2544900",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6ebe2ed_aa5490ee",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/StateMachine.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-14T12:48:12Z",
+      "side": 1,
+      "message": "why is this being moved here ? I think this being an API in needs to be in the API pkg. Also merge with StateMachineInfo as per other comment.",
+      "revId": "0d94319d83bdfeff98e377c8334f43f1c2544900",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3b0278e_bca0b055",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/StateMachineStoreImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-14T12:48:12Z",
+      "side": 1,
+      "message": "Return StateMachine, when combined.",
+      "range": {
+        "startLine": 179,
+        "startChar": 22,
+        "endLine": 179,
+        "endChar": 38
+      },
+      "revId": "0d94319d83bdfeff98e377c8334f43f1c2544900",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d708364_6c676834",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/timer/DistributedIgmpTimerStore.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-14T12:48:12Z",
+      "side": 1,
+      "message": "remove when combining timer into the StateMachine",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 71
+      },
+      "revId": "0d94319d83bdfeff98e377c8334f43f1c2544900",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3bf43efa_78173a6a",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/timer/IgmpTimer.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-14T12:48:12Z",
+      "side": 1,
+      "message": "interface please move to API package",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "0d94319d83bdfeff98e377c8334f43f1c2544900",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
