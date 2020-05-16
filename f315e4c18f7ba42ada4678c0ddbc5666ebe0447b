@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "759833c5_d8efd815",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemacine/StateMachineStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aca8b588_1fb71c9c",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 64
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "013fab2c_dce9c9af",
         "filename": "api/src/main/java/org/opencord/igmpproxy/timer/IgmpTimerStore.java",
         "patchSetId": 4
@@ -212,6 +236,30 @@
       "writtenOn": "2020-05-12T22:55:27Z",
       "side": 1,
       "message": "I think store services should be dummy services.It would be better if it has a minimum logic. StateMachineServiceImpl managed igmp-timer-store and state-machine-store.\n\nI am going to update as you say.",
+      "parentUuid": "013fab2c_dce9c9af",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "44f861c6_407fd74e",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/timer/IgmpTimerStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "Done",
       "parentUuid": "013fab2c_dce9c9af",
       "range": {
         "startLine": 25,
@@ -272,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "a2cc077d_18875edb",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b35c7548_c931e08f",
+      "range": {
+        "startLine": 72,
+        "startChar": 0,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da7d5835_3f7e5e57",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
         "patchSetId": 4
@@ -283,6 +355,30 @@
       "writtenOn": "2020-05-12T09:40:19Z",
       "side": 1,
       "message": "again, her the time could be an attribute of the state machine, with no need for two stores.",
+      "range": {
+        "startLine": 205,
+        "startChar": 8,
+        "endLine": 226,
+        "endChar": 9
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0190ed07_63267d1b",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da7d5835_3f7e5e57",
       "range": {
         "startLine": 205,
         "startChar": 8,
@@ -329,6 +425,30 @@
       "writtenOn": "2020-05-12T22:55:27Z",
       "side": 1,
       "message": "I hade seperated they before (SingleStateMachine, AbstractState,IdleMember,NonMember,DelayMember). \nStates access to store services during state transitions. Therefore i made to implementation as a private inner class. \n\nFirstly I can seperate SingleStateMachine and States. Only states stay in this class as a private inner class.",
+      "parentUuid": "688bd953_231d4c8f",
+      "range": {
+        "startLine": 253,
+        "startChar": 4,
+        "endLine": 254,
+        "endChar": 62
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aaaded57_07edbb82",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "It seperated. But I send machine-store to SingleStateMachine object. I don\u0027t think it\u0027s a good solution. I will look for different solution about this.",
       "parentUuid": "688bd953_231d4c8f",
       "range": {
         "startLine": 253,
@@ -389,6 +509,30 @@
     },
     {
       "key": {
+        "uuid": "732e91e8_8fe2c4a7",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/GroupMemberStoreImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43d16f55_f379f149",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 9
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83859cec_6473c518",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/SimpleGroupMemberStore.java",
         "patchSetId": 4
@@ -400,6 +544,30 @@
       "writtenOn": "2020-05-12T09:40:19Z",
       "side": 1,
       "message": "this can be entirely removed.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 70
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da8df151_9f3ba3e4",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/SimpleGroupMemberStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83859cec_6473c518",
       "range": {
         "startLine": 24,
         "startChar": 0,
@@ -529,6 +697,30 @@
     },
     {
       "key": {
+        "uuid": "5cc5d7e4_b6937477",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/SimpleStateMachineStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6646a20_9b1cf432",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 72
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36831159_8a73dea7",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/timer/DistributedIgmpTimerStore.java",
         "patchSetId": 4
@@ -552,6 +744,30 @@
     },
     {
       "key": {
+        "uuid": "83dca3d3_0cb6fe11",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/timer/DistributedIgmpTimerStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36831159_8a73dea7",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 71
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f31f0cfe_98f2e312",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/timer/SimpleIgmpTimerStore.java",
         "patchSetId": 4
@@ -563,6 +779,30 @@
       "writtenOn": "2020-05-12T09:40:19Z",
       "side": 1,
       "message": "this can be entirely removed.",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 66
+      },
+      "revId": "f315e4c18f7ba42ada4678c0ddbc5666ebe0447b",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4848db88_2cf7ff6b",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/timer/SimpleIgmpTimerStore.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-16T03:34:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f31f0cfe_98f2e312",
       "range": {
         "startLine": 27,
         "startChar": 0,
