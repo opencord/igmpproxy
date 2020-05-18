@@ -506,6 +506,30 @@
     },
     {
       "key": {
+        "uuid": "57483170_c94a6559",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/AbstractGroupMemberStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-18T19:20:23Z",
+      "side": 1,
+      "message": "\u003e if different store implementation is require , this design can be\n \u003e used. Also I use it to test.",
+      "parentUuid": "76060b4e_03da0fc2",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7847dce5_e7d22254",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/DistributedGroupMemberStore.java",
         "patchSetId": 6
