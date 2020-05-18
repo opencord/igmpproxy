@@ -157,6 +157,29 @@
     },
     {
       "key": {
+        "uuid": "e41efbe3_2077023b",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T10:06:53Z",
+      "side": 1,
+      "message": "you can make the Join call return the state machine and then store the state machine in the store, not doing it at line 109",
+      "range": {
+        "startLine": 119,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 41
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "983fdb36_53b96ec3",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
         "patchSetId": 6
