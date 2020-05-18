@@ -1,0 +1,429 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9d20260_32219a8b",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/IgmpTimerConstants.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "I think we can move this to IgmpTimer class removing this class altogether",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 51
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "793b9c7e_4c9b668a",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemacine/State.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "missing javadoc",
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "556eb46e_0c73097f",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemacine/StateConstants.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "I\u0027d say we can move this to the State class, removing redundant StateConstants class.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "55c82639_b1cf129e",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemacine/StateMachineId.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "is there a specific reason for this output ? Object.toStringHelper() instead of hardcoded object is better",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 20
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "956c5d16_58e996d7",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemacine/package-info.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "javadoc",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82c9022f_d07fc8e0",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/SingleStateMachine.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "why call this method at all and pass a boolean ? we can check were the method is called and avoid calling if !messageOutAllowed. No parameter is required.",
+      "range": {
+        "startLine": 213,
+        "startChar": 8,
+        "endLine": 228,
+        "endChar": 9
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f82cda3_64461b81",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "why are you keeping a local Map here ? there is no need for such local cache. All the operations can be don on the backing store. Again this is because we are keeping StateMachine and StateMachine info separated. we need to merge them and have just the StateMachine saved in the store.\nAlso this copy of the map can be obtained fro an asJavaMap() called on the backing distributed concurrent map offered by atomix.",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 52
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "983fdb36_53b96ec3",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "this will work only if the device is connected. Please check method IsLocalMaster() in mast app to extend this and make it work in all cases.",
+      "range": {
+        "startLine": 198,
+        "startChar": 38,
+        "endLine": 198,
+        "endChar": 51
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1cb967f1_d9c1caa8",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineServiceImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "How is the handling of the disconnected device done ? We should have a listener https://gerrit.opencord.org/#/c/18967/ that handles connection and disconnection.",
+      "range": {
+        "startLine": 236,
+        "startChar": 0,
+        "endLine": 236,
+        "endChar": 1
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26384232_3c531d0d",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/AbstractGroupMemberStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "I think this and the DistributedGroupMemberStore can be merged, no need for this to be in a a separated class.",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7847dce5_e7d22254",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/DistributedGroupMemberStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "\"started: is enough. the log already prints the class for you.",
+      "range": {
+        "startLine": 60,
+        "startChar": 8,
+        "endLine": 60,
+        "endChar": 60
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8fa133cd_0907042a",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/DistributedGroupMemberStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "it\u0027s better to invert these, first clear and nullify the local map, then clear the distributed then destroy it.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 30
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3aafc0b3_a8737fd1",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/DistributedGroupMemberStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 60
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3eabb8ce_ee7c78a2",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/GroupMemberId.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "seems an API to me, please move in the API package",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 34
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "65266a62_7cb3b142",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/GroupMemberStoreDelegate.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "javadoc, valid for all classes",
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5780f595_4fd13c3a",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/AbstractStateMachineStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "since there are no simple stores anymore this can be merged with DistributedMachineStore to avoid complication.",
+      "range": {
+        "startLine": 27,
+        "startChar": 22,
+        "endLine": 27,
+        "endChar": 47
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c8ccc78f_97eeab63",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/DistributedStateMachineStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "clear first",
+      "range": {
+        "startLine": 80,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 32
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1ecefc50_6f0fde80",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/DistributedStateMachineStore.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 60
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "795fdb1b_9004835f",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/package-info.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-18T09:57:42Z",
+      "side": 1,
+      "message": "javadoc",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 30
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
