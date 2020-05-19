@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07ff6ead_c6056f54",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemachine/StateMachine.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T11:46:15Z",
+      "side": 1,
+      "message": "I\u0027m still wondering why is the boolean used in these methods. By looking at the implementation I think that we can avoid passing it in and NOT call the method at all if it\u0027s not needed",
+      "range": {
+        "startLine": 114,
+        "startChar": 4,
+        "endLine": 114,
+        "endChar": 41
+      },
+      "revId": "b8ace3f7da77956734e0c8e9b073379f00dd0986",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61a3d382_f99ad5b9",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/SingleStateMachine.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T11:46:15Z",
+      "side": 1,
+      "message": "shall we really go to the next state if the message out is not allowed ? I\u0027m puzzled",
+      "range": {
+        "startLine": 141,
+        "startChar": 7,
+        "endLine": 141,
+        "endChar": 36
+      },
+      "revId": "b8ace3f7da77956734e0c8e9b073379f00dd0986",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ef3ae74_ee9a3e6d",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/SingleStateMachine.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T11:46:15Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 146,
+        "startChar": 0,
+        "endLine": 149,
+        "endChar": 9
+      },
+      "revId": "b8ace3f7da77956734e0c8e9b073379f00dd0986",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "218c54bd_5c8cd776",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineImpl.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T11:46:15Z",
+      "side": 1,
+      "message": "to avoid confusion rename this as StateMachineManager",
+      "range": {
+        "startLine": 43,
+        "startChar": 13,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "b8ace3f7da77956734e0c8e9b073379f00dd0986",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
