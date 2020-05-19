@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bec7411_edf6c69f",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemachine/StateMachineStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T13:41:29Z",
+      "side": 1,
+      "message": "usually store interface are not really public, please move to the impl package.",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 36
+      },
+      "revId": "e0c09f3499dcd443e5fe376f7b8fe06ca2b8a8fb",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3478e2a7_90278325",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T13:41:29Z",
+      "side": 1,
+      "message": "just out of consistency in java is usually the opposite. Valid for all the checks in the patch.",
+      "range": {
+        "startLine": 83,
+        "startChar": 12,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "e0c09f3499dcd443e5fe376f7b8fe06ca2b8a8fb",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "541aeeef_c4c62955",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T13:41:29Z",
+      "side": 1,
+      "message": "I\u0027d log a debug here.",
+      "range": {
+        "startLine": 107,
+        "startChar": 12,
+        "endLine": 107,
+        "endChar": 25
+      },
+      "revId": "e0c09f3499dcd443e5fe376f7b8fe06ca2b8a8fb",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0230341a_7d502cb2",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T13:41:29Z",
+      "side": 1,
+      "message": "log a debug stating that the machine was already left",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 9
+      },
+      "revId": "e0c09f3499dcd443e5fe376f7b8fe06ca2b8a8fb",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cdf65755_32927195",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T13:41:29Z",
+      "side": 1,
+      "message": "same, log a warning, valid for all other null checks with just return",
+      "range": {
+        "startLine": 133,
+        "startChar": 12,
+        "endLine": 133,
+        "endChar": 19
+      },
+      "revId": "e0c09f3499dcd443e5fe376f7b8fe06ca2b8a8fb",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "61f0b7e2_4ef89120",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/state/DelayMember.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T13:41:29Z",
+      "side": 1,
+      "message": "missing javadoc, valid for all classes and methods",
+      "revId": "e0c09f3499dcd443e5fe376f7b8fe06ca2b8a8fb",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7e3af849_3da50242",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/DistributedStateMachineStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T13:41:29Z",
+      "side": 1,
+      "message": "redundant",
+      "range": {
+        "startLine": 77,
+        "startChar": 8,
+        "endLine": 77,
+        "endChar": 13
+      },
+      "revId": "e0c09f3499dcd443e5fe376f7b8fe06ca2b8a8fb",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "843611ca_74f946f0",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/DistributedStateMachineStore.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T13:41:29Z",
+      "side": 1,
+      "message": "decrement is probably good enough since you are not returning the value",
+      "range": {
+        "startLine": 111,
+        "startChar": 33,
+        "endLine": 111,
+        "endChar": 48
+      },
+      "revId": "e0c09f3499dcd443e5fe376f7b8fe06ca2b8a8fb",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
