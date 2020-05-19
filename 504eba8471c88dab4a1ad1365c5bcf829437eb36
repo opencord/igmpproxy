@@ -741,6 +741,30 @@
     },
     {
       "key": {
+        "uuid": "290c3388_89f1e311",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/GroupMember.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-05-19T11:46:15Z",
+      "side": 1,
+      "message": "do you know what the expectation of this code was ?",
+      "parentUuid": "1e36a89a_9620111a",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 28
+      },
+      "revId": "504eba8471c88dab4a1ad1365c5bcf829437eb36",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3eabb8ce_ee7c78a2",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/GroupMemberId.java",
         "patchSetId": 6
