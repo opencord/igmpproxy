@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f87d1f6_bd515f36",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/GroupMemberId.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-22T17:05:54Z",
+      "side": 1,
+      "message": "You need to implement a custom serializer and serialize/deserialize device id as string. Look at McastRoleStoreKeySerializer.",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "53bcc027_305ad68a",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/GroupMemberId.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-22T17:05:54Z",
+      "side": 1,
+      "message": "You need also a default constructor. see McastRoleStoreKey",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d13b0f85_d9bc163b",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemachine/StateMachineId.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-22T17:05:54Z",
+      "side": 1,
+      "message": "same comments here regarding the custom serializer and the default constructor. You can see in McastHandler how to register the custom serializer",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "873fc619_3e2e238c",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-22T17:05:54Z",
+      "side": 1,
+      "message": "decrementAndGetCounter ?",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 79
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "82215503_d3fc52e1",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/InternalGroupMemberEvent.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-22T17:05:54Z",
+      "side": 1,
+      "message": "We usually use internal to distinguish the component events from the internal map event. This is why I suggested to remove Internal.",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d205590_7aa45bef",
+        "filename": "app/src/test/java/org/opencord/igmpproxy/impl/IgmpStatisticsTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-22T17:05:54Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 47
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
