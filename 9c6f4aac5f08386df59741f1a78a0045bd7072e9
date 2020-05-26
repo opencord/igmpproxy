@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba3e100e_f6ba9b1d",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/GroupMemberId.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-26T12:28:25Z",
+      "side": 1,
+      "message": "private. Something like this:\n\n    // Constructor for serialization\n    private McastRoleStoreKey() {\n        this.mcastIp \u003d null;\n        this.deviceId \u003d null;\n        this.source \u003d null;\n    }",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 10
+      },
+      "revId": "9c6f4aac5f08386df59741f1a78a0045bd7072e9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9ac9667_92acf4b0",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/GroupMemberIdSerializer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-26T12:28:25Z",
+      "side": 1,
+      "message": "you need to handle as string. Same for read",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 70
+      },
+      "revId": "9c6f4aac5f08386df59741f1a78a0045bd7072e9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a858c97c_73b34c91",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemachine/StateMachineId.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-26T12:28:25Z",
+      "side": 1,
+      "message": "same comments here",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "9c6f4aac5f08386df59741f1a78a0045bd7072e9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "89a786f3_eb919cb7",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemachine/StateMachineIdSerializer.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-26T12:28:25Z",
+      "side": 1,
+      "message": "please fix this class as well",
+      "range": {
+        "startLine": 28,
+        "startChar": 13,
+        "endLine": 28,
+        "endChar": 37
+      },
+      "revId": "9c6f4aac5f08386df59741f1a78a0045bd7072e9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aad53500_e3271209",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/SingleStateMachine.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-26T12:28:25Z",
+      "side": 1,
+      "message": "this does not look right",
+      "range": {
+        "startLine": 79,
+        "startChar": 5,
+        "endLine": 88,
+        "endChar": 55
+      },
+      "revId": "9c6f4aac5f08386df59741f1a78a0045bd7072e9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "820a79cf_df10c721",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineManager.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-26T12:28:25Z",
+      "side": 1,
+      "message": "why do you still need this ?",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 79
+      },
+      "revId": "9c6f4aac5f08386df59741f1a78a0045bd7072e9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ae81593c_687ef980",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/DistributedStateMachineStore.java",
+        "patchSetId": 12
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-26T12:28:25Z",
+      "side": 1,
+      "message": "please verify that the last modification you did does not create problems",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 58
+      },
+      "revId": "9c6f4aac5f08386df59741f1a78a0045bd7072e9",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
