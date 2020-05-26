@@ -237,6 +237,29 @@
     },
     {
       "key": {
+        "uuid": "54ee73ba_b41a2584",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/DistributedStateMachineStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-05-26T12:28:25Z",
+      "side": 1,
+      "message": "I am not 100% you can do this removal in favor of the custom serializer. Have you actually tried this code ? Probably you have still to register the inner members if they are not part of the API namespace",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d205590_7aa45bef",
         "filename": "app/src/test/java/org/opencord/igmpproxy/impl/IgmpStatisticsTest.java",
         "patchSetId": 10
