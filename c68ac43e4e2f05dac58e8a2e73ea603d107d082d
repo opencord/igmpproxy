@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "8f3a7da2_7f2f2048",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/machine/DistributedStateMachineStore.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-26T15:12:00Z",
+      "side": 1,
+      "message": "Yes,I tried it. writing and reading worked. \nAll registers are in SingleStateMachineSerializer.",
+      "parentUuid": "54ee73ba_b41a2584",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 44
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d205590_7aa45bef",
         "filename": "app/src/test/java/org/opencord/igmpproxy/impl/IgmpStatisticsTest.java",
         "patchSetId": 10
