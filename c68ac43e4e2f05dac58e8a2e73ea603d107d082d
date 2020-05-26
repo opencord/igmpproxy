@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0806a82d_c89895d4",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/GroupMemberId.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-26T02:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f87d1f6_bd515f36",
+      "range": {
+        "startLine": 29,
+        "startChar": 19,
+        "endLine": 29,
+        "endChar": 32
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53bcc027_305ad68a",
         "filename": "api/src/main/java/org/opencord/igmpproxy/GroupMemberId.java",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2020-05-22T17:05:54Z",
       "side": 1,
       "message": "You need also a default constructor. see McastRoleStoreKey",
+      "range": {
+        "startLine": 34,
+        "startChar": 12,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c5663ea_df0731d6",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/GroupMemberId.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-26T02:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53bcc027_305ad68a",
       "range": {
         "startLine": 34,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0ed6d030_0abb3cde",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/statemachine/StateMachineId.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-26T02:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d13b0f85_d9bc163b",
+      "range": {
+        "startLine": 27,
+        "startChar": 19,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "873fc619_3e2e238c",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineManager.java",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2020-05-22T17:05:54Z",
       "side": 1,
       "message": "decrementAndGetCounter ?",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 118,
+        "endChar": 79
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "19ea7f96_f7d2c2bb",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/StateMachineManager.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-26T02:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "873fc619_3e2e238c",
       "range": {
         "startLine": 115,
         "startChar": 0,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f7b1e807_a0241455",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/store/groupmember/InternalGroupMemberEvent.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-26T02:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82215503_d3fc52e1",
+      "range": {
+        "startLine": 23,
+        "startChar": 13,
+        "endLine": 23,
+        "endChar": 37
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d205590_7aa45bef",
         "filename": "app/src/test/java/org/opencord/igmpproxy/impl/IgmpStatisticsTest.java",
         "patchSetId": 10
@@ -128,6 +248,30 @@
       "writtenOn": "2020-05-22T17:05:54Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 186,
+        "startChar": 0,
+        "endLine": 186,
+        "endChar": 47
+      },
+      "revId": "c68ac43e4e2f05dac58e8a2e73ea603d107d082d",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4f4b09a_2a38c07a",
+        "filename": "app/src/test/java/org/opencord/igmpproxy/impl/IgmpStatisticsTest.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-05-26T02:30:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d205590_7aa45bef",
       "range": {
         "startLine": 186,
         "startChar": 0,
