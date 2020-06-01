@@ -16,7 +16,9 @@
 package org.opencord.igmpproxy.impl;
 
 import com.google.common.collect.Sets;
+import org.onosproject.mcast.api.McastRouteData;
 import org.onosproject.net.Device;
+import org.onosproject.net.HostId;
 import org.opencord.igmpproxy.IgmpLeadershipService;
 import org.opencord.igmpproxy.IgmpStatisticsService;
 import org.opencord.igmpproxy.impl.store.groupmember.GroupMember;
@@ -91,6 +93,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static org.onlab.packet.IGMPMembership.MODE_IS_INCLUDE;
 import static org.onlab.packet.IGMPMembership.MODE_IS_EXCLUDE;
@@ -822,71 +825,120 @@ public class IgmpManager {
     private class InternalDeviceListener implements DeviceListener {
         @Override
         public void event(DeviceEvent event) {
-            DeviceId devId = event.subject().id();
-            Port p = event.port();
-            if (getSubscriberAndDeviceInformation(devId).isEmpty() &&
-                    !(p != null && isConnectPoint(devId, p.number()))) {
-                return;
-            }
-            PortNumber port;
+            eventExecutor.execute(() -> {
+                DeviceId devId = event.subject().id();
+                Port p = event.port();
 
-            switch (event.type()) {
+                if (!igmpLeadershipService.isLocalLeader(devId)) {
+                    return;
+                }
+                if (getSubscriberAndDeviceInformation(devId).isEmpty() &&
+                        !(p != null && isConnectPoint(devId, p.number()))) {
+                    return;
+                }
+                PortNumber port;
 
-                case DEVICE_ADDED:
-                case DEVICE_UPDATED:
-                case DEVICE_REMOVED:
-                case DEVICE_SUSPENDED:
-                case DEVICE_AVAILABILITY_CHANGED:
-                case PORT_STATS_UPDATED:
-                    break;
-                case PORT_ADDED:
-                    port = p.number();
-                    if (getSubscriberAndDeviceInformation(devId).isPresent() &&
-                            !isUplink(devId, port) && !isConnectPoint(devId, port)) {
-                        processFilterObjective(devId, port, false);
-                    } else if (isUplink(devId, port)) {
-                        provisionUplinkFlows();
-                    } else if (isConnectPoint(devId, port)) {
-                        provisionConnectPointFlows();
-                    }
-                    break;
-                case PORT_UPDATED:
-                    port = p.number();
-                    if (getSubscriberAndDeviceInformation(devId).isPresent() &&
-                            !isUplink(devId, port) && !isConnectPoint(devId, port)) {
-                        if (event.port().isEnabled()) {
+                switch (event.type()) {
+
+                    case DEVICE_ADDED:
+                    case DEVICE_UPDATED:
+                    case DEVICE_REMOVED:
+                    case DEVICE_SUSPENDED:
+                    case DEVICE_AVAILABILITY_CHANGED:
+                    case PORT_STATS_UPDATED:
+                        break;
+                    case PORT_ADDED:
+                        port = p.number();
+                        if (getSubscriberAndDeviceInformation(devId).isPresent() &&
+                                !isUplink(devId, port) && !isConnectPoint(devId, port)) {
                             processFilterObjective(devId, port, false);
-                        } else {
-                            processFilterObjective(devId, port, true);
-                        }
-                    } else if (isUplink(devId, port)) {
-                        if (event.port().isEnabled()) {
-                            provisionUplinkFlows(devId);
-                        } else {
-                            processFilterObjective(devId, port, true);
-                        }
-                    } else if (isConnectPoint(devId, port)) {
-                        if (event.port().isEnabled()) {
+                        } else if (isUplink(devId, port)) {
+                            provisionUplinkFlows();
+                        } else if (isConnectPoint(devId, port)) {
                             provisionConnectPointFlows();
-                        } else {
-                            unprovisionConnectPointFlows();
                         }
-                    }
-                    break;
-                case PORT_REMOVED:
-                    port = p.number();
-                    processFilterObjective(devId, port, true);
-                    break;
-                default:
-                    log.info("Unknown device event {}", event.type());
-                    break;
-            }
+                        onSourceBecomesValid(devId, port);
+                        break;
+                    case PORT_UPDATED:
+                        port = p.number();
+                        if (getSubscriberAndDeviceInformation(devId).isPresent() &&
+                                !isUplink(devId, port) && !isConnectPoint(devId, port)) {
+                            processFilterObjective(devId, port, !event.port().isEnabled());
+                        } else if (isUplink(devId, port)) {
+                            if (event.port().isEnabled()) {
+                                provisionUplinkFlows(devId);
+                            } else {
+                                processFilterObjective(devId, port, true);
+                            }
+                        } else if (isConnectPoint(devId, port)) {
+                            if (event.port().isEnabled()) {
+                                provisionConnectPointFlows();
+                            } else {
+                                unprovisionConnectPointFlows();
+                            }
+                        }
+                        if (event.port().isEnabled()) {
+                            onSourceBecomesValid(devId, port);
+                        } else {
+                            onSourceBecomesInvalid(devId, port);
+                        }
+                        break;
+                    case PORT_REMOVED:
+                        port = p.number();
+                        processFilterObjective(devId, port, true);
+                        onSourceBecomesInvalid(devId, port);
+                        break;
+                    default:
+                        log.info("Unknown device event {}", event.type());
+                        break;
+                }
+            });
         }
 
         @Override
         public boolean isRelevant(DeviceEvent event) {
             return true;
         }
+    }
+
+    private Set<McastRoute> multicastRoutesOfIgmpProxy() {
+        Set<McastRoute> routes = new HashSet<>(); //using set to eliminate multiple entities
+        groupMemberStore.getAllGroupMemberIds().forEach(groupMemberId -> {
+            GroupMember groupMember = groupMemberStore.getGroupMember(groupMemberId);
+            if (groupMember != null) {
+                groupMember.getSourceList().forEach(source -> {
+                    //regenerate the routes created by this application
+                    routes.add(new McastRoute(source, groupMemberId.getGroupIp(), McastRoute.Type.IGMP));
+                });
+            }
+        });
+        return routes;
+    }
+
+    private void onSourceBecomesInvalid(DeviceId deviceId, PortNumber portNumber) {
+        Set<McastRoute> routes = multicastRoutesOfIgmpProxy();
+        //remove the source from the existing routes
+        routes.forEach(route -> {
+            multicastService.removeSources(route, Sets.newHashSet(new ConnectPoint(deviceId, portNumber)));
+        });
+    }
+
+    private void onSourceBecomesValid(DeviceId deviceId, PortNumber portNumber) {
+        if (!(getSource().isPresent() &&
+                getSource().get().deviceId().equals(deviceId) &&
+                getSource().get().port().equals(portNumber))) {
+            //connect point is not configured as the source
+            log.debug("{}/{} is not the source cp. Stopped processing it further", deviceId, portNumber);
+            return;
+        }
+        log.info("source device:port is active. Restoring the source. DeviceId={}, portNumber={}",
+                deviceId, portNumber);
+        //restore the source
+        Set<McastRoute> routes = multicastRoutesOfIgmpProxy();
+        routes.forEach(route -> {
+            //add source to the route
+            multicastService.addSources(route, Sets.newHashSet(new ConnectPoint(deviceId, portNumber)));
+        });
     }
 
     private class InternalNetworkConfigListener implements NetworkConfigListener {
@@ -943,9 +995,18 @@ public class IgmpManager {
         }
 
         void getSourceConnectPoint(IgmpproxyConfig cfg) {
+            ConnectPoint oldSourceDevPort = sourceDeviceAndPort;
             sourceDeviceAndPort = cfg.getSourceDeviceAndPort();
             if (sourceDeviceAndPort != null) {
                 log.debug("source parameter configured to {}", sourceDeviceAndPort);
+            }
+            if (oldSourceDevPort != null && !oldSourceDevPort.equals(sourceDeviceAndPort)) {
+                //source config has changed, remove the old source from multicast routes
+                onSourceBecomesInvalid(oldSourceDevPort.deviceId(), oldSourceDevPort.port());
+            }
+            if (sourceDeviceAndPort != null && !sourceDeviceAndPort.equals(oldSourceDevPort)) {
+                //add new source to the existing routes
+                onSourceBecomesValid(sourceDeviceAndPort.deviceId(), sourceDeviceAndPort.port());
             }
         }
 
