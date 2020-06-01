@@ -16,7 +16,9 @@
 package org.opencord.igmpproxy.impl;
 
 import com.google.common.collect.Sets;
+import org.onosproject.mcast.api.McastRouteData;
 import org.onosproject.net.Device;
+import org.onosproject.net.HostId;
 import org.opencord.igmpproxy.IgmpLeadershipService;
 import org.opencord.igmpproxy.IgmpStatisticsService;
 import org.opencord.igmpproxy.impl.store.groupmember.GroupMember;
@@ -91,6 +93,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import static org.onlab.packet.IGMPMembership.MODE_IS_INCLUDE;
 import static org.onlab.packet.IGMPMembership.MODE_IS_EXCLUDE;
@@ -841,6 +844,7 @@ public class IgmpManager {
                     } else if (isConnectPoint(devId, port)) {
                         provisionConnectPointFlows();
                     }
+                    onSourceBecomesValid(devId, port);
                     break;
                 case PORT_UPDATED:
                     port = p.number();
@@ -864,10 +868,16 @@ public class IgmpManager {
                             unprovisionConnectPointFlows();
                         }
                     }
+                    if (event.port().isEnabled()) {
+                        onSourceBecomesValid(devId, port);
+                    } else {
+                        onSourceBecomesInvalid(devId, port);
+                    }
                     break;
                 case PORT_REMOVED:
                     port = p.number();
                     processFilterObjective(devId, port, true);
+                    onSourceBecomesInvalid(devId, port);
                     break;
                 default:
                     log.info("Unknown device event {}", event.type());
@@ -879,6 +889,55 @@ public class IgmpManager {
         public boolean isRelevant(DeviceEvent event) {
             return true;
         }
+    }
+
+    private Set<McastRoute> multicastRoutesOfIgmpProxy() {
+        Set<McastRoute> routes = new HashSet<>(); //using set to eliminate multiple entities
+        groupMemberStore.getAllGroupMemberIds().forEach(groupMemberId -> {
+            GroupMember groupMember = groupMemberStore.getGroupMember(groupMemberId);
+            if (groupMember != null) {
+                groupMember.getSourceList().forEach(source -> {
+                    //regenerate the routes created by this application
+                    routes.add(new McastRoute(source, groupMemberId.getGroupIp(), McastRoute.Type.IGMP));
+                });
+            }
+        });
+        return routes;
+    }
+
+    private void onSourceBecomesInvalid(DeviceId deviceId, PortNumber portNumber) {
+        //TODO: instance coordination is needed
+        Set<McastRoute> routes = multicastRoutesOfIgmpProxy();
+        routes.forEach(route -> {
+            McastRouteData mcastRouteData = multicastService.routeData(route);
+            if (mcastRouteData != null) {
+                //check the route data whether it stores the received connect point as a source or not
+                Set<ConnectPoint> sources = mcastRouteData.sources().get(HostId.NONE).stream()
+                        .filter(cp -> cp.deviceId().equals(deviceId) && cp.port().equals(portNumber))
+                        .collect(Collectors.toSet());
+                if (!sources.isEmpty()) {
+                    multicastService.removeSources(route);
+                }
+            }
+        });
+    }
+
+    private void onSourceBecomesValid(DeviceId deviceId, PortNumber portNumber) {
+        //TODO: instance coordination is needed
+        if (!(getSource().isPresent() &&
+                getSource().get().deviceId().equals(deviceId) &&
+                getSource().get().port().equals(portNumber))) {
+            //connect point is not configured as the source
+            return;
+        }
+        log.info("source device:port is active. Restoring sources fo multicast routes. DeviceId={}, portNumber={}",
+                deviceId, portNumber);
+        //restore the source
+        Set<McastRoute> routes = multicastRoutesOfIgmpProxy();
+        routes.forEach(route -> {
+            //add source to the route
+            multicastService.addSources(route, Sets.newHashSet(new ConnectPoint(deviceId, portNumber)));
+        });
     }
 
     private class InternalNetworkConfigListener implements NetworkConfigListener {
@@ -936,6 +995,7 @@ public class IgmpManager {
             if (sourceDeviceAndPort != null) {
                 log.debug("source parameter configured to {}", sourceDeviceAndPort);
             }
+            //TODO: when the source config is changed, should we remove the old source from the multicast routes?
         }
 
         public void reconfigureSsmTable(IgmpproxySsmTranslateConfig cfg) {
