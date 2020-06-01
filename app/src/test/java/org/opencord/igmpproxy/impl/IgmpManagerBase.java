@@ -359,6 +359,16 @@ public class IgmpManagerBase {
         }
 
         @Override
+        public void removeSources(McastRoute route, Set<ConnectPoint> sources) {
+
+        }
+
+        @Override
+        public void removeSources(McastRoute route, HostId hostId, Set<ConnectPoint> connectPoints) {
+
+        }
+
+        @Override
         public void addSink(McastRoute route, HostId hostId) {
 
         }
