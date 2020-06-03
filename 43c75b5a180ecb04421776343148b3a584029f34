@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75189e03_0759f5fe",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-03T19:08:19Z",
+      "side": 1,
+      "message": "We need to call here isLocalLeader - it seems there is no coordination between instance at this point of the code. This will potentially fix a bug.",
+      "revId": "43c75b5a180ecb04421776343148b3a584029f34",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "51a9a8b2_998ca4dc",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-03T19:08:19Z",
+      "side": 1,
+      "message": "We can drop this call here",
+      "range": {
+        "startLine": 915,
+        "startChar": 0,
+        "endLine": 917,
+        "endChar": 9
+      },
+      "revId": "43c75b5a180ecb04421776343148b3a584029f34",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8222a44b_297e6bb6",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-03T19:08:19Z",
+      "side": 1,
+      "message": "I believe this is not correct. \n\nAlso, I would do something specular to onSourceBecomesValid. I believe the only thing that we are missing is an implementation of the api removeSources(McastRoute, Set\u003cConnectPoint\u003e).\n\nWhat do you think ?",
+      "range": {
+        "startLine": 920,
+        "startChar": 12,
+        "endLine": 929,
+        "endChar": 13
+      },
+      "revId": "43c75b5a180ecb04421776343148b3a584029f34",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "402d20ba_529f3b18",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-03T19:08:19Z",
+      "side": 1,
+      "message": "here as well",
+      "range": {
+        "startLine": 934,
+        "startChar": 0,
+        "endLine": 936,
+        "endChar": 9
+      },
+      "revId": "43c75b5a180ecb04421776343148b3a584029f34",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
