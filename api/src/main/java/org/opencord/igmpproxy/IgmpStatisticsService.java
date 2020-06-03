@@ -23,11 +23,25 @@ import org.onosproject.event.ListenerService;
  */
 public interface IgmpStatisticsService extends
         ListenerService<IgmpStatisticsEvent, IgmpStatisticsEventListener> {
+
     /**
-     * Returns IgmpStatistics object.
+     * Increases statistic-value for given type.
      *
-     * @return IgmpStatistics
-    */
-    public IgmpStatistics getIgmpStats();
+     * @param type type of igmp-statistic.
+     */
+    void increaseStat(IgmpStatisticType type);
+
+    /**
+     * Resets all statistic-values.
+     */
+    void resetAllStats();
+
+    /**
+     * Get statistic-value for given type.
+     *
+     * @param type type of igmp-statistic
+     * @return value of statistic
+     */
+    Long getStat(IgmpStatisticType type);
 
 }
