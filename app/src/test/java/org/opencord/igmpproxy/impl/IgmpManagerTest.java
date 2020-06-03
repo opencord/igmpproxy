@@ -24,6 +24,8 @@ import org.onlab.packet.Ethernet;
 import org.onosproject.core.CoreServiceAdapter;
 import org.onosproject.net.flow.FlowRuleServiceAdapter;
 import org.onosproject.net.flowobjective.FlowObjectiveServiceAdapter;
+import org.onosproject.store.cluster.messaging.ClusterCommunicationServiceAdapter;
+import org.onosproject.store.service.TestStorageService;
 
 import static org.junit.Assert.*;
 
@@ -54,6 +56,9 @@ public class IgmpManagerTest extends IgmpManagerBase {
         igmpStatisticsManager = new IgmpStatisticsManager();
         igmpStatisticsManager.cfgService = new MockCfgService();
         TestUtils.setField(igmpStatisticsManager, "eventDispatcher", new TestEventDispatcher());
+        igmpStatisticsManager.storageService = new TestStorageService();
+        igmpStatisticsManager.leadershipManager = new TestIgmpLeaderShipService();
+        igmpStatisticsManager.clusterCommunicationService = new ClusterCommunicationServiceAdapter();
         igmpStatisticsManager.activate(new MockComponentContext());
         igmpManager.igmpStatisticsManager = this.igmpStatisticsManager;
 

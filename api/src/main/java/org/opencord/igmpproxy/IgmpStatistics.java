@@ -18,11 +18,11 @@ package org.opencord.igmpproxy;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- *
  * Records metrics for IgmpProxy application.
- *
  */
 public class IgmpStatistics {
+
+    private static final long RESET_VALUE = 0L;
 
     //Total number of join requests
     private AtomicLong igmpJoinReq = new AtomicLong();
@@ -101,7 +101,7 @@ public class IgmpStatistics {
         return igmpv3MembershipQuery.get();
     }
 
-    public Long getIgmpv1MemershipReport() {
+    public Long getIgmpv1MembershipReport() {
         return igmpv1MembershipReport.get();
     }
 
@@ -133,20 +133,40 @@ public class IgmpStatistics {
         igmpJoinReq.incrementAndGet();
     }
 
+    public void resetIgmpJoinReq() {
+        igmpJoinReq.set(RESET_VALUE);
+    }
+
     public void increaseIgmpSuccessJoinRejoinReq() {
         igmpSuccessJoinRejoinReq.incrementAndGet();
+    }
+
+    public void resetIgmpSuccessJoinRejoinReq() {
+        igmpSuccessJoinRejoinReq.set(RESET_VALUE);
     }
 
     public void increaseIgmpFailJoinReq() {
         igmpFailJoinReq.incrementAndGet();
     }
 
+    public void resetIgmpFailJoinReq() {
+        igmpFailJoinReq.set(RESET_VALUE);
+    }
+
     public void increaseIgmpLeaveReq() {
         igmpLeaveReq.incrementAndGet();
     }
 
+    public void resetIgmpLeaveReq() {
+        igmpLeaveReq.set(RESET_VALUE);
+    }
+
     public void increaseIgmpDisconnect() {
         igmpDisconnect.incrementAndGet();
+    }
+
+    public void resetIgmpDisconnect() {
+        igmpDisconnect.set(RESET_VALUE);
     }
 
     public void increaseIgmpv3MembershipQuery() {
@@ -154,14 +174,27 @@ public class IgmpStatistics {
         igmpMsgReceived.incrementAndGet();
     }
 
+    public void resetIgmpv3MembershipQuery() {
+        igmpv3MembershipQuery.set(RESET_VALUE);
+    }
+
     public void increaseIgmpv2MembershipReport() {
         igmpv2MembershipReport.incrementAndGet();
         igmpMsgReceived.incrementAndGet();
     }
 
+    public void resetIgmpv2MembershipReport() {
+        igmpv2MembershipReport.set(RESET_VALUE);
+    }
+
+
     public void increaseIgmpv1MembershipReport() {
         igmpv1MembershipReport.incrementAndGet();
         igmpMsgReceived.incrementAndGet();
+    }
+
+    public void resetIgmpv1MembershipReport() {
+        igmpv1MembershipReport.set(RESET_VALUE);
     }
 
     public void increaseIgmpv3MembershipReport() {
@@ -169,17 +202,37 @@ public class IgmpStatistics {
         igmpMsgReceived.incrementAndGet();
     }
 
+    public void resetIgmpv3MembershipReport() {
+        igmpv3MembershipReport.set(RESET_VALUE);
+    }
+
     public void increaseIgmpv2LeaveGroup() {
         igmpv2LeaveGroup.incrementAndGet();
         igmpMsgReceived.incrementAndGet();
+    }
+
+    public void resetIgmpv2LeaveGroup() {
+        igmpv2LeaveGroup.set(RESET_VALUE);
     }
 
     public void increaseInvalidIgmpMsgReceived() {
         invalidIgmpMsgReceived.incrementAndGet();
     }
 
+    public void resetInvalidIgmpMsgReceived() {
+        invalidIgmpMsgReceived.set(RESET_VALUE);
+    }
+
+    public void decrementInvalidIgmpMsgReceived(long value) {
+        invalidIgmpMsgReceived.set(invalidIgmpMsgReceived.get() - value);
+    }
+
     public void increaseTotalMsgReceived() {
         totalMsgReceived.incrementAndGet();
+    }
+
+    public void resetTotalMsgReceived() {
+        totalMsgReceived.set(RESET_VALUE);
     }
 
     public Long getValidIgmpPacketCounter() {
@@ -190,6 +243,10 @@ public class IgmpStatistics {
         validIgmpPacketCounter.incrementAndGet();
     }
 
+    public void resetValidIgmpPacketCounter() {
+        validIgmpPacketCounter.set(RESET_VALUE);
+    }
+
     public Long getCurrentGrpNumCounter() {
         return currentGrpNumCounter.get();
     }
@@ -198,9 +255,14 @@ public class IgmpStatistics {
         currentGrpNumCounter.incrementAndGet();
     }
 
+    public void resetCurrentGrpNumCounter() {
+        currentGrpNumCounter.set(RESET_VALUE);
+    }
+
     public Long getIgmpChannelJoinCounter() {
         return igmpChannelJoinCounter.get();
     }
+
     public Long getIgmpValidChecksumCounter() {
         return igmpValidChecksumCounter.get();
     }
@@ -209,8 +271,16 @@ public class IgmpStatistics {
         igmpChannelJoinCounter.incrementAndGet();
     }
 
+    public void resetIgmpChannelJoinCounter() {
+        igmpChannelJoinCounter.set(RESET_VALUE);
+    }
+
     public void increaseIgmpValidChecksumCounter() {
         igmpValidChecksumCounter.incrementAndGet();
+    }
+
+    public void resetIgmpValidChecksumCounter() {
+        igmpValidChecksumCounter.set(RESET_VALUE);
     }
 
     public Long getUnconfiguredGroupCounter() {
@@ -221,6 +291,10 @@ public class IgmpStatistics {
         unconfiguredGroupCounter.incrementAndGet();
     }
 
+    public void resetUnconfiguredGroupCounter() {
+        unconfiguredGroupCounter.set(RESET_VALUE);
+    }
+
     public Long getFailJoinReqUnknownMulticastIpCounter() {
         return failJoinReqUnknownMulticastIpCounter.get();
     }
@@ -229,12 +303,20 @@ public class IgmpStatistics {
         failJoinReqUnknownMulticastIpCounter.incrementAndGet();
     }
 
+    public void resetFailJoinReqUnknownMulticastIpCounter() {
+        failJoinReqUnknownMulticastIpCounter.set(RESET_VALUE);
+    }
+
     public Long getFailJoinReqInsuffPermissionAccessCounter() {
         return failJoinReqInsuffPermissionAccessCounter.get();
     }
 
     public void increaseFailJoinReqInsuffPermissionAccessCounter() {
         failJoinReqInsuffPermissionAccessCounter.incrementAndGet();
+    }
+
+    public void resetFailJoinReqInsuffPermissionAccessCounter() {
+        failJoinReqInsuffPermissionAccessCounter.set(RESET_VALUE);
     }
 
     public Long getReportsRxWithWrongModeCounter() {
@@ -249,8 +331,16 @@ public class IgmpStatistics {
         unknownIgmpTypePacketsRxCounter.incrementAndGet();
     }
 
+    public void resetUnknownIgmpTypePacketsRxCounter() {
+        unknownIgmpTypePacketsRxCounter.set(RESET_VALUE);
+    }
+
     public void increaseReportsRxWithWrongModeCounter() {
         reportsRxWithWrongModeCounter.incrementAndGet();
+    }
+
+    public void resetReportsRxWithWrongModeCounter() {
+        reportsRxWithWrongModeCounter.set(RESET_VALUE);
     }
 
     public Long getInvalidIgmpLength() {
@@ -259,6 +349,10 @@ public class IgmpStatistics {
 
     public void increaseInvalidIgmpLength() {
         invalidIgmpLength.incrementAndGet();
+    }
+
+    public void resetInvalidIgmpLength() {
+        invalidIgmpLength.set(RESET_VALUE);
     }
 
     public Long getIgmpGeneralMembershipQuery() {
@@ -277,12 +371,53 @@ public class IgmpStatistics {
         igmpGeneralMembershipQuery.incrementAndGet();
     }
 
+    public void resetIgmpGeneralMembershipQuery() {
+        igmpGeneralMembershipQuery.set(RESET_VALUE);
+    }
+
     public void increaseIgmpGrpSpecificMembershipQuery() {
         igmpGrpSpecificMembershipQuery.incrementAndGet();
+    }
+
+    public void resetIgmpGrpSpecificMembershipQuery() {
+        igmpGrpSpecificMembershipQuery.set(RESET_VALUE);
     }
 
     public void increaseIgmpGrpAndSrcSpecificMembershipQuery() {
         igmpGrpAndSrcSpecificMembershipQuery.incrementAndGet();
     }
 
+    public void resetIgmpGrpAndSrcSpecificMembershipQuery() {
+        igmpGrpAndSrcSpecificMembershipQuery.set(RESET_VALUE);
+    }
+
+
+    public void setStats(IgmpStatistics current) {
+        igmpJoinReq.set(current.igmpJoinReq.get());
+        igmpSuccessJoinRejoinReq.set(current.igmpSuccessJoinRejoinReq.get());
+        igmpFailJoinReq.set(current.igmpFailJoinReq.get());
+        igmpLeaveReq.set(current.igmpLeaveReq.get());
+        igmpDisconnect.set(current.igmpDisconnect.get());
+        igmpv3MembershipQuery.set(current.igmpv3MembershipQuery.get());
+        igmpv1MembershipReport.set(current.igmpv1MembershipReport.get());
+        igmpv3MembershipReport.set(current.igmpv3MembershipReport.get());
+        igmpv2MembershipReport.set(current.igmpv2MembershipReport.get());
+        igmpv2LeaveGroup.set(current.igmpv2LeaveGroup.get());
+        totalMsgReceived.set(current.totalMsgReceived.get());
+        igmpMsgReceived.set(current.igmpMsgReceived.get());
+        invalidIgmpMsgReceived.set(current.invalidIgmpMsgReceived.get());
+        unknownIgmpTypePacketsRxCounter.set(current.unknownIgmpTypePacketsRxCounter.get());
+        reportsRxWithWrongModeCounter.set(current.reportsRxWithWrongModeCounter.get());
+        failJoinReqInsuffPermissionAccessCounter.set(current.failJoinReqInsuffPermissionAccessCounter.get());
+        failJoinReqUnknownMulticastIpCounter.set(current.failJoinReqUnknownMulticastIpCounter.get());
+        unconfiguredGroupCounter.set(current.unconfiguredGroupCounter.get());
+        validIgmpPacketCounter.set(current.validIgmpPacketCounter.get());
+        igmpChannelJoinCounter.set(current.igmpChannelJoinCounter.get());
+        currentGrpNumCounter.set(current.currentGrpNumCounter.get());
+        igmpValidChecksumCounter.set(current.igmpValidChecksumCounter.get());
+        invalidIgmpLength.set(current.invalidIgmpLength.get());
+        igmpGeneralMembershipQuery.set(current.igmpGeneralMembershipQuery.get());
+        igmpGrpSpecificMembershipQuery.set(current.igmpGrpSpecificMembershipQuery.get());
+        igmpGrpAndSrcSpecificMembershipQuery.set(current.igmpGrpAndSrcSpecificMembershipQuery.get());
+    }
 }
