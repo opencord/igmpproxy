@@ -69,4 +69,9 @@ public class IgmpLeadershipManager implements IgmpLeadershipService {
         }
         return true;
     }
+
+    @Override
+    public NodeId getLocalNodeId() {
+        return clusterService.getLocalNode().id();
+    }
 }
