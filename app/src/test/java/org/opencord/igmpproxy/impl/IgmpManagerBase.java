@@ -16,6 +16,7 @@
 package org.opencord.igmpproxy.impl;
 
 import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.IGMP;
@@ -26,6 +27,9 @@ import org.onlab.packet.MacAddress;
 import org.onlab.packet.VlanId;
 import org.onosproject.cfg.ComponentConfigService;
 import org.onosproject.cfg.ConfigProperty;
+import org.onosproject.cluster.Leader;
+import org.onosproject.cluster.Leadership;
+import org.onosproject.cluster.NodeId;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.event.DefaultEventSinkRegistry;
 import org.onosproject.event.Event;
@@ -295,9 +299,33 @@ public class IgmpManagerBase {
     }
 
     class TestIgmpLeaderShipService implements IgmpLeadershipService {
+        private NodeId nodeId = NodeId.nodeId("test-id");
+        private Leader leader = new Leader(nodeId, 0, 0);
+        private static final String TEST_TOPIC = "igmp-statistics";
+
         @Override
         public boolean isLocalLeader(DeviceId deviceId) {
             return true;
+        }
+
+        @Override
+        public NodeId getLocalNodeId() {
+            return nodeId;
+        }
+
+        @Override
+        public NodeId getLeader(String topic) {
+            return nodeId;
+        }
+
+        @Override
+        public Leadership runForLeadership(String topic) {
+            return new Leadership(TEST_TOPIC, leader, Lists.newArrayList(nodeId));
+        }
+
+        @Override
+        public void withdraw(String topic) {
+
         }
     }
 

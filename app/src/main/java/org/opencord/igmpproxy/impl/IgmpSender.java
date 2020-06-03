@@ -33,6 +33,7 @@ import org.onosproject.net.packet.DefaultOutboundPacket;
 import org.onosproject.net.packet.OutboundPacket;
 import org.onosproject.net.packet.PacketService;
 import org.opencord.igmpproxy.IgmpLeadershipService;
+import org.opencord.igmpproxy.IgmpStatisticType;
 import org.opencord.igmpproxy.IgmpStatisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -213,7 +214,7 @@ public final class IgmpSender {
                 break;
             default:
                 log.debug("Unknown igmp type: {} ", type);
-                igmpStatisticsService.getIgmpStats().increaseUnknownIgmpTypePacketsRxCounter();
+                igmpStatisticsService.increaseStat(IgmpStatisticType.UNKNOWN_IGMP_TYPE_PACKETS_RX_COUNTER);
                 return null;
         }
 
@@ -280,16 +281,16 @@ public final class IgmpSender {
         // This counter will be useful in future if we change the procedure to generate the packets.
         if ((igmp.getIgmpType() == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT
              || igmp.getIgmpType() == IGMP.TYPE_IGMPV2_LEAVE_GROUP) && igmp.serialize().length < IGMPv2.HEADER_LENGTH) {
-                 igmpStatisticsService.getIgmpStats().increaseInvalidIgmpLength();
+                 igmpStatisticsService.increaseStat(IgmpStatisticType.INVALID_IGMP_LENGTH);
         } else if (igmp.getIgmpType() == IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT
             && igmp.serialize().length < IGMPv3.MINIMUM_HEADER_LEN) {
-                 igmpStatisticsService.getIgmpStats().increaseInvalidIgmpLength();
+                 igmpStatisticsService.increaseStat(IgmpStatisticType.INVALID_IGMP_LENGTH);
         }
         TrafficTreatment treatment = DefaultTrafficTreatment.builder()
                 .setOutput(portNumber).build();
         OutboundPacket packet = new DefaultOutboundPacket(deviceId,
                 treatment, ByteBuffer.wrap(ethPkt.serialize()));
-        igmpStatisticsService.getIgmpStats().increaseValidIgmpPacketCounter();
+        igmpStatisticsService.increaseStat(IgmpStatisticType.VALID_IGMP_PACKET_COUNTER);
         packetService.emit(packet);
 
     }
