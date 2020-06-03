@@ -25,6 +25,7 @@ import org.onlab.packet.IpAddress;
 import org.onlab.packet.MacAddress;
 import org.onosproject.cfg.ComponentConfigService;
 import org.onosproject.cfg.ConfigProperty;
+import org.onosproject.cluster.NodeId;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.event.DefaultEventSinkRegistry;
 import org.onosproject.event.Event;
@@ -297,6 +298,11 @@ public class IgmpManagerBase {
         @Override
         public boolean isLocalLeader(DeviceId deviceId) {
             return true;
+        }
+
+        @Override
+        public NodeId getLocalNodeId() {
+            return NodeId.nodeId("test-id");
         }
     }
 
