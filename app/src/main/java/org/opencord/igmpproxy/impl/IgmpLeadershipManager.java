@@ -17,6 +17,7 @@ package org.opencord.igmpproxy.impl;
 
 import org.onosproject.cluster.ClusterService;
 import org.onosproject.cluster.LeadershipService;
+import org.onosproject.cluster.Leadership;
 import org.onosproject.cluster.NodeId;
 import org.onosproject.mastership.MastershipService;
 import org.onosproject.net.DeviceId;
@@ -68,5 +69,25 @@ public class IgmpLeadershipManager implements IgmpLeadershipService {
             return clusterService.getLocalNode().id().equals(leader);
         }
         return true;
+    }
+
+    @Override
+    public NodeId getLocalNodeId() {
+        return clusterService.getLocalNode().id();
+    }
+
+    @Override
+    public NodeId getLeader(String topic) {
+        return leadershipService.getLeader(topic);
+    }
+
+    @Override
+    public Leadership runForLeadership(String topic) {
+        return leadershipService.runForLeadership(topic);
+    }
+
+    @Override
+    public void withdraw(String topic) {
+        leadershipService.withdraw(topic);
     }
 }

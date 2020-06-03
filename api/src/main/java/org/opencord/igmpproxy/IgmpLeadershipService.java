@@ -15,6 +15,8 @@
  */
 package org.opencord.igmpproxy;
 
+import org.onosproject.cluster.Leadership;
+import org.onosproject.cluster.NodeId;
 import org.onosproject.net.DeviceId;
 
 /**
@@ -28,4 +30,34 @@ public interface IgmpLeadershipService {
      * @return if it is leadership of this device, return true
      */
     boolean isLocalLeader(DeviceId deviceId);
+
+    /**
+     * Gets local node id.
+     *
+     * @return node id
+     */
+    NodeId getLocalNodeId();
+
+    /**
+     * Gets leader for topic.
+     *
+     * @param topic topic name
+     * @return leader of topic
+     */
+    NodeId getLeader(String topic);
+
+    /**
+     * Enters a leadership contest.
+     *
+     * @param topic leadership topic
+     * @return {@code Leadership} future
+     */
+    Leadership runForLeadership(String topic);
+
+    /**
+     * Withdraws from a leadership contest.
+     *
+     * @param topic leadership topic
+     */
+    void withdraw(String topic);
 }
