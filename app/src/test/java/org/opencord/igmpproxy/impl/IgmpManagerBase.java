@@ -23,6 +23,7 @@ import org.onlab.packet.IGMPMembership;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.IpAddress;
 import org.onlab.packet.MacAddress;
+import org.onlab.packet.VlanId;
 import org.onosproject.cfg.ComponentConfigService;
 import org.onosproject.cfg.ConfigProperty;
 import org.onosproject.core.ApplicationId;
@@ -686,14 +687,15 @@ public class IgmpManagerBase {
         igmpMembership.setRecordType((byte) 0x33);
 
         return IgmpSender.getInstance().buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT, groupIp,
-                igmpMembership, sourceIp, false);
+                igmpMembership, sourceIp, false, VlanId.ANY_VALUE, VlanId.NO_VID, IgmpSender.DEFAULT_COS);
     }
 
     Ethernet buildUnknownIgmpPacket(Ip4Address groupIp, Ip4Address sourceIp) {
         IGMPMembership igmpMembership = new IGMPMembership(groupIp);
         igmpMembership.setRecordType((byte) 0x33);
 
-        return IgmpSender.getInstance().buildIgmpPacket((byte) 0x44, groupIp, igmpMembership, sourceIp, false);
+        return IgmpSender.getInstance().buildIgmpPacket((byte) 0x44, groupIp, igmpMembership, sourceIp, false,
+                VlanId.ANY_VALUE, VlanId.NO_VID, IgmpSender.DEFAULT_COS);
     }
 
     class TestStateMachineStoreService extends AbstractStateMachineStore {

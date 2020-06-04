@@ -129,7 +129,9 @@ public class IgmpManager {
     private static boolean withRADownlink = false;
     private static boolean periodicQuery = true;
     private static short mvlan = 4000;
+    private static short mvlanInner = VlanId.NONE.toShort();
     private static byte igmpCos = 7;
+    private static byte igmpUniCos = 7;
     public static boolean connectPointMode = true;
     public static ConnectPoint connectPoint = null;
     private static ConnectPoint sourceDeviceAndPort = null;
@@ -257,6 +259,8 @@ public class IgmpManager {
         if (config != null) {
             mvlan = config.egressVlan().toShort();
             IgmpSender.getInstance().setMvlan(mvlan);
+            mvlanInner = config.egressInnerVlan().toShort();
+            IgmpSender.getInstance().setMvlanInner(mvlanInner);
         }
         deviceService.addListener(deviceListener);
         scheduledExecutorService.scheduleAtFixedRate(new IgmpProxyTimerTask(), 1000, 1000, TimeUnit.MILLISECONDS);
@@ -487,10 +491,14 @@ public class IgmpManager {
         Ethernet ethpkt;
         Ip4Address srcIp = getDeviceIp(groupMember.getDeviceId());
         if (groupMember.getv2()) {
-            ethpkt = IgmpSender.getInstance().buildIgmpV2Query(groupMember.getGroupIp(), srcIp);
+            ethpkt = IgmpSender.getInstance().buildIgmpV2Query(groupMember.getGroupIp(),
+                    srcIp, groupMember.getvlan().toShort());
         } else {
-            ethpkt = IgmpSender.getInstance().buildIgmpV3Query(groupMember.getGroupIp(), srcIp);
+            ethpkt = IgmpSender.getInstance().buildIgmpV3Query(groupMember.getGroupIp(),
+                    srcIp, groupMember.getvlan().toShort());
         }
+        log.debug("Sending IGMP query to {}/{} for group {}: {}",
+                groupMember.getDeviceId(), groupMember.getPortNumber(), groupMember.getGroupIp(), ethpkt);
         IgmpSender.getInstance().sendIgmpPacket(ethpkt, groupMember.getDeviceId(), groupMember.getPortNumber());
     }
 
@@ -895,6 +903,7 @@ public class IgmpManager {
             withRAUplink = newCfg.withRAUplink();
             withRADownlink = newCfg.withRADownlink();
             igmpCos = newCfg.igmpCos();
+            igmpUniCos = newCfg.igmpUniCos(); // defines priority bit of IGMP query message sent to UNI ports
             periodicQuery = newCfg.periodicQuery();
             fastLeave = newCfg.fastLeave();
             pimSSmInterworking = newCfg.pimSsmInterworking();
@@ -925,8 +934,10 @@ public class IgmpManager {
             getSourceConnectPoint(newCfg);
 
             IgmpSender.getInstance().setIgmpCos(igmpCos);
+            IgmpSender.getInstance().setIgmpUniCos(igmpUniCos);
             IgmpSender.getInstance().setMaxResp(maxResp);
             IgmpSender.getInstance().setMvlan(mvlan);
+            IgmpSender.getInstance().setMvlanInner(mvlanInner);
             IgmpSender.getInstance().setWithRADownlink(withRADownlink);
             IgmpSender.getInstance().setWithRAUplink(withRAUplink);
         }
@@ -972,10 +983,22 @@ public class IgmpManager {
 
                     if (event.configClass().equals(MCAST_CONFIG_CLASS)) {
                         McastConfig config = networkConfig.getConfig(coreAppId, MCAST_CONFIG_CLASS);
-                        if (config != null && mvlan != config.egressVlan().toShort()) {
-                            mvlan = config.egressVlan().toShort();
-                            IgmpSender.getInstance().setMvlan(mvlan);
+                        boolean vlanConfigChanged = config != null && mvlan != config.egressVlan().toShort();
+                        boolean innerVlanConfigChanged = config != null &&
+                                mvlanInner != config.egressInnerVlan().toShort();
+
+                        if (vlanConfigChanged || innerVlanConfigChanged) {
+                            log.info("igmpproxy vlan config received. {}", config);
+                            //at least one of the vlan configs has changed. Call leave before setting new values
                             groupMemberStore.getAllGroupMembers().forEach(m -> leaveAction(m));
+                            if (vlanConfigChanged) {
+                                mvlan = config.egressVlan().toShort();
+                                IgmpSender.getInstance().setMvlan(mvlan);
+                            }
+                            if (innerVlanConfigChanged) {
+                                mvlanInner = config.egressInnerVlan().toShort();
+                                IgmpSender.getInstance().setMvlanInner(mvlanInner);
+                            }
                         }
                     }
 

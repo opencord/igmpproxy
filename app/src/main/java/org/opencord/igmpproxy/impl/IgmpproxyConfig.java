@@ -31,6 +31,7 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     protected static final String DEFAULT_LAST_QUERY_INTERVAL = "2";
     protected static final String DEFAULT_LAST_QUERY_COUNT = "2";
     protected static final String DEFAULT_IGMP_COS = "7";
+    protected static final String DEFAULT_UNI_IGMP_COS = "7";
     protected static final Boolean DEFAULT_FAST_LEAVE = false;
     protected static final Boolean DEFAULT_PERIODIC_QUERY = true;
     protected static final String DEFAULT_WITH_RA_UPLINK = "true";
@@ -52,6 +53,7 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     private static final String FAST_LEAVE = "FastLeave";
     private static final String PERIODIC_QUERY = "PeriodicQuery";
     private static final String IGMP_COS = "IgmpCos";
+    private static final String IGMP_UNI_COS = "IgmpUniCos";
     private static final String WITH_RA_UPLINK = "withRAUpLink";
     private static final String WITH_RA_DOWN_LINK = "withRADownLink";
     private static final String PIMSSM_INTERWORKING = "pimSSmInterworking";
@@ -147,6 +149,10 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
 
     public byte igmpCos() {
         return Byte.parseByte(getStringProperty(IGMP_COS, DEFAULT_IGMP_COS));
+    }
+
+    public byte igmpUniCos() {
+        return Byte.parseByte(getStringProperty(IGMP_UNI_COS, DEFAULT_UNI_IGMP_COS));
     }
 
     public boolean withRAUplink() {
