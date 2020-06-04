@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8419d9c1_d31314ea",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-04T11:16:04Z",
+      "side": 1,
+      "message": "None ?",
+      "range": {
+        "startLine": 132,
+        "startChar": 38,
+        "endLine": 132,
+        "endChar": 42
+      },
+      "revId": "b0418117a3dd052af7811d42b6b59ce2fab8566e",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a5f93d29_38c19c53",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-04T11:16:04Z",
+      "side": 1,
+      "message": "I think we can rewrite something also here",
+      "range": {
+        "startLine": 986,
+        "startChar": 0,
+        "endLine": 996,
+        "endChar": 21
+      },
+      "revId": "b0418117a3dd052af7811d42b6b59ce2fab8566e",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59eea451_b3b3f8fd",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpSender.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-04T11:16:04Z",
+      "side": 1,
+      "message": "Should it be None ?",
+      "range": {
+        "startLine": 61,
+        "startChar": 31,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "b0418117a3dd052af7811d42b6b59ce2fab8566e",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "169054c9_c8a279b7",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpSender.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-04T11:16:04Z",
+      "side": 1,
+      "message": "this can be rewritten a bit",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 40
+      },
+      "revId": "b0418117a3dd052af7811d42b6b59ce2fab8566e",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
