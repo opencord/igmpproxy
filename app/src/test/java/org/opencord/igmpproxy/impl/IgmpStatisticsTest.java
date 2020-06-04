@@ -28,6 +28,7 @@ import org.junit.Test;
 import org.onlab.junit.TestUtils;
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.Ip4Address;
+import org.onlab.packet.VlanId;
 import org.onosproject.core.CoreServiceAdapter;
 import org.onosproject.net.flow.FlowRuleServiceAdapter;
 import org.onosproject.net.flowobjective.FlowObjectiveServiceAdapter;
@@ -147,12 +148,13 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
 
         flagForQueryPacket = true;
         //IGMPV3 Group Specific Membership Query packet
-        Ethernet igmpv3MembershipQueryPkt = IgmpSender.getInstance().buildIgmpV3Query(GROUP_IP, SOURCE_IP_OF_A);
+        Ethernet igmpv3MembershipQueryPkt = IgmpSender.getInstance().
+                buildIgmpV3Query(GROUP_IP, SOURCE_IP_OF_A, VlanId.MAX_VLAN);
         sendPacket(igmpv3MembershipQueryPkt);
 
         //IGMPV3 General Membership Query packet
         Ethernet igmpv3MembershipQueryPkt1 =
-                IgmpSender.getInstance().buildIgmpV3Query(Ip4Address.valueOf(0), SOURCE_IP_OF_A);
+                IgmpSender.getInstance().buildIgmpV3Query(Ip4Address.valueOf(0), SOURCE_IP_OF_A, VlanId.MAX_VLAN);
         sendPacket(igmpv3MembershipQueryPkt1);
         assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () ->
                 assertEquals(igmpStatisticsManager.getIgmpStats()
