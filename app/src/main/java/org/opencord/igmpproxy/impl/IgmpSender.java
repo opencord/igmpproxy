@@ -24,6 +24,7 @@ import org.onlab.packet.IGMPQuery;
 import org.onlab.packet.IPv4;
 import org.onlab.packet.Ip4Address;
 import org.onlab.packet.MacAddress;
+import org.onlab.packet.VlanId;
 import org.onosproject.net.DeviceId;
 import org.onosproject.net.PortNumber;
 import org.onosproject.net.flow.DefaultTrafficTreatment;
@@ -57,7 +58,9 @@ public final class IgmpSender {
     private boolean withRAUplink = true;
     private boolean withRADownlink = false;
     private short mvlan = DEFAULT_MVLAN;
+    private short mvlanInner = VlanId.NONE.toShort();
     private byte igmpCos = DEFAULT_COS;
+    private byte igmpUniCos = DEFAULT_COS;
     private int maxResp = DEFAULT_MEX_RESP;
     private Logger log = LoggerFactory.getLogger(getClass());
 
@@ -89,8 +92,15 @@ public final class IgmpSender {
         this.mvlan = mvlan;
     }
 
+    public void setMvlanInner(short mvlanInner) {
+        this.mvlanInner = mvlanInner;
+    }
+
     public void setIgmpCos(byte igmpCos) {
         this.igmpCos = igmpCos;
+    }
+    public void setIgmpUniCos(byte igmpUniCos) {
+        this.igmpUniCos = igmpUniCos;
     }
 
     public void setMaxResp(int maxResp) {
@@ -101,12 +111,14 @@ public final class IgmpSender {
         IGMPMembership igmpMembership = new IGMPMembership(groupIp);
         igmpMembership.setRecordType(IGMPMembership.CHANGE_TO_EXCLUDE_MODE);
 
-        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT, groupIp, igmpMembership, sourceIp, false);
+        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT, groupIp, igmpMembership,
+                sourceIp, false, mvlan, mvlanInner, igmpCos);
     }
 
     public Ethernet buildIgmpV2Join(Ip4Address groupIp, Ip4Address sourceIp) {
         IGMPMembership igmpMembership = new IGMPMembership(groupIp);
-        return buildIgmpPacket(IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT, groupIp, igmpMembership, sourceIp, true);
+        return buildIgmpPacket(IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT, groupIp, igmpMembership,
+                sourceIp, true, mvlan, mvlanInner, igmpCos);
     }
 
     public Ethernet buildIgmpV2ResponseQuery(Ip4Address groupIp, Ip4Address sourceIp) {
@@ -117,31 +129,37 @@ public final class IgmpSender {
         IGMPMembership igmpMembership = new IGMPMembership(groupIp);
         igmpMembership.setRecordType(IGMPMembership.MODE_IS_EXCLUDE);
 
-        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT, groupIp, igmpMembership, sourceIp, false);
+        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT, groupIp, igmpMembership,
+                sourceIp, false, mvlan, mvlanInner, igmpCos);
     }
 
     public Ethernet buildIgmpV3Leave(Ip4Address groupIp, Ip4Address sourceIp) {
         IGMPMembership igmpMembership = new IGMPMembership(groupIp);
         igmpMembership.setRecordType(IGMPMembership.CHANGE_TO_INCLUDE_MODE);
 
-        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT, groupIp, igmpMembership, sourceIp, false);
+        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT, groupIp, igmpMembership,
+                sourceIp, false, mvlan, mvlanInner, igmpCos);
     }
 
     public Ethernet buildIgmpV2Leave(Ip4Address groupIp, Ip4Address sourceIp) {
         IGMPMembership igmpMembership = new IGMPMembership(groupIp);
-        return buildIgmpPacket(IGMP.TYPE_IGMPV2_LEAVE_GROUP, groupIp, igmpMembership, sourceIp, true);
+        return buildIgmpPacket(IGMP.TYPE_IGMPV2_LEAVE_GROUP, groupIp, igmpMembership,
+                sourceIp, true, mvlan, mvlanInner, igmpCos);
     }
 
-    public Ethernet buildIgmpV2Query(Ip4Address groupIp, Ip4Address sourceIp) {
-        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_QUERY, groupIp, null, sourceIp, true);
+    public Ethernet buildIgmpV2Query(Ip4Address groupIp, Ip4Address sourceIp, short vlan) {
+        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_QUERY, groupIp, null,
+                sourceIp, true, vlan, VlanId.NONE.toShort(), igmpUniCos);
     }
 
-    public Ethernet buildIgmpV3Query(Ip4Address groupIp, Ip4Address sourceIp) {
-        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_QUERY, groupIp, null, sourceIp, false);
+    public Ethernet buildIgmpV3Query(Ip4Address groupIp, Ip4Address sourceIp, short vlan) {
+        return buildIgmpPacket(IGMP.TYPE_IGMPV3_MEMBERSHIP_QUERY, groupIp, null,
+                sourceIp, false, vlan, VlanId.NONE.toShort(), igmpUniCos);
     }
 
     protected Ethernet buildIgmpPacket(byte type, Ip4Address groupIp, IGMPMembership igmpMembership,
-                                     Ip4Address sourceIp, boolean isV2Query) {
+                                     Ip4Address sourceIp, boolean isV2Query, short vlan,
+                                       short innerVlan, byte igmpCos) {
 
         IGMP igmpPacket;
         if (isV2Query) {
@@ -210,8 +228,15 @@ public final class IgmpSender {
         ethPkt.setSourceMACAddress(MAC_ADDRESS);
         ethPkt.setEtherType(Ethernet.TYPE_IPV4);
         ethPkt.setPayload(ip4Packet);
-        ethPkt.setVlanID(mvlan);
+        ethPkt.setVlanID(vlan);
         ethPkt.setPriorityCode(igmpCos);
+
+        if (innerVlan != VlanId.NONE.toShort()) {
+            ethPkt.setQinQTPID(Ethernet.TYPE_VLAN);
+            ethPkt.setQinQVID(vlan);
+            ethPkt.setVlanID(innerVlan);
+            ethPkt.setQinQPriorityCode(igmpCos);
+        }
 
         return ethPkt;
     }
