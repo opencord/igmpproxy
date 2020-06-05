@@ -272,6 +272,8 @@ public final class IgmpSender {
 
     public void sendIgmpPacket(Ethernet ethPkt, DeviceId deviceId, PortNumber portNumber) {
         if (!igmpLeadershipService.isLocalLeader(deviceId)) {
+            log.debug("Instance is not leader for device {}, " +
+                             "not emitting IMGP packet on port {}", deviceId, portNumber);
             return;
         }
 
@@ -292,6 +294,7 @@ public final class IgmpSender {
         OutboundPacket packet = new DefaultOutboundPacket(deviceId,
                 treatment, ByteBuffer.wrap(ethPkt.serialize()));
         igmpStatisticsService.getIgmpStats().increaseValidIgmpPacketCounter();
+        log.debug("Emitting on {}:{} IGMP packet {}", deviceId, portNumber, packet);
         packetService.emit(packet);
 
     }

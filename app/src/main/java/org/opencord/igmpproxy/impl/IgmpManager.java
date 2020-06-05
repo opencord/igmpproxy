@@ -351,6 +351,9 @@ public class IgmpManager {
         DeviceId deviceId = cp.deviceId();
         PortNumber portNumber = cp.port();
 
+        log.debug("Processing IGMP report on membership {} for vlan {} on port {} with type {}",
+                  igmpGroup, vlan, cp, igmpType);
+
         Ip4Address groupIp = igmpGroup.getGaddr().getIp4Address();
         if (!groupIp.isMulticast()) {
             log.info(groupIp.toString() + " is not a valid group address");
@@ -404,6 +407,7 @@ public class IgmpManager {
         GroupMember groupMember = groupMemberStore.getGroupMember(groupMemberKey);
 
         if (join) {
+            log.debug("Received join on {} for vlan {}", cp, vlan);
             igmpStatisticsManager.getIgmpStats().increaseIgmpJoinReq();
             if (groupMember == null) {
                 Optional<ConnectPoint> sourceConfigured = getSource();
@@ -458,6 +462,7 @@ public class IgmpManager {
             //put updated member to the store
             groupMemberStore.putGroupMember(groupMember);
         } else {
+            log.debug("Received leave on {} for vlan {}", cp, vlan);
             igmpStatisticsManager.getIgmpStats().increaseIgmpLeaveReq();
             if (groupMember == null) {
                 log.info("receive leave but no instance, group {} device: {} port:{}",
@@ -772,7 +777,7 @@ public class IgmpManager {
             return (connectPointMode && connectPoint.deviceId().equals(device)
                     && connectPoint.port().equals(port));
         } else {
-            log.info("connectPoint not configured for device {}", device);
+            log.debug("connectPoint not configured for device {}", device);
             return false;
         }
     }
