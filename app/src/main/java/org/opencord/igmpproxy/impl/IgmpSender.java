@@ -271,7 +271,13 @@ public final class IgmpSender {
 
     public void sendIgmpPacket(Ethernet ethPkt, DeviceId deviceId, PortNumber portNumber) {
         if (!igmpLeadershipService.isLocalLeader(deviceId)) {
+            log.trace("Instance is not leader for device {}, " +
+                             "not emitting IMGP packet on port {}", deviceId, portNumber);
             return;
+        }
+
+        if (log.isTraceEnabled()) {
+            log.trace("Emitting on {}/{} outbound IGMP packet {}", deviceId, portNumber, ethPkt);
         }
 
         IPv4 ipv4Pkt = (IPv4) ethPkt.getPayload();
@@ -292,6 +298,9 @@ public final class IgmpSender {
                 treatment, ByteBuffer.wrap(ethPkt.serialize()));
         igmpStatisticsService.increaseStat(IgmpStatisticType.VALID_IGMP_PACKET_COUNTER);
         packetService.emit(packet);
+        if (log.isTraceEnabled()) {
+            log.trace("Emitted on {}/{} outbound IGMP packet {}", deviceId, portNumber, packet);
+        }
 
     }
 }
