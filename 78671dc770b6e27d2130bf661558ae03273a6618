@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "2fec1010_d90842b1",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-06-08T10:08:47Z",
+      "side": 1,
+      "message": "you need a topic for the statistics, and publish them only if the node is leader for that topic see Line 139 of /java/org/opencord/dhcpl2relay/impl/SimpleDhcpL2RelayCountersStore.java",
+      "parentUuid": "75485b2b_c4ec204d",
+      "range": {
+        "startLine": 73,
+        "startChar": 13,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "78671dc770b6e27d2130bf661558ae03273a6618",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5eaa4d9_70ff8d35",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
         "patchSetId": 3
@@ -88,6 +112,23 @@
         "endLine": 241,
         "endChar": 69
       },
+      "revId": "78671dc770b6e27d2130bf661558ae03273a6618",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c757358b_18ab0bfa",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-06-08T10:08:47Z",
+      "side": 1,
+      "message": "this is where you need to check if the node is master for the statistics subject.",
       "revId": "78671dc770b6e27d2130bf661558ae03273a6618",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
