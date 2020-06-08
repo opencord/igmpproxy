@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a492d0a_ded0f707",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-06-08T15:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75189e03_0759f5fe",
+      "revId": "43c75b5a180ecb04421776343148b3a584029f34",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51a9a8b2_998ca4dc",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2020-06-03T19:08:19Z",
       "side": 1,
       "message": "We can drop this call here",
+      "range": {
+        "startLine": 915,
+        "startChar": 0,
+        "endLine": 917,
+        "endChar": 9
+      },
+      "revId": "43c75b5a180ecb04421776343148b3a584029f34",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6b2f9dd8_535f0847",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-06-08T15:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51a9a8b2_998ca4dc",
       "range": {
         "startLine": 915,
         "startChar": 0,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "c99f4f1b_aa75d012",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-06-08T15:22:00Z",
+      "side": 1,
+      "message": "I have just created SEBA-991 to create the needed method on MulticastRouteService. Ilayda is going to take care of it.",
+      "parentUuid": "8222a44b_297e6bb6",
+      "range": {
+        "startLine": 920,
+        "startChar": 12,
+        "endLine": 929,
+        "endChar": 13
+      },
+      "revId": "43c75b5a180ecb04421776343148b3a584029f34",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "402d20ba_529f3b18",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
         "patchSetId": 3
@@ -76,6 +142,30 @@
       "writtenOn": "2020-06-03T19:08:19Z",
       "side": 1,
       "message": "here as well",
+      "range": {
+        "startLine": 934,
+        "startChar": 0,
+        "endLine": 936,
+        "endChar": 9
+      },
+      "revId": "43c75b5a180ecb04421776343148b3a584029f34",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "30846fe6_18ea6d31",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-06-08T15:22:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "402d20ba_529f3b18",
       "range": {
         "startLine": 934,
         "startChar": 0,
