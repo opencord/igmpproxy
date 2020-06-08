@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "313458a3_7f3d7c24",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/IgmpStatistics.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-08T08:21:49Z",
+      "side": 1,
+      "message": "we should do something like -\u003e msgReceived - membershipQuery.\n\nCheck elsewhere",
+      "range": {
+        "startLine": 179,
+        "startChar": 8,
+        "endLine": 179,
+        "endChar": 23
+      },
+      "revId": "78671dc770b6e27d2130bf661558ae03273a6618",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "75485b2b_c4ec204d",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-08T08:21:49Z",
+      "side": 1,
+      "message": "We are missing the aggregation and instance coordination.\n\nAggregation is important because over the time the mastership can change - so the real value will be the aggregation of the counters coming from different instances.\n\nWe need only one instance publishing stats (instance coordination)",
+      "range": {
+        "startLine": 73,
+        "startChar": 13,
+        "endLine": 73,
+        "endChar": 34
+      },
+      "revId": "78671dc770b6e27d2130bf661558ae03273a6618",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b5eaa4d9_70ff8d35",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-08T08:21:49Z",
+      "side": 1,
+      "message": "you need to stop both tasks before shutting down the executor",
+      "range": {
+        "startLine": 168,
+        "startChar": 16,
+        "endLine": 168,
+        "endChar": 26
+      },
+      "revId": "78671dc770b6e27d2130bf661558ae03273a6618",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b28c5739_f5507b7c",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-08T08:21:49Z",
+      "side": 1,
+      "message": "I think we can reset it as well",
+      "range": {
+        "startLine": 241,
+        "startChar": 0,
+        "endLine": 241,
+        "endChar": 69
+      },
+      "revId": "78671dc770b6e27d2130bf661558ae03273a6618",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e3ea961a_5b00e488",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-08T08:21:49Z",
+      "side": 1,
+      "message": "do we need these ? Some names are also a bit confused",
+      "range": {
+        "startLine": 569,
+        "startChar": 0,
+        "endLine": 579,
+        "endChar": 5
+      },
+      "revId": "78671dc770b6e27d2130bf661558ae03273a6618",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
