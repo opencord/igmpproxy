@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bcf08c49_17fe4498",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpSender.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1000068
+      },
+      "writtenOn": "2020-06-08T21:57:20Z",
+      "side": 1,
+      "message": "packet logs are always TRACE",
+      "revId": "c437ab2e0af7f240777f0aef75b2bd7d6864c9c7",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
