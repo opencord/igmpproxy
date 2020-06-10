@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "580a163c_d0b5bb4b",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-10T11:45:49Z",
+      "side": 1,
+      "message": "here the leave will happen with the new tags - it can be potentially a problem if we expect old tags. What do you think ? It mainly depends on how this configuration change will be performed in the various parts of the network",
+      "range": {
+        "startLine": 986,
+        "startChar": 0,
+        "endLine": 999,
+        "endChar": 25
+      },
+      "revId": "cd6928ab93b982eb8f42b37b8942578fa9866877",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
