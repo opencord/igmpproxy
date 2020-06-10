@@ -140,6 +140,30 @@
       "revId": "f5d3afc534ed32aeb5e361e27a89ea2cbd94f6b3",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "aebcc34a_a8339338",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2020-06-10T12:49:05Z",
+      "side": 1,
+      "message": "I think we should, but I\u0027ll let also pier elaborate further.",
+      "parentUuid": "266d8a96_60255dc9",
+      "range": {
+        "startLine": 1004,
+        "startChar": 12,
+        "endLine": 1004,
+        "endChar": 20
+      },
+      "revId": "f5d3afc534ed32aeb5e361e27a89ea2cbd94f6b3",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
