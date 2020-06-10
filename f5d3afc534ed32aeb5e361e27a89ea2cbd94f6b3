@@ -164,6 +164,30 @@
       "revId": "f5d3afc534ed32aeb5e361e27a89ea2cbd94f6b3",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7eb969b7_718ac7cc",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-10T14:17:03Z",
+      "side": 1,
+      "message": "yes we should do that",
+      "parentUuid": "aebcc34a_a8339338",
+      "range": {
+        "startLine": 1004,
+        "startChar": 12,
+        "endLine": 1004,
+        "endChar": 20
+      },
+      "revId": "f5d3afc534ed32aeb5e361e27a89ea2cbd94f6b3",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
