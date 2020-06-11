@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10a7833d_c7e59e36",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-11T20:09:25Z",
+      "side": 1,
+      "message": "this is not used. Also it does not seem strictly needed, what was the original plan ?\nI believe we should go with just eventExecutor.",
+      "range": {
+        "startLine": 224,
+        "startChar": 28,
+        "endLine": 224,
+        "endChar": 47
+      },
+      "revId": "ae7d7ac19bd947a70065ba1bfd49cc9cb2989824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "172451a9_3ace8781",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-11T20:09:25Z",
+      "side": 1,
+      "message": "Once we have the new api - we should go straight way to the store. There is no need for all these checks",
+      "range": {
+        "startLine": 917,
+        "startChar": 12,
+        "endLine": 924,
+        "endChar": 13
+      },
+      "revId": "ae7d7ac19bd947a70065ba1bfd49cc9cb2989824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5277ff2e_44b8e327",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-11T20:09:25Z",
+      "side": 1,
+      "message": "Shall we recreate the routes ?",
+      "range": {
+        "startLine": 1004,
+        "startChar": 16,
+        "endLine": 1004,
+        "endChar": 38
+      },
+      "revId": "ae7d7ac19bd947a70065ba1bfd49cc9cb2989824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
