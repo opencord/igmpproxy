@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "160525ae_be5d7dad",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/IgmpStatistics.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "No I am not using. I delete this.",
+      "parentUuid": "6cbcd28c_9f6fb861",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 228,
+        "endChar": 5
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e48f5fd_f3ebd63f",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2020-06-11T19:52:24Z",
       "side": 1,
       "message": "do we still need this ?",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 66
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "24f804dd_88ed149c",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e48f5fd_f3ebd63f",
       "range": {
         "startLine": 77,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a6cb2653_25cab416",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37f3796e_9b91d104",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 52
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c7c824e_011e2b5c",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2020-06-11T19:52:24Z",
       "side": 1,
       "message": "private ?",
+      "range": {
+        "startLine": 99,
+        "startChar": 18,
+        "endLine": 99,
+        "endChar": 32
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1577b455_394f7102",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c7c824e_011e2b5c",
       "range": {
         "startLine": 99,
         "startChar": 18,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "dd7332b1_9c4ee01c",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "Okay I can ignore it. Actually I thought that if another message would sent later, these controls would prevent the error.",
+      "parentUuid": "f6a96906_e9e60b67",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 245,
+        "endChar": 81
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e0ccd3c_4b3a2d1f",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
         "patchSetId": 4
@@ -128,6 +248,30 @@
       "writtenOn": "2020-06-11T19:52:24Z",
       "side": 1,
       "message": "there is no need for this",
+      "range": {
+        "startLine": 251,
+        "startChar": 10,
+        "endLine": 253,
+        "endChar": 9
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f990620e_333093d8",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e0ccd3c_4b3a2d1f",
       "range": {
         "startLine": 251,
         "startChar": 10,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "56c8f486_e3ed1a47",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b61a32cd_e9c99a7c",
+      "range": {
+        "startLine": 256,
+        "startChar": 17,
+        "endLine": 256,
+        "endChar": 32
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e24c4d9f_cee9391e",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
         "patchSetId": 4
@@ -174,6 +342,30 @@
       "writtenOn": "2020-06-11T19:52:24Z",
       "side": 1,
       "message": "same for this logic. Can we embed everything in IgmpStatistics ?",
+      "range": {
+        "startLine": 387,
+        "startChar": 16,
+        "endLine": 387,
+        "endChar": 28
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6a164d24_969e4b2c",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e24c4d9f_cee9391e",
       "range": {
         "startLine": 387,
         "startChar": 16,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "7c6b960e_ca283f68",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 476,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "358eaf38_f97971ef",
+      "range": {
+        "startLine": 476,
+        "startChar": 101,
+        "endLine": 476,
+        "endChar": 108
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9dfa49e2_53cf7233",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
         "patchSetId": 4
@@ -220,6 +436,30 @@
       "writtenOn": "2020-06-11T19:52:24Z",
       "side": 1,
       "message": "same for this",
+      "range": {
+        "startLine": 482,
+        "startChar": 16,
+        "endLine": 482,
+        "endChar": 23
+      },
+      "revId": "f973962eb90f6385c5d6798a23152e42ecd66377",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c6cf9d37_688e88fc",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1000682
+      },
+      "writtenOn": "2020-06-12T13:48:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9dfa49e2_53cf7233",
       "range": {
         "startLine": 482,
         "startChar": 16,
