@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "6e2ce8f4_92acd72e",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-06-12T10:42:33Z",
+      "side": 1,
+      "message": "upps sorry, you\u0027re right, no need to calculate anything",
+      "parentUuid": "3e179758_374e4dbc",
+      "range": {
+        "startLine": 917,
+        "startChar": 12,
+        "endLine": 924,
+        "endChar": 13
+      },
+      "revId": "ae7d7ac19bd947a70065ba1bfd49cc9cb2989824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5277ff2e_44b8e327",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
         "patchSetId": 6
