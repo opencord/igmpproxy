@@ -22,6 +22,30 @@
       "revId": "cd6928ab93b982eb8f42b37b8942578fa9866877",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "828aae9c_8d78f42d",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 999,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-06-12T07:54:55Z",
+      "side": 1,
+      "message": "It seems I should call leave() before setting new config values",
+      "parentUuid": "580a163c_d0b5bb4b",
+      "range": {
+        "startLine": 986,
+        "startChar": 0,
+        "endLine": 999,
+        "endChar": 25
+      },
+      "revId": "cd6928ab93b982eb8f42b37b8942578fa9866877",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
     }
   ]
 }
