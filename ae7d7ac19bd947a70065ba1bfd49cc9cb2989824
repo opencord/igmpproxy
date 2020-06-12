@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d12d0f7_e2cb39d7",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-06-12T09:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10a7833d_c7e59e36",
+      "range": {
+        "startLine": 224,
+        "startChar": 28,
+        "endLine": 224,
+        "endChar": 47
+      },
+      "revId": "ae7d7ac19bd947a70065ba1bfd49cc9cb2989824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "172451a9_3ace8781",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6b180e86_ebea039b",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-06-12T09:56:07Z",
+      "side": 1,
+      "message": "I think I need to calculate the sources that should be removed from a route. It requires these iterations.",
+      "parentUuid": "172451a9_3ace8781",
+      "range": {
+        "startLine": 917,
+        "startChar": 12,
+        "endLine": 924,
+        "endChar": 13
+      },
+      "revId": "ae7d7ac19bd947a70065ba1bfd49cc9cb2989824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5277ff2e_44b8e327",
         "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2020-06-11T20:09:25Z",
       "side": 1,
       "message": "Shall we recreate the routes ?",
+      "range": {
+        "startLine": 1004,
+        "startChar": 16,
+        "endLine": 1004,
+        "endChar": 38
+      },
+      "revId": "ae7d7ac19bd947a70065ba1bfd49cc9cb2989824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7092bd2a_aa283ea0",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 1004,
+      "author": {
+        "id": 1000498
+      },
+      "writtenOn": "2020-06-12T09:56:07Z",
+      "side": 1,
+      "message": "Do you mean adding the new source to the existing routes?",
+      "parentUuid": "5277ff2e_44b8e327",
       "range": {
         "startLine": 1004,
         "startChar": 16,
