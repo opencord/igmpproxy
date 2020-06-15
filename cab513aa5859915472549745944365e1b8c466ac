@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03c53c86_62765297",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/IgmpStatistics.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-15T08:13:39Z",
+      "side": 1,
+      "message": "do we need these getters ? They seem to be a duplicate. Otherwise drop:\npublic Long getStat(IgmpStatisticType type) {",
+      "range": {
+        "startLine": 100,
+        "startChar": 16,
+        "endLine": 100,
+        "endChar": 33
+      },
+      "revId": "cab513aa5859915472549745944365e1b8c466ac",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "77180594_4cc67eb4",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-15T08:13:39Z",
+      "side": 1,
+      "message": "getAndSet ?",
+      "range": {
+        "startLine": 187,
+        "startChar": 12,
+        "endLine": 187,
+        "endChar": 32
+      },
+      "revId": "cab513aa5859915472549745944365e1b8c466ac",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbe214cc_aa83f874",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-15T08:13:39Z",
+      "side": 1,
+      "message": "why do you need to iterate ?",
+      "range": {
+        "startLine": 239,
+        "startChar": 0,
+        "endLine": 242,
+        "endChar": 9
+      },
+      "revId": "cab513aa5859915472549745944365e1b8c466ac",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df6de03b_6dfe13a8",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpStatisticsManager.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-06-15T08:13:39Z",
+      "side": 1,
+      "message": "this can be dropped",
+      "range": {
+        "startLine": 245,
+        "startChar": 33,
+        "endLine": 245,
+        "endChar": 55
+      },
+      "revId": "cab513aa5859915472549745944365e1b8c466ac",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": false
+    }
+  ]
+}
