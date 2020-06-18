@@ -24,8 +24,6 @@ import org.opencord.igmpproxy.impl.state.NonMember;
 import org.opencord.igmpproxy.statemachine.StateMachine;
 import org.opencord.igmpproxy.statemachine.State;
 import org.opencord.igmpproxy.statemachine.StateMachineId;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -35,8 +33,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public final class SingleStateMachine implements StateMachine {
     public static final int DEFAULT_MAX_RESP = 0xfffffff;
-
-    private Logger log = LoggerFactory.getLogger(getClass());
 
     private StateMachineId stateMachineId;
     private int currentState;
@@ -215,7 +211,6 @@ public final class SingleStateMachine implements StateMachine {
     }
 
     private void next(int msg) {
-        log.debug("Transitioning to State {}", msg);
         this.currentState = transition[currentState][msg];
     }
 
