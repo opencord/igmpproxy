@@ -93,6 +93,8 @@ public class IgmpStatisticsManager extends
     private KryoNamespace statSerializer = KryoNamespace.newBuilder()
             .register(KryoNamespaces.API)
             .register(IgmpStatistics.class)
+            .register(ClusterMessage.class)
+            .register(MessageSubject.class)
             .build();
 
     //Statistics values are valid or invalid

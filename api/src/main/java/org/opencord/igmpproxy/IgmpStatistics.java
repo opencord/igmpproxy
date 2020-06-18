@@ -15,17 +15,12 @@
  */
 package org.opencord.igmpproxy;
 
-import org.slf4j.Logger;
-
 import java.util.concurrent.atomic.AtomicLong;
-
-import static org.slf4j.LoggerFactory.getLogger;
 
 /**
  * Records metrics for IgmpProxy application.
  */
 public class IgmpStatistics {
-    private final Logger log = getLogger(getClass());
     private static final long RESET_VALUE = 0L;
 
     //Total number of join requests
@@ -223,7 +218,6 @@ public class IgmpStatistics {
                 failJoinReqInsuffPermissionAccessCounter.incrementAndGet();
                 break;
             default:
-                log.warn("Unhandled statistic type. {}", type);
                 break;
         }
     }
@@ -311,7 +305,6 @@ public class IgmpStatistics {
                 break;
             default:
                 value = null;
-                log.warn("Unhandled statistic type. {}", type);
                 break;
         }
         return value;
