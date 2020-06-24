@@ -116,7 +116,7 @@ public class IgmpStatisticsManager extends
     public void activate(ComponentContext context) {
         igmpStats = getIgmpStatsInstance();
 
-
+        log.info("Creating Distributed Statistics Map {}", IGMP_STATISTICS);
         statistics = storageService.<NodeId, IgmpStatistics>eventuallyConsistentMapBuilder()
                 .withName(IGMP_STATISTICS)
                 .withSerializer(statSerializer)
