@@ -24,57 +24,57 @@ public class IgmpStatistics {
     private static final long RESET_VALUE = 0L;
 
     //Total number of join requests
-    private AtomicLong igmpJoinReq = new AtomicLong();
+    private AtomicLong igmpJoinReq = new AtomicLong(100);
     //Total number of successful join and rejoin requests
-    private AtomicLong igmpSuccessJoinRejoinReq = new AtomicLong();
+    private AtomicLong igmpSuccessJoinRejoinReq = new AtomicLong(100);
     //Total number of failed join requests
-    private AtomicLong igmpFailJoinReq = new AtomicLong();
+    private AtomicLong igmpFailJoinReq = new AtomicLong(100);
     //Total number of leaves requests
-    private AtomicLong igmpLeaveReq = new AtomicLong();
+    private AtomicLong igmpLeaveReq = new AtomicLong(100);
     // Total number of disconnects
-    private AtomicLong igmpDisconnect = new AtomicLong();
+    private AtomicLong igmpDisconnect = new AtomicLong(100);
     //Count of Total number of IGMPV3_MEMBERSHIP_QUERY
-    private AtomicLong igmpv3MembershipQuery = new AtomicLong();
+    private AtomicLong igmpv3MembershipQuery = new AtomicLong(100);
     //Count of IGMPV1_MEMBERSHIP_REPORT
-    private AtomicLong igmpv1MembershipReport = new AtomicLong();
+    private AtomicLong igmpv1MembershipReport = new AtomicLong(100);
     //Count of IGMPV3_MEMBERSHIP_REPORT
-    private AtomicLong igmpv3MembershipReport = new AtomicLong();
+    private AtomicLong igmpv3MembershipReport = new AtomicLong(100);
     //Count of IGMPV2_MEMBERSHIP_REPORT
-    private AtomicLong igmpv2MembershipReport = new AtomicLong();
+    private AtomicLong igmpv2MembershipReport = new AtomicLong(100);
     //Count of TYPE_IGMPV2_LEAVE_GROUP
-    private AtomicLong igmpv2LeaveGroup = new AtomicLong();
+    private AtomicLong igmpv2LeaveGroup = new AtomicLong(100);
     //Total number of messages received.
-    private AtomicLong totalMsgReceived = new AtomicLong();
+    private AtomicLong totalMsgReceived = new AtomicLong(100);
     //Total number of IGMP messages received
-    private AtomicLong igmpMsgReceived = new AtomicLong();
+    private AtomicLong igmpMsgReceived = new AtomicLong(100);
     //Total number of invalid IGMP messages received
-    private AtomicLong invalidIgmpMsgReceived = new AtomicLong();
+    private AtomicLong invalidIgmpMsgReceived = new AtomicLong(100);
     //Counter for unknown igmp type
-    private AtomicLong unknownIgmpTypePacketsRxCounter = new AtomicLong();
+    private AtomicLong unknownIgmpTypePacketsRxCounter = new AtomicLong(100);
     // Counter for igmp report with wrong mode.
-    private AtomicLong reportsRxWithWrongModeCounter = new AtomicLong();
+    private AtomicLong reportsRxWithWrongModeCounter = new AtomicLong(100);
     // Counter for failed join due to insufficient permission access
-    private AtomicLong failJoinReqInsuffPermissionAccessCounter = new AtomicLong();
+    private AtomicLong failJoinReqInsuffPermissionAccessCounter = new AtomicLong(100);
     // Counter for invalid group ip address i.e not a valid multicast address.
-    private AtomicLong failJoinReqUnknownMulticastIpCounter = new AtomicLong();
+    private AtomicLong failJoinReqUnknownMulticastIpCounter = new AtomicLong(100);
     // Counter for unconfigured group
-    private AtomicLong unconfiguredGroupCounter = new AtomicLong();
+    private AtomicLong unconfiguredGroupCounter = new AtomicLong(100);
     // Counter for valid igmp packet
-    private AtomicLong validIgmpPacketCounter = new AtomicLong();
+    private AtomicLong validIgmpPacketCounter = new AtomicLong(100);
     // Counter for current number of igmp channel joins
-    private AtomicLong igmpChannelJoinCounter = new AtomicLong();
+    private AtomicLong igmpChannelJoinCounter = new AtomicLong(100);
     // Counter for current group number
-    private AtomicLong currentGrpNumCounter = new AtomicLong();
+    private AtomicLong currentGrpNumCounter = new AtomicLong(100);
     // Counter for igmp Checksum
-    private AtomicLong igmpValidChecksumCounter = new AtomicLong();
+    private AtomicLong igmpValidChecksumCounter = new AtomicLong(100);
     // Counter for Invalid Igmp Length
-    private AtomicLong invalidIgmpLength = new AtomicLong();
+    private AtomicLong invalidIgmpLength = new AtomicLong(100);
     //Total number of general IGMP membership query messages received
-    private AtomicLong igmpGeneralMembershipQuery = new AtomicLong();
+    private AtomicLong igmpGeneralMembershipQuery = new AtomicLong(100);
     //Total number of group specific IGMP membership query messages received
-    private AtomicLong igmpGrpSpecificMembershipQuery = new AtomicLong();
+    private AtomicLong igmpGrpSpecificMembershipQuery = new AtomicLong(100);
     //Total number of group and source specific IGMP membership query messages received
-    private AtomicLong igmpGrpAndSrcSpecificMembershipQuery = new AtomicLong();
+    private AtomicLong igmpGrpAndSrcSpecificMembershipQuery = new AtomicLong(100);
 
     public void setStats(IgmpStatistics current) {
         igmpJoinReq.set(current.igmpJoinReq.get());
