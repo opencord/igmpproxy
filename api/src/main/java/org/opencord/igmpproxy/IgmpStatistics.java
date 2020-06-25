@@ -74,7 +74,7 @@ public class IgmpStatistics {
     //Total number of group specific IGMP membership query messages received
     private AtomicLong igmpGrpSpecificMembershipQuery = new AtomicLong();
     //Total number of group and source specific IGMP membership query messages received
-    private AtomicLong igmpGrpAndSrcSpecificMembershipQuery = new AtomicLong(100);
+    private AtomicLong igmpGrpAndSrcSpecificMembershipQuery = new AtomicLong();
 
     public void setStats(IgmpStatistics current) {
         igmpJoinReq.set(current.igmpJoinReq.get());

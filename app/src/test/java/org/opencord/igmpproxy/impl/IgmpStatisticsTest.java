@@ -173,7 +173,7 @@ public class IgmpStatisticsTest extends IgmpManagerBase {
         sendPacket(igmpv3MembershipQueryPkt1);
         assertAfter(WAIT_TIMEOUT, WAIT_TIMEOUT * 2, () ->
                 assertEquals(igmpStatisticsManager
-                        .getStat(IgmpStatisticType.IGMP_GRP_AND_SRC_SPESIFIC_MEMBERSHIP_QUERY).longValue(), 101));
+                        .getStat(IgmpStatisticType.IGMP_GRP_AND_SRC_SPESIFIC_MEMBERSHIP_QUERY).longValue(), 1));
         assertEquals(igmpStatisticsManager
                 .getStat(IgmpStatisticType.IGMP_GENERAL_MEMBERSHIP_QUERY).longValue(), 1);
         assertEquals(igmpStatisticsManager.getStat(IgmpStatisticType.CURRENT_GRP_NUMBER_COUNTER).longValue(), 1);
