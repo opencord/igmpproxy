@@ -31,9 +31,21 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>app</module>
         <module>api</module>
+        <module>app</module>
     </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <configuration>
+                    <sourceDirectories>${project.build.sourceDirectory}</sourceDirectories>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <repositories>
         <repository>
