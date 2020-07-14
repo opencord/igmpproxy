@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab53d074_0a5a31a4",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2020-07-14T20:24:22Z",
+      "side": 1,
+      "message": "fix here",
+      "revId": "20d7d83466d2f130ac26595af526b69bf3aaca0c",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    }
+  ]
+}
