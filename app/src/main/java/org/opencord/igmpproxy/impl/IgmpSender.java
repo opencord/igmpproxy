@@ -65,16 +65,13 @@ public final class IgmpSender {
     private int maxResp = DEFAULT_MEX_RESP;
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    private IgmpSender(PacketService packetService, IgmpLeadershipService igmpLeadershipService,
-             IgmpStatisticsService igmpStatisticsService) {
+    private IgmpSender(PacketService packetService, IgmpStatisticsService igmpStatisticsService) {
         this.packetService = packetService;
-        this.igmpLeadershipService = igmpLeadershipService;
         this.igmpStatisticsService = igmpStatisticsService;
     }
 
-    public static void init(PacketService packetService, IgmpLeadershipService igmpLeadershipService,
-            IgmpStatisticsService igmpStatisticsService) {
-        instance = new IgmpSender(packetService, igmpLeadershipService, igmpStatisticsService);
+    public static void init(PacketService packetService, IgmpStatisticsService igmpStatisticsService) {
+        instance = new IgmpSender(packetService, igmpStatisticsService);
     }
 
     public static IgmpSender getInstance() {
@@ -254,10 +251,6 @@ public final class IgmpSender {
     }
 
     public void sendIgmpPacketUplink(Ethernet ethPkt, DeviceId deviceId, PortNumber upLinkPort) {
-        if (!igmpLeadershipService.isLocalLeader(deviceId)) {
-            return;
-        }
-
         if (IgmpManager.connectPointMode) {
             if (IgmpManager.connectPoint == null) {
                 log.warn("cannot find a connectPoint to send the packet uplink");
@@ -270,12 +263,6 @@ public final class IgmpSender {
     }
 
     public void sendIgmpPacket(Ethernet ethPkt, DeviceId deviceId, PortNumber portNumber) {
-        if (!igmpLeadershipService.isLocalLeader(deviceId)) {
-            log.trace("Instance is not leader for device {}, " +
-                             "not emitting IMGP packet on port {}", deviceId, portNumber);
-            return;
-        }
-
         if (log.isTraceEnabled()) {
             log.trace("Emitting on {}/{} outbound IGMP packet {}", deviceId, portNumber, ethPkt);
         }
