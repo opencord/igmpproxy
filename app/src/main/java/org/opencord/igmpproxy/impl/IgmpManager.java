@@ -240,7 +240,7 @@ public class IgmpManager {
         appId = coreService.registerApplication(APP_NAME);
         coreAppId = coreService.registerApplication(CoreService.CORE_APP_NAME);
         packetService.addProcessor(processor, PacketProcessor.director(4));
-        IgmpSender.init(packetService, igmpLeadershipService, igmpStatisticsManager);
+        IgmpSender.init(packetService, igmpStatisticsManager);
 
         networkConfig.registerConfigFactory(igmpproxySsmConfigFactory);
         networkConfig.registerConfigFactory(igmpproxyConfigFactory);
@@ -1051,7 +1051,11 @@ public class IgmpManager {
                         if (vlanConfigChanged || innerVlanConfigChanged) {
                             log.info("igmpproxy vlan config received. {}", config);
                             //at least one of the vlan configs has changed. Call leave before setting new values
-                            groupMemberStore.getAllGroupMembers().forEach(m -> leaveAction(m));
+                            groupMemberStore.getAllGroupMembers().forEach(m -> {
+                                if (igmpLeadershipService.isLocalLeader(m.getDeviceId())) {
+                                    leaveAction(m);
+                                }
+                            });
                             if (vlanConfigChanged) {
                                 mvlan = config.egressVlan().toShort();
                                 IgmpSender.getInstance().setMvlan(mvlan);
