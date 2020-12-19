@@ -17,8 +17,6 @@ package org.opencord.igmpproxy.impl;
 
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.IGMP;
-import org.onlab.packet.IGMP.IGMPv2;
-import org.onlab.packet.IGMP.IGMPv3;
 import org.onlab.packet.IGMPMembership;
 import org.onlab.packet.IGMPQuery;
 import org.onlab.packet.IPv4;
@@ -269,15 +267,11 @@ public final class IgmpSender {
 
         IPv4 ipv4Pkt = (IPv4) ethPkt.getPayload();
         IGMP igmp = (IGMP) ipv4Pkt.getPayload();
-        // We are checking the length of packets. Right now the counter value will be 0 because of internal translation
-        // As packet length will always be valid
-        // This counter will be useful in future if we change the procedure to generate the packets.
+        // We are checking the groups.
         if ((igmp.getIgmpType() == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT
-             || igmp.getIgmpType() == IGMP.TYPE_IGMPV2_LEAVE_GROUP) && igmp.serialize().length < IGMPv2.HEADER_LENGTH) {
-                 igmpStatisticsService.increaseStat(IgmpStatisticType.INVALID_IGMP_LENGTH);
-        } else if (igmp.getIgmpType() == IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT
-            && igmp.serialize().length < IGMPv3.MINIMUM_HEADER_LEN) {
-                 igmpStatisticsService.increaseStat(IgmpStatisticType.INVALID_IGMP_LENGTH);
+                || igmp.getIgmpType() == IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT
+                || igmp.getIgmpType() == IGMP.TYPE_IGMPV2_LEAVE_GROUP) && igmp.getGroups().isEmpty()) {
+            igmpStatisticsService.increaseStat(IgmpStatisticType.INVALID_IGMP_LENGTH);
         }
         TrafficTreatment treatment = DefaultTrafficTreatment.builder()
                 .setOutput(portNumber).build();
