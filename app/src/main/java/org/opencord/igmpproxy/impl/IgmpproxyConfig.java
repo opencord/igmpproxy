@@ -32,6 +32,8 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     protected static final String DEFAULT_LAST_QUERY_COUNT = "2";
     protected static final String DEFAULT_IGMP_COS = "7";
     protected static final String DEFAULT_UNI_IGMP_COS = "7";
+    protected static final String DEFAULT_PACKET_PROCESSOR_POOL_SIZE = "12";
+    protected static final String DEFAULT_NUMBER_OF_IGMP_REPORT_PROCESSOR_THREADS = "20";
     protected static final Boolean DEFAULT_FAST_LEAVE = false;
     protected static final Boolean DEFAULT_PERIODIC_QUERY = true;
     protected static final String DEFAULT_WITH_RA_UPLINK = "true";
@@ -61,6 +63,8 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
     private static final String ENABLE_IGMP_PROVISIONING = "enableIgmpProvisioning";
     private static final String IGMP_ON_POD_BASIS = "igmpOnPodBasis";
     private static final String OUTGOING_IGMP_WITH_V3 = "outgoingIgmpWithV3";
+    private static final String PACKET_PROCESSOR_POOL_SIZE = "packetProcessorPoolSize";
+    private static final String NUMBER_OF_IGMP_REPORT_PROCESSOR_THREADS = "numberOfIgmpReportProcessorThreads";
 
     /**
      * Gets the value of a string property, protecting for an empty
@@ -212,7 +216,7 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
             return DEFAULT_IGMP_PROVISIONING_SUPPORT;
         }
         return Boolean.parseBoolean(getStringProperty(ENABLE_IGMP_PROVISIONING,
-                                                      DEFAULT_IGMP_PROVISIONING_SUPPORT.toString()));
+                DEFAULT_IGMP_PROVISIONING_SUPPORT.toString()));
     }
 
     public boolean igmpOnPodBasis() {
@@ -220,7 +224,7 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
             return DEFAULT_IGMP_ON_POD_BASIS;
         }
         return Boolean.parseBoolean(getStringProperty(IGMP_ON_POD_BASIS,
-                                                      DEFAULT_IGMP_ON_POD_BASIS.toString()));
+                DEFAULT_IGMP_ON_POD_BASIS.toString()));
     }
 
     public Boolean outgoingIgmpWithV3() {
@@ -228,5 +232,13 @@ public class IgmpproxyConfig extends Config<ApplicationId> {
             return null;
         }
         return Boolean.parseBoolean(getStringProperty(OUTGOING_IGMP_WITH_V3, DEFAULT_OUTGOING_IGMP_WITH_V3.toString()));
+    }
+    public int packetProcessorPoolSize() {
+        return Integer.parseInt(getStringProperty(PACKET_PROCESSOR_POOL_SIZE, DEFAULT_PACKET_PROCESSOR_POOL_SIZE));
+    }
+
+    public int numberOfIgmpReportProcessorThreads() {
+        return Integer.parseInt(getStringProperty(NUMBER_OF_IGMP_REPORT_PROCESSOR_THREADS,
+                DEFAULT_NUMBER_OF_IGMP_REPORT_PROCESSOR_THREADS));
     }
 }
