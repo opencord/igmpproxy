@@ -16,22 +16,7 @@
 package org.opencord.igmpproxy.impl;
 
 import com.google.common.collect.Sets;
-import org.onosproject.net.Device;
-import org.opencord.igmpproxy.IgmpLeadershipService;
-import org.opencord.igmpproxy.IgmpStatisticType;
-import org.opencord.igmpproxy.IgmpStatisticsService;
-import org.opencord.igmpproxy.impl.store.groupmember.GroupMember;
-import org.opencord.igmpproxy.GroupMemberId;
-import org.opencord.igmpproxy.impl.store.groupmember.GroupMemberStore;
-import org.opencord.igmpproxy.statemachine.StateMachineService;
-import org.opencord.sadis.BaseInformationService;
-import org.opencord.sadis.SadisService;
-import org.opencord.sadis.SubscriberAndDeviceInformation;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.onlab.packet.EthType;
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.IGMP;
@@ -45,8 +30,11 @@ import org.onlab.packet.VlanId;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.core.CoreService;
 import org.onosproject.mastership.MastershipService;
+import org.onosproject.mcast.api.McastRoute;
+import org.onosproject.mcast.api.MulticastRouteService;
 import org.onosproject.net.AnnotationKeys;
 import org.onosproject.net.ConnectPoint;
+import org.onosproject.net.Device;
 import org.onosproject.net.DeviceId;
 import org.onosproject.net.Port;
 import org.onosproject.net.PortNumber;
@@ -68,21 +56,35 @@ import org.onosproject.net.flowobjective.FlowObjectiveService;
 import org.onosproject.net.flowobjective.Objective;
 import org.onosproject.net.flowobjective.ObjectiveContext;
 import org.onosproject.net.flowobjective.ObjectiveError;
-import org.onosproject.mcast.api.McastRoute;
-import org.onosproject.mcast.api.MulticastRouteService;
 import org.onosproject.net.packet.InboundPacket;
 import org.onosproject.net.packet.PacketContext;
 import org.onosproject.net.packet.PacketProcessor;
 import org.onosproject.net.packet.PacketService;
+import org.opencord.igmpproxy.GroupMemberId;
+import org.opencord.igmpproxy.IgmpLeadershipService;
+import org.opencord.igmpproxy.IgmpReport;
+import org.opencord.igmpproxy.IgmpStatisticType;
+import org.opencord.igmpproxy.IgmpStatisticsService;
+import org.opencord.igmpproxy.impl.store.groupmember.GroupMember;
+import org.opencord.igmpproxy.impl.store.groupmember.GroupMemberStore;
+import org.opencord.igmpproxy.statemachine.StateMachineService;
+import org.opencord.sadis.BaseInformationService;
+import org.opencord.sadis.SadisService;
+import org.opencord.sadis.SubscriberAndDeviceInformation;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -91,16 +93,16 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
-import static org.onlab.packet.IGMPMembership.MODE_IS_INCLUDE;
-import static org.onlab.packet.IGMPMembership.MODE_IS_EXCLUDE;
-import static org.onlab.packet.IGMPMembership.CHANGE_TO_INCLUDE_MODE;
-import static org.onlab.packet.IGMPMembership.CHANGE_TO_EXCLUDE_MODE;
 import static org.onlab.packet.IGMPMembership.ALLOW_NEW_SOURCES;
 import static org.onlab.packet.IGMPMembership.BLOCK_OLD_SOURCES;
-
-import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
+import static org.onlab.packet.IGMPMembership.CHANGE_TO_EXCLUDE_MODE;
+import static org.onlab.packet.IGMPMembership.CHANGE_TO_INCLUDE_MODE;
+import static org.onlab.packet.IGMPMembership.MODE_IS_EXCLUDE;
+import static org.onlab.packet.IGMPMembership.MODE_IS_INCLUDE;
 import static org.onlab.util.Tools.groupedThreads;
 
 /**
@@ -220,6 +222,10 @@ public class IgmpManager {
     private int maxResp = 10; //unit is 1 sec
     private int keepAliveInterval = 120; //unit is 1 sec
 
+    private int packetProcessorPoolSize = 12;
+    private int numberOfIgmpReportProcessorThreads = 20;
+    ExecutorService[] igmpReportProcessServiceExecutorList;
+
     private ExecutorService eventExecutor;
 
     public static int getUnsolicitedTimeout() {
@@ -234,6 +240,13 @@ public class IgmpManager {
 
     private List<Byte> validMembershipModes = Arrays.asList(MODE_IS_INCLUDE, MODE_IS_EXCLUDE, CHANGE_TO_INCLUDE_MODE,
             CHANGE_TO_EXCLUDE_MODE, ALLOW_NEW_SOURCES, BLOCK_OLD_SOURCES);
+
+    private static AtomicLong idCounter = new AtomicLong();
+
+    public static String createID() {
+        return String.valueOf(idCounter.getAndIncrement());
+    }
+
 
     @Activate
     protected void activate() {
@@ -265,8 +278,17 @@ public class IgmpManager {
         }
         deviceService.addListener(deviceListener);
         scheduledExecutorService.scheduleAtFixedRate(new IgmpProxyTimerTask(), 1000, 1000, TimeUnit.MILLISECONDS);
-        eventExecutor = newSingleThreadScheduledExecutor(groupedThreads("cord/igmpproxy",
+        eventExecutor = Executors.newScheduledThreadPool(packetProcessorPoolSize, groupedThreads("cord/igmpproxy",
                 "events-igmp-%d", log));
+
+        igmpReportProcessServiceExecutorList = new ExecutorService[numberOfIgmpReportProcessorThreads];
+        ThreadFactory igmpReportProcessorThreadFactory =
+                new ThreadFactoryBuilder().setNameFormat("report-processor-igmp-%d").setDaemon(true).build();
+        for (int i = 0; i < numberOfIgmpReportProcessorThreads; i++) {
+            ExecutorService igmpReportProcessServiceExecutor = Executors.newSingleThreadExecutor(
+                    igmpReportProcessorThreadFactory);
+            igmpReportProcessServiceExecutorList[i] = igmpReportProcessServiceExecutor;
+        }
         log.info("Started");
     }
 
@@ -274,6 +296,9 @@ public class IgmpManager {
     protected void deactivate() {
         scheduledExecutorService.shutdown();
         eventExecutor.shutdown();
+        for (ExecutorService executor : igmpReportProcessServiceExecutorList) {
+            executor.shutdown();
+        }
 
         // de-register and null our handler
         networkConfig.removeListener(configListener);
@@ -344,20 +369,38 @@ public class IgmpManager {
         return (maxResp + 5) / 10;
     }
 
+    private void queueIgmpReport(IGMPMembership igmpGroup, VlanId vlan,
+                                 ConnectPoint cp, byte igmpType, String packetId) {
+
+        IgmpReport igmpReport = IgmpReport.of(igmpGroup, vlan, cp, igmpType, packetId);
+        int packetHashCode = igmpReport.hashCode();
+        int threadId = Math.abs(packetHashCode % numberOfIgmpReportProcessorThreads);
+        log.debug("IGMP report for ConnectPoint {} and group IP {} shall be processed in thread #{}",
+                cp, igmpGroup.getGaddr(), threadId);
+
+        igmpReportProcessServiceExecutorList[threadId].execute(() -> processIgmpReport(igmpReport));
+    }
+
     private Ip4Address ssmTranslateRoute(IpAddress group) {
         return ssmTranslateTable.get(group);
     }
 
-    private void processIgmpReport(IGMPMembership igmpGroup, VlanId vlan, ConnectPoint cp, byte igmpType) {
+    public void processIgmpReport(IgmpReport report) {
+        IGMPMembership igmpGroup = report.getIgmpMembership();
+        VlanId vlan = report.getVlanId();
+        ConnectPoint cp = report.getConnectPoint();
+        byte igmpType = report.getIgmpType();
+        String packetId = report.getPacketId();
+
         DeviceId deviceId = cp.deviceId();
         PortNumber portNumber = cp.port();
 
         log.debug("Processing IGMP report on membership {} for vlan {} on port {} with type {}",
-                  igmpGroup, vlan, cp, igmpType);
+                igmpGroup, vlan, cp, igmpType);
 
         Ip4Address groupIp = igmpGroup.getGaddr().getIp4Address();
         if (!groupIp.isMulticast()) {
-            log.info(groupIp.toString() + " is not a valid group address");
+            log.info("{} is not a valid group address", groupIp);
             igmpStatisticsManager.increaseStat(IgmpStatisticType.FAIL_JOIN_REQ_UNKNOWN_MULTICAST_IP_COUNTER);
             return;
         }
@@ -405,6 +448,7 @@ public class IgmpManager {
             }
         }
         GroupMemberId groupMemberKey = GroupMemberId.of(groupIp, deviceId, portNumber);
+        log.debug("{} - {} generated for packetId #{}", join ? "Join" : "Leave", groupMemberKey, packetId);
         GroupMember groupMember = groupMemberStore.getGroupMember(groupMemberKey);
 
         if (join) {
@@ -524,9 +568,11 @@ public class IgmpManager {
     private class IgmpPacketProcessor implements PacketProcessor {
         @Override
         public void process(PacketContext context) {
-
+            String packetId = createID();
+            log.debug("Entered to IgmpPacketProcessor #{}", packetId);
             eventExecutor.execute(() -> {
                 try {
+                    log.debug("Execute starts #{}", packetId);
                     InboundPacket pkt = context.inPacket();
                     Ethernet ethPkt = pkt.parsed();
                     if (ethPkt == null) {
@@ -588,15 +634,15 @@ public class IgmpManager {
                             break;
                         case IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT:
                             igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_V3_MEMBERSHIP_REPORT);
-                            processIgmpMessage(pkt, igmp, upLinkPort, vlan);
+                            processIgmpMessage(pkt, igmp, upLinkPort, vlan, packetId);
                             break;
                         case IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT:
                             igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_V2_MEMBERSHIP_REPORT);
-                            processIgmpMessage(pkt, igmp, upLinkPort, vlan);
+                            processIgmpMessage(pkt, igmp, upLinkPort, vlan, packetId);
                             break;
                         case IGMP.TYPE_IGMPV2_LEAVE_GROUP:
                             igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_V2_LEAVE_GROUP);
-                            processIgmpMessage(pkt, igmp, upLinkPort, vlan);
+                            processIgmpMessage(pkt, igmp, upLinkPort, vlan, packetId);
                             break;
 
                         default:
@@ -613,7 +659,8 @@ public class IgmpManager {
         }
     }
 
-    private void processIgmpMessage(InboundPacket pkt, IGMP igmp, PortNumber upLinkPort, short vlan) {
+    private void processIgmpMessage(InboundPacket pkt, IGMP igmp, PortNumber upLinkPort, short vlan, String
+            packetId) {
         //Discard join/leave from OLT’s uplink port’s
         if (pkt.receivedFrom().port().equals(upLinkPort) ||
                 isConnectPoint(pkt.receivedFrom().deviceId(), pkt.receivedFrom().port())) {
@@ -624,16 +671,17 @@ public class IgmpManager {
         Iterator<IGMPGroup> itr = igmp.getGroups().iterator();
         while (itr.hasNext()) {
             IGMPGroup group = itr.next();
+            log.debug("IGMPGroup {} #{}", group.getGaddr(), packetId);
             if (group instanceof IGMPMembership) {
-                processIgmpReport((IGMPMembership) group, VlanId.vlanId(vlan),
-                        pkt.receivedFrom(), igmp.getIgmpType());
+                queueIgmpReport((IGMPMembership) group, VlanId.vlanId(vlan),
+                        pkt.receivedFrom(), igmp.getIgmpType(), packetId);
             } else {
                 IGMPMembership mgroup = new IGMPMembership(group.getGaddr().getIp4Address());
                 mgroup.setRecordType(igmp.getIgmpType() == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT ?
                         IGMPMembership.MODE_IS_EXCLUDE :
                         IGMPMembership.MODE_IS_INCLUDE);
-                processIgmpReport(mgroup, VlanId.vlanId(vlan),
-                        pkt.receivedFrom(), igmp.getIgmpType());
+                queueIgmpReport(mgroup, VlanId.vlanId(vlan),
+                        pkt.receivedFrom(), igmp.getIgmpType(), packetId);
             }
         }
 
@@ -961,6 +1009,8 @@ public class IgmpManager {
             pimSSmInterworking = newCfg.pimSsmInterworking();
             enableIgmpProvisioning = newCfg.enableIgmpProvisioning();
             igmpOnPodBasis = newCfg.igmpOnPodBasis();
+            packetProcessorPoolSize = newCfg.packetProcessorPoolSize();
+            numberOfIgmpReportProcessorThreads = newCfg.numberOfIgmpReportProcessorThreads();
             if (newCfg.outgoingIgmpWithV3() != null &&
                     outgoingIgmpWithV3 != newCfg.outgoingIgmpWithV3()) {
                 outgoingIgmpWithV3 = newCfg.outgoingIgmpWithV3();
