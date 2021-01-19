@@ -16,22 +16,6 @@
 package org.opencord.igmpproxy.impl;
 
 import com.google.common.collect.Sets;
-import org.onosproject.net.Device;
-import org.opencord.igmpproxy.IgmpLeadershipService;
-import org.opencord.igmpproxy.IgmpStatisticType;
-import org.opencord.igmpproxy.IgmpStatisticsService;
-import org.opencord.igmpproxy.impl.store.groupmember.GroupMember;
-import org.opencord.igmpproxy.GroupMemberId;
-import org.opencord.igmpproxy.impl.store.groupmember.GroupMemberStore;
-import org.opencord.igmpproxy.statemachine.StateMachineService;
-import org.opencord.sadis.BaseInformationService;
-import org.opencord.sadis.SadisService;
-import org.opencord.sadis.SubscriberAndDeviceInformation;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.onlab.packet.EthType;
 import org.onlab.packet.Ethernet;
 import org.onlab.packet.IGMP;
@@ -45,8 +29,11 @@ import org.onlab.packet.VlanId;
 import org.onosproject.core.ApplicationId;
 import org.onosproject.core.CoreService;
 import org.onosproject.mastership.MastershipService;
+import org.onosproject.mcast.api.McastRoute;
+import org.onosproject.mcast.api.MulticastRouteService;
 import org.onosproject.net.AnnotationKeys;
 import org.onosproject.net.ConnectPoint;
+import org.onosproject.net.Device;
 import org.onosproject.net.DeviceId;
 import org.onosproject.net.Port;
 import org.onosproject.net.PortNumber;
@@ -68,39 +55,54 @@ import org.onosproject.net.flowobjective.FlowObjectiveService;
 import org.onosproject.net.flowobjective.Objective;
 import org.onosproject.net.flowobjective.ObjectiveContext;
 import org.onosproject.net.flowobjective.ObjectiveError;
-import org.onosproject.mcast.api.McastRoute;
-import org.onosproject.mcast.api.MulticastRouteService;
 import org.onosproject.net.packet.InboundPacket;
 import org.onosproject.net.packet.PacketContext;
 import org.onosproject.net.packet.PacketProcessor;
 import org.onosproject.net.packet.PacketService;
+import org.opencord.igmpproxy.GroupMemberId;
+import org.opencord.igmpproxy.IgmpLeadershipService;
+import org.opencord.igmpproxy.IgmpReport;
+import org.opencord.igmpproxy.IgmpStatisticType;
+import org.opencord.igmpproxy.IgmpStatisticsService;
+import org.opencord.igmpproxy.impl.store.groupmember.GroupMember;
+import org.opencord.igmpproxy.impl.store.groupmember.GroupMemberStore;
+import org.opencord.igmpproxy.statemachine.StateMachineService;
+import org.opencord.sadis.BaseInformationService;
+import org.opencord.sadis.SadisService;
+import org.opencord.sadis.SubscriberAndDeviceInformation;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TimerTask;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
-import static org.onlab.packet.IGMPMembership.MODE_IS_INCLUDE;
-import static org.onlab.packet.IGMPMembership.MODE_IS_EXCLUDE;
-import static org.onlab.packet.IGMPMembership.CHANGE_TO_INCLUDE_MODE;
-import static org.onlab.packet.IGMPMembership.CHANGE_TO_EXCLUDE_MODE;
 import static org.onlab.packet.IGMPMembership.ALLOW_NEW_SOURCES;
 import static org.onlab.packet.IGMPMembership.BLOCK_OLD_SOURCES;
-
-import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
+import static org.onlab.packet.IGMPMembership.CHANGE_TO_EXCLUDE_MODE;
+import static org.onlab.packet.IGMPMembership.CHANGE_TO_INCLUDE_MODE;
+import static org.onlab.packet.IGMPMembership.MODE_IS_EXCLUDE;
+import static org.onlab.packet.IGMPMembership.MODE_IS_INCLUDE;
 import static org.onlab.util.Tools.groupedThreads;
 
 /**
@@ -220,6 +222,11 @@ public class IgmpManager {
     private int maxResp = 10; //unit is 1 sec
     private int keepAliveInterval = 120; //unit is 1 sec
 
+    private int packetProcessorPoolSize = 12;
+    private int numberOfIgmpReportProcessorThreads = 20;
+    private ThreadGroup igmpReportProcessorThreadGroup;
+    BlockingQueue<IgmpReport>[] igmpReportProcessorQueueList;
+
     private ExecutorService eventExecutor;
 
     public static int getUnsolicitedTimeout() {
@@ -234,6 +241,13 @@ public class IgmpManager {
 
     private List<Byte> validMembershipModes = Arrays.asList(MODE_IS_INCLUDE, MODE_IS_EXCLUDE, CHANGE_TO_INCLUDE_MODE,
             CHANGE_TO_EXCLUDE_MODE, ALLOW_NEW_SOURCES, BLOCK_OLD_SOURCES);
+
+    private static AtomicLong idCounter = new AtomicLong();
+
+    public static String createID() {
+        return String.valueOf(idCounter.getAndIncrement());
+    }
+
 
     @Activate
     protected void activate() {
@@ -265,8 +279,22 @@ public class IgmpManager {
         }
         deviceService.addListener(deviceListener);
         scheduledExecutorService.scheduleAtFixedRate(new IgmpProxyTimerTask(), 1000, 1000, TimeUnit.MILLISECONDS);
-        eventExecutor = newSingleThreadScheduledExecutor(groupedThreads("cord/igmpproxy",
+        eventExecutor = Executors.newScheduledThreadPool(packetProcessorPoolSize, groupedThreads("cord/igmpproxy",
                 "events-igmp-%d", log));
+
+        igmpReportProcessorThreadGroup = new ThreadGroup("IgmpReportProcessorGroup");
+        igmpReportProcessorQueueList = new LinkedBlockingQueue[numberOfIgmpReportProcessorThreads];
+        for (int i = 0; i < numberOfIgmpReportProcessorThreads; i++) {
+            String threadName = String.format("IgmpReportProcessor-%d", i);
+            BlockingQueue<IgmpReport> blockingQueue = new LinkedBlockingQueue<>();
+
+            IgmpReportProcessor reportProcessor = new IgmpReportProcessor(blockingQueue, this, threadName);
+            Thread igmpReportProcessorThread = new Thread(igmpReportProcessorThreadGroup, reportProcessor, threadName);
+            igmpReportProcessorThread.setDaemon(true);
+            igmpReportProcessorThread.start();
+
+            igmpReportProcessorQueueList[i] = blockingQueue;
+        }
         log.info("Started");
     }
 
@@ -274,6 +302,9 @@ public class IgmpManager {
     protected void deactivate() {
         scheduledExecutorService.shutdown();
         eventExecutor.shutdown();
+
+        igmpReportProcessorThreadGroup.interrupt();
+        igmpReportProcessorQueueList = null;
 
         // de-register and null our handler
         networkConfig.removeListener(configListener);
@@ -348,138 +379,162 @@ public class IgmpManager {
         return ssmTranslateTable.get(group);
     }
 
-    private void processIgmpReport(IGMPMembership igmpGroup, VlanId vlan, ConnectPoint cp, byte igmpType) {
-        DeviceId deviceId = cp.deviceId();
-        PortNumber portNumber = cp.port();
+    private void queueIgmpReport(IGMPMembership igmpGroup, VlanId vlan,
+                                 ConnectPoint cp, byte igmpType, String packetId) {
 
-        log.debug("Processing IGMP report on membership {} for vlan {} on port {} with type {}",
-                  igmpGroup, vlan, cp, igmpType);
-
-        Ip4Address groupIp = igmpGroup.getGaddr().getIp4Address();
-        if (!groupIp.isMulticast()) {
-            log.info(groupIp.toString() + " is not a valid group address");
-            igmpStatisticsManager.increaseStat(IgmpStatisticType.FAIL_JOIN_REQ_UNKNOWN_MULTICAST_IP_COUNTER);
-            return;
+        IgmpReport igmpReport = IgmpReport.of(igmpGroup, vlan, cp, igmpType, packetId);
+        int packetHashCode = igmpReport.hashCode();
+        int threadId = Math.abs(packetHashCode % numberOfIgmpReportProcessorThreads);
+        log.info("IGMP report for ConnectPoint {} and group IP {} shall be processed in thread #{}",
+                cp, igmpGroup.getGaddr(), threadId);
+        try {
+            igmpReportProcessorQueueList[threadId].put(igmpReport);
+        } catch (Exception ex) {
+            log.error("igmpReportProcessorQueueList[threadId].put error : ", ex);
         }
-        Ip4Address srcIp = getDeviceIp(deviceId);
+    }
 
-        byte recordType = igmpGroup.getRecordType();
-        boolean join = false;
+    public void processIgmpReport(IgmpReport report) {
+        if (multicastService != null) {
+            IGMPMembership igmpGroup = report.getIgmpMembership();
+            VlanId vlan = report.getVlanId();
+            ConnectPoint cp = report.getConnectPoint();
+            byte igmpType = report.getIgmpType();
+            String packetId = report.getPacketId();
 
-        ArrayList<Ip4Address> sourceList = new ArrayList<>();
+            DeviceId deviceId = cp.deviceId();
+            PortNumber portNumber = cp.port();
 
-        if (!validMembershipModes.contains(recordType)) {
-            igmpStatisticsManager.increaseStat(IgmpStatisticType.REPORTS_RX_WITH_WRONG_MODE_COUNTER);
-        }
-        if (igmpGroup.getSources().size() > 0) {
-            igmpGroup.getSources().forEach(source -> sourceList.add(source.getIp4Address()));
-            if (recordType == IGMPMembership.CHANGE_TO_EXCLUDE_MODE ||
-                    recordType == IGMPMembership.MODE_IS_EXCLUDE ||
-                    recordType == IGMPMembership.BLOCK_OLD_SOURCES) {
-                join = false;
-            } else if (recordType == IGMPMembership.CHANGE_TO_INCLUDE_MODE ||
-                    recordType == IGMPMembership.MODE_IS_INCLUDE ||
-                    recordType == IGMPMembership.ALLOW_NEW_SOURCES) {
-                join = true;
-            }
-        } else {
-            IpAddress src = null;
-            if (pimSSmInterworking) {
-                src = ssmTranslateRoute(groupIp);
-                if (src == null) {
-                    log.info("no ssm translate for group {}", groupIp);
-                    return;
-                }
-            } else {
-                src = IpAddress.valueOf(DEFAULT_PIMSSM_HOST);
-            }
-            sourceList.add(src.getIp4Address());
-            if (recordType == IGMPMembership.CHANGE_TO_EXCLUDE_MODE ||
-                    recordType == IGMPMembership.MODE_IS_EXCLUDE ||
-                    recordType == IGMPMembership.BLOCK_OLD_SOURCES) {
-                join = true;
-            } else if (recordType == IGMPMembership.CHANGE_TO_INCLUDE_MODE ||
-                    recordType == IGMPMembership.MODE_IS_INCLUDE ||
-                    recordType == IGMPMembership.ALLOW_NEW_SOURCES) {
-                join = false;
-            }
-        }
-        GroupMemberId groupMemberKey = GroupMemberId.of(groupIp, deviceId, portNumber);
-        GroupMember groupMember = groupMemberStore.getGroupMember(groupMemberKey);
+            log.debug("Processing IGMP report on membership {} for vlan {} on port {} with type {}",
+                    igmpGroup, vlan, cp, igmpType);
 
-        if (join) {
-            log.debug("Received join on {} for vlan {}", cp, vlan);
-            igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_JOIN_REQ);
-
-            if (groupMember == null) {
-                Optional<ConnectPoint> sourceConfigured = getSource();
-                if (!sourceConfigured.isPresent()) {
-                    igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_FAIL_JOIN_REQ);
-                    log.warn("Unable to process IGMP Join from {} since no source " +
-                            "configuration is found.", deviceId);
-                    igmpStatisticsManager
-                            .increaseStat(IgmpStatisticType.FAIL_JOIN_REQ_INSUFF_PERMISSION_ACCESS_COUNTER);
-                    return;
-                }
-
-                Optional<PortNumber> deviceUplink = getDeviceUplink(deviceId);
-                if (deviceUplink.isEmpty()) {
-                    log.warn("Unable to process IGMP Join since uplink port " +
-                            "of the device {} is not found.", deviceId);
-                    return;
-                }
-
-                if (igmpType == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT) {
-                    groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, true);
-                } else {
-                    groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, false);
-                }
-
-                HashSet<ConnectPoint> sourceConnectPoints = Sets.newHashSet(sourceConfigured.get());
-
-                boolean isJoined = stateMachineService.join(deviceId, groupIp, srcIp, deviceUplink.get());
-                if (isJoined) {
-                    igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_SUCCESS_JOIN_RE_JOIN_REQ);
-                    igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_CHANNEL_JOIN_COUNTER);
-                } else {
-                    igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_FAIL_JOIN_REQ);
-                }
-                groupMemberStore.putGroupMember(groupMember);
-                log.debug("Group member created with id: {}", groupMember.getGroupMemberId());
-                groupMember.updateList(recordType, sourceList);
-                groupMember.getSourceList().forEach(source -> {
-                    McastRoute route = new McastRoute(source, groupIp, McastRoute.Type.IGMP);
-                    //add route
-                    multicastService.add(route);
-                    //add source to the route
-                    multicastService.addSources(route, Sets.newHashSet(sourceConnectPoints));
-                    //add sink to the route
-                    multicastService.addSinks(route, Sets.newHashSet(cp));
-                });
-                igmpStatisticsManager.increaseStat(IgmpStatisticType.UNCONFIGURED_GROUP_COUNTER);
-
-            }
-            groupMember.resetAllTimers();
-            groupMember.updateList(recordType, sourceList);
-            groupMember.setLeave(false);
-            //put updated member to the store
-            groupMemberStore.putGroupMember(groupMember);
-        } else {
-            log.debug("Received leave on {} for vlan {}", cp, vlan);
-            igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_LEAVE_REQ);
-            if (groupMember == null) {
-                log.info("receive leave but no instance, group {} device: {} port:{}",
-                        groupIp, deviceId, portNumber);
-                igmpStatisticsManager.increaseStat(IgmpStatisticType.UNCONFIGURED_GROUP_COUNTER);
+            Ip4Address groupIp = igmpGroup.getGaddr().getIp4Address();
+            if (!groupIp.isMulticast()) {
+                log.info("{} is not a valid group address", groupIp);
+                igmpStatisticsManager.increaseStat(IgmpStatisticType.FAIL_JOIN_REQ_UNKNOWN_MULTICAST_IP_COUNTER);
                 return;
+            }
+            Ip4Address srcIp = getDeviceIp(deviceId);
+
+            byte recordType = igmpGroup.getRecordType();
+            boolean join = false;
+
+            ArrayList<Ip4Address> sourceList = new ArrayList<>();
+
+            if (!validMembershipModes.contains(recordType)) {
+                igmpStatisticsManager.increaseStat(IgmpStatisticType.REPORTS_RX_WITH_WRONG_MODE_COUNTER);
+            }
+            if (igmpGroup.getSources().size() > 0) {
+                igmpGroup.getSources().forEach(source -> sourceList.add(source.getIp4Address()));
+                if (recordType == IGMPMembership.CHANGE_TO_EXCLUDE_MODE ||
+                        recordType == IGMPMembership.MODE_IS_EXCLUDE ||
+                        recordType == IGMPMembership.BLOCK_OLD_SOURCES) {
+                    join = false;
+                } else if (recordType == IGMPMembership.CHANGE_TO_INCLUDE_MODE ||
+                        recordType == IGMPMembership.MODE_IS_INCLUDE ||
+                        recordType == IGMPMembership.ALLOW_NEW_SOURCES) {
+                    join = true;
+                }
             } else {
-                groupMember.setLeave(true);
-                if (fastLeave) {
-                    leaveAction(groupMember);
+                IpAddress src = null;
+                if (pimSSmInterworking) {
+                    src = ssmTranslateRoute(groupIp);
+                    if (src == null) {
+                        log.info("no ssm translate for group {}", groupIp);
+                        return;
+                    }
                 } else {
-                    sendQuery(groupMember);
-                    //put modified group member object to the store
-                    groupMemberStore.updateGroupMember(groupMember);
+                    src = IpAddress.valueOf(DEFAULT_PIMSSM_HOST);
+                }
+                sourceList.add(src.getIp4Address());
+                if (recordType == IGMPMembership.CHANGE_TO_EXCLUDE_MODE ||
+                        recordType == IGMPMembership.MODE_IS_EXCLUDE ||
+                        recordType == IGMPMembership.BLOCK_OLD_SOURCES) {
+                    join = true;
+                } else if (recordType == IGMPMembership.CHANGE_TO_INCLUDE_MODE ||
+                        recordType == IGMPMembership.MODE_IS_INCLUDE ||
+                        recordType == IGMPMembership.ALLOW_NEW_SOURCES) {
+                    join = false;
+                }
+            }
+            GroupMemberId groupMemberKey = GroupMemberId.of(groupIp, deviceId, portNumber);
+            log.debug("{} - {} generated for packetId #{}", join ? "Join" : "Leave", groupMemberKey, packetId);
+            GroupMember groupMember = groupMemberStore.getGroupMember(groupMemberKey);
+
+            if (join) {
+                log.debug("Received join on {} for vlan {}", cp, vlan);
+                igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_JOIN_REQ);
+
+                if (groupMember == null) {
+                    Optional<ConnectPoint> sourceConfigured = getSource();
+                    if (!sourceConfigured.isPresent()) {
+                        igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_FAIL_JOIN_REQ);
+                        log.warn("Unable to process IGMP Join from {} since no source " +
+                                "configuration is found.", deviceId);
+                        igmpStatisticsManager
+                                .increaseStat(IgmpStatisticType.FAIL_JOIN_REQ_INSUFF_PERMISSION_ACCESS_COUNTER);
+                        return;
+                    }
+
+                    Optional<PortNumber> deviceUplink = getDeviceUplink(deviceId);
+                    if (deviceUplink.isEmpty()) {
+                        log.warn("Unable to process IGMP Join since uplink port " +
+                                "of the device {} is not found.", deviceId);
+                        return;
+                    }
+
+                    if (igmpType == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT) {
+                        groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, true);
+                    } else {
+                        groupMember = new GroupMember(groupIp, vlan, deviceId, portNumber, false);
+                    }
+
+                    HashSet<ConnectPoint> sourceConnectPoints = Sets.newHashSet(sourceConfigured.get());
+
+                    boolean isJoined = stateMachineService.join(deviceId, groupIp, srcIp, deviceUplink.get());
+                    if (isJoined) {
+                        igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_SUCCESS_JOIN_RE_JOIN_REQ);
+                        igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_CHANNEL_JOIN_COUNTER);
+                    } else {
+                        igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_FAIL_JOIN_REQ);
+                    }
+                    groupMemberStore.putGroupMember(groupMember);
+                    log.debug("Group member created with id: {}", groupMember.getGroupMemberId());
+                    groupMember.updateList(recordType, sourceList);
+                    groupMember.getSourceList().forEach(source -> {
+                        McastRoute route = new McastRoute(source, groupIp, McastRoute.Type.IGMP);
+                        //add route
+                        multicastService.add(route);
+                        //add source to the route
+                        multicastService.addSources(route, Sets.newHashSet(sourceConnectPoints));
+                        //add sink to the route
+                        multicastService.addSinks(route, Sets.newHashSet(cp));
+                    });
+                    igmpStatisticsManager.increaseStat(IgmpStatisticType.UNCONFIGURED_GROUP_COUNTER);
+
+                }
+                groupMember.resetAllTimers();
+                groupMember.updateList(recordType, sourceList);
+                groupMember.setLeave(false);
+                //put updated member to the store
+                groupMemberStore.putGroupMember(groupMember);
+            } else {
+                log.debug("Received leave on {} for vlan {}", cp, vlan);
+                igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_LEAVE_REQ);
+                if (groupMember == null) {
+                    log.info("receive leave but no instance, group {} device: {} port:{}",
+                            groupIp, deviceId, portNumber);
+                    igmpStatisticsManager.increaseStat(IgmpStatisticType.UNCONFIGURED_GROUP_COUNTER);
+                    return;
+                } else {
+                    groupMember.setLeave(true);
+                    if (fastLeave) {
+                        leaveAction(groupMember);
+                    } else {
+                        sendQuery(groupMember);
+                        //put modified group member object to the store
+                        groupMemberStore.updateGroupMember(groupMember);
+                    }
                 }
             }
         }
@@ -524,9 +579,11 @@ public class IgmpManager {
     private class IgmpPacketProcessor implements PacketProcessor {
         @Override
         public void process(PacketContext context) {
-
+            String packetId = createID();
+            log.debug("Entered to IgmpPacketProcessor #{}", packetId);
             eventExecutor.execute(() -> {
                 try {
+                    log.debug("Execute starts #{}", packetId);
                     InboundPacket pkt = context.inPacket();
                     Ethernet ethPkt = pkt.parsed();
                     if (ethPkt == null) {
@@ -588,15 +645,15 @@ public class IgmpManager {
                             break;
                         case IGMP.TYPE_IGMPV3_MEMBERSHIP_REPORT:
                             igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_V3_MEMBERSHIP_REPORT);
-                            processIgmpMessage(pkt, igmp, upLinkPort, vlan);
+                            processIgmpMessage(pkt, igmp, upLinkPort, vlan, packetId);
                             break;
                         case IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT:
                             igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_V2_MEMBERSHIP_REPORT);
-                            processIgmpMessage(pkt, igmp, upLinkPort, vlan);
+                            processIgmpMessage(pkt, igmp, upLinkPort, vlan, packetId);
                             break;
                         case IGMP.TYPE_IGMPV2_LEAVE_GROUP:
                             igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_V2_LEAVE_GROUP);
-                            processIgmpMessage(pkt, igmp, upLinkPort, vlan);
+                            processIgmpMessage(pkt, igmp, upLinkPort, vlan, packetId);
                             break;
 
                         default:
@@ -613,7 +670,8 @@ public class IgmpManager {
         }
     }
 
-    private void processIgmpMessage(InboundPacket pkt, IGMP igmp, PortNumber upLinkPort, short vlan) {
+    private void processIgmpMessage(InboundPacket pkt, IGMP igmp, PortNumber upLinkPort, short vlan, String
+            packetId) {
         //Discard join/leave from OLT’s uplink port’s
         if (pkt.receivedFrom().port().equals(upLinkPort) ||
                 isConnectPoint(pkt.receivedFrom().deviceId(), pkt.receivedFrom().port())) {
@@ -624,16 +682,17 @@ public class IgmpManager {
         Iterator<IGMPGroup> itr = igmp.getGroups().iterator();
         while (itr.hasNext()) {
             IGMPGroup group = itr.next();
+            log.debug("IGMPGroup {} #{}", group.getGaddr(), packetId);
             if (group instanceof IGMPMembership) {
-                processIgmpReport((IGMPMembership) group, VlanId.vlanId(vlan),
-                        pkt.receivedFrom(), igmp.getIgmpType());
+                queueIgmpReport((IGMPMembership) group, VlanId.vlanId(vlan),
+                        pkt.receivedFrom(), igmp.getIgmpType(), packetId);
             } else {
                 IGMPMembership mgroup = new IGMPMembership(group.getGaddr().getIp4Address());
                 mgroup.setRecordType(igmp.getIgmpType() == IGMP.TYPE_IGMPV2_MEMBERSHIP_REPORT ?
                         IGMPMembership.MODE_IS_EXCLUDE :
                         IGMPMembership.MODE_IS_INCLUDE);
-                processIgmpReport(mgroup, VlanId.vlanId(vlan),
-                        pkt.receivedFrom(), igmp.getIgmpType());
+                queueIgmpReport(mgroup, VlanId.vlanId(vlan),
+                        pkt.receivedFrom(), igmp.getIgmpType(), packetId);
             }
         }
 
@@ -961,6 +1020,8 @@ public class IgmpManager {
             pimSSmInterworking = newCfg.pimSsmInterworking();
             enableIgmpProvisioning = newCfg.enableIgmpProvisioning();
             igmpOnPodBasis = newCfg.igmpOnPodBasis();
+            packetProcessorPoolSize = newCfg.packetProcessorPoolSize();
+            numberOfIgmpReportProcessorThreads = newCfg.numberOfIgmpReportProcessorThreads();
             if (newCfg.outgoingIgmpWithV3() != null &&
                     outgoingIgmpWithV3 != newCfg.outgoingIgmpWithV3()) {
                 outgoingIgmpWithV3 = newCfg.outgoingIgmpWithV3();
