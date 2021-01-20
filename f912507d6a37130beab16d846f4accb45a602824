@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed30860b_a671253f",
+        "filename": "api/src/main/java/org/opencord/igmpproxy/IgmpReport.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2021-01-20T10:19:40Z",
+      "side": 1,
+      "message": "this file should live under ONOS in the packet package, where other IGMP related packets such as IGMPMembership elements are.",
+      "revId": "f912507d6a37130beab16d846f4accb45a602824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e8313d9_0e551c2a",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2021-01-20T10:19:40Z",
+      "side": 1,
+      "message": "this starts the thread independently if there is any work for him. A possible different way to do this is to have instead of a list of blocking queues a list of newSingleThreadExecutor, which automatically implement a queue, because when you call execute on it it will grab the thread and execute the task, if another execute is called on it it will be added to the queue and automatically taken when the first execute call finishes. this woudl allow you to avoid having the thread running at all times. Thus removing also the need to use IgmpReportProcessor.java because you can call execute with just processIgmpReport method call.",
+      "revId": "f912507d6a37130beab16d846f4accb45a602824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64884e84_18c00a99",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2021-01-20T10:19:40Z",
+      "side": 1,
+      "message": "debug",
+      "revId": "f912507d6a37130beab16d846f4accb45a602824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891e8bc5_59444b1e",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2021-01-20T10:19:40Z",
+      "side": 1,
+      "message": "this catches unexpected exceptions too, please be more specific",
+      "revId": "f912507d6a37130beab16d846f4accb45a602824",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    }
+  ]
+}
