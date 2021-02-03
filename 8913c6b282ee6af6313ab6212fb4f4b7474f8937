@@ -84,6 +84,24 @@
       "revId": "8913c6b282ee6af6313ab6212fb4f4b7474f8937",
       "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9127a7a_bad6bb5a",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1000116
+      },
+      "writtenOn": "2021-02-03T14:00:23Z",
+      "side": 1,
+      "message": "I agree with pier, here it\u0027s best to leave the eventExecutor single threaded, multi thread processing will be handled by the different per has queue, please move back line 281n to newSingleThreadScheduledExecutor",
+      "parentUuid": "a467e275_5b4c5a5b",
+      "revId": "8913c6b282ee6af6313ab6212fb4f4b7474f8937",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
     }
   ]
 }
