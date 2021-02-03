@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41adaf73_4135099b",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2021-02-03T13:45:40Z",
+      "side": 1,
+      "message": "Why is it needed ? Is it needed for debugging ?",
+      "revId": "8913c6b282ee6af6313ab6212fb4f4b7474f8937",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a3de606_7e9b3db6",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2021-02-03T13:45:40Z",
+      "side": 1,
+      "message": "if it is only for debugging we can return the counter when isDebugEnabled otherwise return -1.\nYou will not notice any difference since all the log statements using packetId are a debug level",
+      "revId": "8913c6b282ee6af6313ab6212fb4f4b7474f8937",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1113d8_ef12957c",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2021-02-03T13:45:40Z",
+      "side": 1,
+      "message": "I believe all the threads will be called report-processor-igmp-1 and this can create some headache when debugging the code. Also I suggest to set an UncaughtExceptionHandler to prevent the executor being cancelled by an exception",
+      "revId": "8913c6b282ee6af6313ab6212fb4f4b7474f8937",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8977d62_041dd66e",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2021-02-03T13:45:40Z",
+      "side": 1,
+      "message": "You may want to move the factory inside",
+      "revId": "8913c6b282ee6af6313ab6212fb4f4b7474f8937",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a467e275_5b4c5a5b",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 569,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2021-02-03T13:45:40Z",
+      "side": 1,
+      "message": "You are now potentially creating packet reordering. Is it necessary to turn this into a multithread executor ? Have you experienced a lot of delay between here and the queuing ? Also I believe the bulky part will be after the queuing.",
+      "revId": "8913c6b282ee6af6313ab6212fb4f4b7474f8937",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    }
+  ]
+}
