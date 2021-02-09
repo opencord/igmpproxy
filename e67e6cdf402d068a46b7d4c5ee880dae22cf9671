@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f0f7e28_ebf7cc24",
+        "filename": "app/src/main/java/org/opencord/igmpproxy/impl/IgmpManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2021-02-09T17:22:49Z",
+      "side": 1,
+      "message": "Unlikely this will have any effect unless you are able to push the netcfg always before the start of the app. \nIf we need to make the number of threads always configurable by netcfg - we have to create a new executor and stop the previous one.",
+      "revId": "e67e6cdf402d068a46b7d4c5ee880dae22cf9671",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388",
+      "unresolved": true
+    }
+  ]
+}
