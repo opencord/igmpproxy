@@ -67,7 +67,6 @@ import org.opencord.igmpproxy.IgmpStatisticsService;
 import org.opencord.igmpproxy.impl.store.groupmember.GroupMember;
 import org.opencord.igmpproxy.impl.store.groupmember.GroupMemberStore;
 import org.opencord.igmpproxy.statemachine.StateMachineService;
-import org.opencord.sadis.BaseInformationService;
 import org.opencord.sadis.SadisService;
 import org.opencord.sadis.SubscriberAndDeviceInformation;
 import org.osgi.service.component.annotations.Activate;
@@ -75,6 +74,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,7 +110,8 @@ import static org.onlab.util.Tools.groupedThreads;
  */
 @Component(immediate = true)
 public class IgmpManager {
-
+    private static final String MCAST_NOT_RUNNING = "Multicast is not running.";
+    private static final String SADIS_NOT_RUNNING = "Sadis is not running.";
     private static final String APP_NAME = "org.opencord.igmpproxy";
 
     private static final Class<IgmpproxyConfig> IGMPPROXY_CONFIG_CLASS =
@@ -174,11 +175,17 @@ public class IgmpManager {
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected NetworkConfigRegistry networkConfig;
 
-    @Reference(cardinality = ReferenceCardinality.MANDATORY)
-    protected MulticastRouteService multicastService;
+    @Reference(cardinality = ReferenceCardinality.OPTIONAL,
+            bind = "bindMcastRouteService",
+            unbind = "unbindMcastRouteService",
+            policy = ReferencePolicy.DYNAMIC)
+    protected volatile MulticastRouteService multicastService;
 
-    @Reference(cardinality = ReferenceCardinality.MANDATORY)
-    protected SadisService sadisService;
+    @Reference(cardinality = ReferenceCardinality.OPTIONAL,
+            bind = "bindSadisService",
+            unbind = "unbindSadisService",
+            policy = ReferencePolicy.DYNAMIC)
+    protected volatile SadisService sadisService;
 
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected IgmpStatisticsService igmpStatisticsManager;
@@ -234,8 +241,6 @@ public class IgmpManager {
         return outgoingIgmpWithV3;
     }
 
-    protected BaseInformationService<SubscriberAndDeviceInformation> subsService;
-
     private List<Byte> validMembershipModes = Arrays.asList(MODE_IS_INCLUDE, MODE_IS_EXCLUDE, CHANGE_TO_INCLUDE_MODE,
             CHANGE_TO_EXCLUDE_MODE, ALLOW_NEW_SOURCES, BLOCK_OLD_SOURCES);
 
@@ -253,7 +258,6 @@ public class IgmpManager {
         configListener.reconfigureNetwork(networkConfig.getConfig(appId, IGMPPROXY_CONFIG_CLASS));
         configListener.reconfigureSsmTable(networkConfig.getConfig(appId, IGMPPROXY_SSM_CONFIG_CLASS));
 
-        subsService = sadisService.getSubscriberInfoService();
         if (connectPointMode) {
             provisionConnectPointFlows();
         } else {
@@ -287,7 +291,6 @@ public class IgmpManager {
         networkConfig.unregisterConfigFactory(igmpproxySsmConfigFactory);
         deviceService.removeListener(deviceListener);
         packetService.removeProcessor(processor);
-        flowRuleService.removeFlowRulesById(appId);
         log.info("Stopped");
     }
 
@@ -304,10 +307,31 @@ public class IgmpManager {
             igmpReportProcessServiceExecutorList[i] = igmpReportProcessServiceExecutor;
         }
     }
+
     private void shutdownIgmpReportProcessServiceExecutors() {
         for (ExecutorService executor : igmpReportProcessServiceExecutorList) {
             executor.shutdown();
         }
+    }
+
+    protected void bindSadisService(SadisService service) {
+        sadisService = service;
+        log.info("Sadis-service binds to onos.");
+    }
+
+    protected void unbindSadisService(SadisService service) {
+        sadisService = null;
+        log.info("Sadis-service unbinds from onos.");
+    }
+
+    protected void bindMcastRouteService(MulticastRouteService service) {
+        multicastService = service;
+        log.info("Multicast route service binds to onos.");
+    }
+
+    protected void unbindMcastRouteService(MulticastRouteService service) {
+        multicastService = null;
+        log.info("Multicast route service unbinds from onos.");
     }
 
     protected Ip4Address getDeviceIp(DeviceId ofDeviceId) {
@@ -384,6 +408,11 @@ public class IgmpManager {
     }
 
     private void processIgmpReport(IGMPMembership igmpGroup, VlanId vlan, ConnectPoint cp, byte igmpType) {
+        if (multicastService == null) {
+            log.warn(MCAST_NOT_RUNNING);
+            return;
+        }
+
         DeviceId deviceId = cp.deviceId();
         PortNumber portNumber = cp.port();
 
@@ -522,6 +551,10 @@ public class IgmpManager {
     }
 
     private void leaveAction(GroupMember groupMember) {
+        if (multicastService == null) {
+            log.warn(MCAST_NOT_RUNNING);
+            return;
+        }
         igmpStatisticsManager.increaseStat(IgmpStatisticType.IGMP_DISCONNECT);
         ConnectPoint cp = new ConnectPoint(groupMember.getDeviceId(), groupMember.getPortNumber());
         stateMachineService.leave(groupMember.getDeviceId(), groupMember.getGroupIp());
@@ -841,6 +874,10 @@ public class IgmpManager {
     private Optional<SubscriberAndDeviceInformation> getSubscriberAndDeviceInformation(String serialNumber) {
         long start = System.currentTimeMillis();
         try {
+            if (sadisService == null) {
+                log.warn(SADIS_NOT_RUNNING);
+                return Optional.empty();
+            }
             return Optional.ofNullable(sadisService.getSubscriberInfoService().get(serialNumber));
         } finally {
             if (log.isDebugEnabled()) {
@@ -848,7 +885,6 @@ public class IgmpManager {
                 // This measurement is just for monitoring these kinds of situations.
                 log.debug("Device fetched from SADIS. Elapsed {} msec", System.currentTimeMillis() - start);
             }
-
         }
     }
 
@@ -956,6 +992,10 @@ public class IgmpManager {
     }
 
     private void onSourceStateChanged(DeviceId deviceId, PortNumber portNumber, boolean enabled) {
+        if (multicastService == null) {
+            log.warn(MCAST_NOT_RUNNING);
+            return;
+        }
         if (!(getSource().isPresent() &&
                 getSource().get().deviceId().equals(deviceId) &&
                 getSource().get().port().equals(portNumber))) {
