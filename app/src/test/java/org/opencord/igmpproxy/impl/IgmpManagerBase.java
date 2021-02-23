@@ -522,6 +522,11 @@ public class IgmpManagerBase {
     private class MockBpService implements BaseInformationService<BandwidthProfileInformation> {
 
         @Override
+        public void clearLocalData() {
+
+        }
+
+        @Override
         public void invalidateAll() {
 
         }
@@ -559,6 +564,11 @@ public class IgmpManagerBase {
         @Override
         public SubscriberAndDeviceInformation get(String id) {
             return sub;
+        }
+
+        @Override
+        public void clearLocalData() {
+
         }
 
         @Override

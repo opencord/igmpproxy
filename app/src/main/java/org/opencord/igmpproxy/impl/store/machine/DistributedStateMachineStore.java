@@ -78,11 +78,6 @@ public class DistributedStateMachineStore extends AbstractStateMachineStore {
 
     @Deactivate
     public void deactivate() {
-        stateMachineMap.clear();
-        stateMachineMap = null;
-        consistentMap.destroy();
-        stateMachineCounters.clear();
-        stateMachineCounters.destroy();
         log.info("Stopped.");
     }
 

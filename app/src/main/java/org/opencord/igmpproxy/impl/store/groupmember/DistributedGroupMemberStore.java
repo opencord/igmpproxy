@@ -64,9 +64,6 @@ public class DistributedGroupMemberStore extends AbstractGroupMemberStore {
 
     @Deactivate
     public void deactivate() {
-        groupMemberMap.clear();
-        groupMemberMap = null;
-        consistentMap.destroy();
         log.info("Stopped.");
     }
 }
