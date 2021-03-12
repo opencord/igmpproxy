@@ -136,6 +136,7 @@ public class IgmpManager {
     private static byte igmpCos = 7;
     private static byte igmpUniCos = 7;
     public static boolean connectPointMode = true;
+    //This is the uplink connect point
     public static ConnectPoint connectPoint = null;
     private static ConnectPoint sourceDeviceAndPort = null;
     private static boolean enableIgmpProvisioning = false;
@@ -394,7 +395,7 @@ public class IgmpManager {
     }
 
     private void queueIgmpReport(IGMPMembership igmpGroup, VlanId vlan, ConnectPoint cp, byte igmpType) {
-        int packetHashCode = Objects.hash(igmpGroup.getGaddr(), connectPoint);
+        int packetHashCode = Objects.hash(igmpGroup.getGaddr(), cp);
         int threadId = Math.abs(packetHashCode % numberOfIgmpReportProcessorThreads);
         log.debug("IGMP report for ConnectPoint {} and group IP {} shall be processed in thread #{}",
                 cp, igmpGroup.getGaddr(), threadId);
