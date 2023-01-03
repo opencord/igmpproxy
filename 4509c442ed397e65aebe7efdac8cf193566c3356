@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ea114ac_191f2e16",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000948
+      },
+      "writtenOn": "2023-01-03T19:17:34Z",
+      "side": 1,
+      "message": "Cosmetic source changes (copyright notice) used to trigger a jenkins job.",
+      "revId": "4509c442ed397e65aebe7efdac8cf193566c3356",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388"
+    }
+  ]
+}
