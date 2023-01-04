@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9ebf899_4025b0da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000948
+      },
+      "writtenOn": "2023-01-04T21:34:50Z",
+      "side": 1,
+      "message": "Publish component version 2.6.0.\n\nJenkins job issued a warning about pom.xml syntax (2 components so far) and deprecation in a future release.  Will have to look into this at some point.",
+      "revId": "521e97c45a98080c6cf9aa026379df66bab7dbdd",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388"
+    }
+  ]
+}
