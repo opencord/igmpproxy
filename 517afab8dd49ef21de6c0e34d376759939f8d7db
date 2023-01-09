@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e5628c95_b9b19292",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000948
+      },
+      "writtenOn": "2023-01-09T22:17:24Z",
+      "side": 1,
+      "message": "NOP copyright changes built cleanly.\npom.xml dependencies updated:\n   sadis 5.6.0 \u003d\u003e 5.9.0",
+      "revId": "517afab8dd49ef21de6c0e34d376759939f8d7db",
+      "serverId": "2a2bfe1b-c5c2-48ed-9ac8-16438ab24388"
+    }
+  ]
+}
