@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   ~ Copyright 2015-2023 Open Networking Foundation (ONF) and the ONF Contributors
@@ -36,7 +37,7 @@
         <onos.app.title>IGMP proxy app</onos.app.title>
         <onos.app.url>http://opencord.org</onos.app.url>
         <onos.app.readme>IGMP implementation.</onos.app.readme>
-        <sadis.api.version>5.10.0</sadis.api.version>
+        <sadis.api.version>5.11.1</sadis.api.version>
     </properties>
 
     <dependencies>
